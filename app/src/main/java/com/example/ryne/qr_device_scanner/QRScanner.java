@@ -14,14 +14,20 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-public class MainActivity extends AppCompatActivity {
+import data.JSONDeviceParser;
+import model.Device;
+
+public class QRScanner extends AppCompatActivity {
     private Button btScan;
+
+    private JSONDeviceParser jsonDeviceParser = new JSONDeviceParser();
+    private Device device = new Device();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //this.startActivity(new Intent(MainActivity.this,DeviceInformation.class));
+        //this.startActivity(new Intent(QRScanner.this,DeviceInformation.class));
 
         btScan = (Button) findViewById(R.id.btClick);
         final Activity activity = this;
@@ -49,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "You cancelled the scanning", Toast.LENGTH_LONG).show();
                 MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.zxing_beep);
                 mediaPlayer.start();
-                Intent intent = new Intent(MainActivity.this, DeviceInformation.class);
+                Intent intent = new Intent(QRScanner.this, DeviceInformation.class);
                 startActivity(intent);
                 DataTask dataTask = new DataTask();
                 dataTask.execute("D01");
@@ -78,7 +84,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(MainActivity.this,s,Toast.LENGTH_LONG).show();
+            //Toast.makeText(QRScanner.this,s,Toast.LENGTH_LONG).show();
+            device = jsonDeviceParser.getDeviceData(s);
+            Log.d("nameofdevice:",device.getName());
+
         }
     }
 

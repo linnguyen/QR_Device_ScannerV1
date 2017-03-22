@@ -24,7 +24,7 @@ public class DeviceInformation extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DeviceInformation.this, MainActivity.class);
+                Intent intent = new Intent(DeviceInformation.this, QRScanner.class);
                 startActivity(intent);
             }
         });
