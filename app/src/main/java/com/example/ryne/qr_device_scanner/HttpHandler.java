@@ -18,19 +18,18 @@ public class HttpHandler {
 
     public HttpHandler(){
     }
-    public static String makeServiceCall(){
+    public static String makeServiceCall(String userCode){
         String response = null;
         try {
-             //URL url = new URL("http://10.0.3.2:3000/users.json");
-            URL url = new URL("https://apiqrcode.herokuapp.com/users.json");
+            //URL url = new URL("http://10.0.3.2:3000/users");
+            //URL url = new URL("https://apiqrcode.herokuapp.com/users.json");
+            URL url = new URL("https://apiqrcode-v1.herokuapp.com/chitietnhapxuat/"+userCode);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             // read the response
             InputStream inputStream = new BufferedInputStream(connection.getInputStream());
             response = covertStreamToString(inputStream);
-            Log.d("toiday","hehe");
         }catch (Exception ex){
-            Log.d("loine",ex.toString());
             ex.getStackTrace();
         }
         return response;

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">QR_Device_Scanner</string>
+    <string name="toolbarTitle">Back</string>
 </resources>
