@@ -21,9 +21,7 @@ public class HttpHandler {
     public static String makeServiceCall(String userCode){
         String response = null;
         try {
-            //URL url = new URL("http://10.0.3.2:3000/users");
-            //URL url = new URL("https://apiqrcode.herokuapp.com/users.json");
-            URL url = new URL("https://apiqrcode-v1.herokuapp.com/chitietnhapxuat/"+userCode);
+            URL url = new URL("https://apiqrcode-v1.herokuapp.com/device_informations/api/2017D001CNTT4");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             // read the response

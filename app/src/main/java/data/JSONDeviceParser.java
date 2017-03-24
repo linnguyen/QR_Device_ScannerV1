@@ -14,8 +14,21 @@ public class JSONDeviceParser {
         Device device = null;
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
-            String name = jsonObject.getString("nameofdevice");
-            device = new Device(name, "", "");
+            //String name = jsonObject.getString("nameofdevice");
+            JSONObject jsonObjectStaff = jsonObject.getJSONObject("staff");
+            String staff = jsonObjectStaff.getString("name");
+
+            JSONObject jsonObjectDevice = jsonObject.getJSONObject("device");
+            String name = jsonObjectDevice.getString("name");
+            String parentCode =  jsonObjectDevice.getString("qrcode");
+            String producer = jsonObjectDevice.getString("producer");
+            String country  = jsonObjectDevice.getString("country");
+            String dateofProduce = jsonObjectDevice.getString("date_of_produce");
+            String digital = jsonObjectDevice.getString("digital");
+            String timeofWarranty = jsonObjectDevice.getString("time_of_warranty");
+            String description = jsonObjectDevice.getString("description");
+
+            device = new Device(name, parentCode, producer, country, dateofProduce, digital, staff, "", timeofWarranty, description);
         } catch (JSONException e) {
             e.printStackTrace();
         }

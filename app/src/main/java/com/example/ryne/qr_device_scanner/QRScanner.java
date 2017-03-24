@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,9 +27,7 @@ public class QRScanner extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //this.startActivity(new Intent(QRScanner.this,DeviceInformation.class));
-
         btScan = (Button) findViewById(R.id.btClick);
         final Activity activity = this;
 
@@ -45,7 +44,6 @@ public class QRScanner extends AppCompatActivity {
             }
         });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -53,15 +51,16 @@ public class QRScanner extends AppCompatActivity {
         if(result != null){
             if(result.getContents() == null){
                 Toast.makeText(this, "You cancelled the scanning", Toast.LENGTH_LONG).show();
-                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.zxing_beep);
+                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
                 mediaPlayer.start();
-                Intent intent = new Intent(QRScanner.this, DeviceInformation.class);
-                startActivity(intent);
                 DataTask dataTask = new DataTask();
                 dataTask.execute("D01");
+                Intent intent = new Intent(QRScanner.this, DeviceInformation.class);
+                intent.putExtra("objDevice", device);
+                startActivity(intent);
             }else{
                 //Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
-                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.zxing_beep);
+                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
                 mediaPlayer.start();
                 Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
                 DataTask dataTask = new DataTask();
@@ -82,12 +81,10 @@ public class QRScanner extends AppCompatActivity {
             super.onPreExecute();
         }
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            //Toast.makeText(QRScanner.this,s,Toast.LENGTH_LONG).show();
-            device = jsonDeviceParser.getDeviceData(s);
-            Log.d("nameofdevice:",device.getName());
-
+        protected void onPostExecute(String jsonString) {
+            super.onPostExecute(jsonString);
+            Toast.makeText(QRScanner.this,jsonString,Toast.LENGTH_LONG).show();
+            device = jsonDeviceParser.getDeviceData(jsonString);
         }
     }
 

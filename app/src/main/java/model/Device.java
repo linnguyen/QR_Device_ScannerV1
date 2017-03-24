@@ -1,21 +1,37 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Created by ryne on 22/03/2017.
  */
 
-public class Device {
+public class Device implements  Serializable{
     private String name;
-    private String origin;
-    private String yearofProduce;
+    private String parentcode;
+    private String producer;
+    private String country;
+    private String dateofProduce;
+    private String digital;
+    private String staff;
+    private String room;
+    private String timeofWarranty;
+    private String description;
 
     public  Device(){
 
     }
-    public Device(String name, String origin, String yearofProduce) {
+    public Device(String name, String parentcode, String producer, String country, String dateofProduce, String digital, String staff, String room, String timeofWarranty, String description) {
         this.name = name;
-        this.origin = origin;
-        this.yearofProduce = yearofProduce;
+        this.parentcode = parentcode;
+        this.producer = producer;
+        this.country = country;
+        this.dateofProduce = dateofProduce;
+        this.digital = digital;
+        this.staff = staff;
+        this.room = room;
+        this.timeofWarranty = timeofWarranty;
+        this.description = description;
     }
 
     public String getName() {
@@ -26,19 +42,75 @@ public class Device {
         this.name = name;
     }
 
-    public String getOrigin() {
-        return origin;
+    public String getParentcode() {
+        return parentcode;
     }
 
-    public void setOrigin(String origin) {
-        this.origin = origin;
+    public void setParentcode(String parentcode) {
+        this.parentcode = parentcode;
     }
 
-    public String getYearofProduce() {
-        return yearofProduce;
+    public String getProducer() {
+        return producer;
     }
 
-    public void setYearofProduce(String yearofProduce) {
-        this.yearofProduce = yearofProduce;
+    public void setProducer(String producer) {
+        this.producer = producer;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getDateofProduce() {
+        return dateofProduce;
+    }
+
+    public void setDateofProduce(String dateofProduce) {
+        this.dateofProduce = dateofProduce;
+    }
+
+    public String getDigital() {
+        return digital;
+    }
+
+    public void setDigital(String digital) {
+        this.digital = digital;
+    }
+
+    public String getStaff() {
+        return staff;
+    }
+
+    public void setStaff(String staff) {
+        this.staff = staff;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public String getTimeofWarranty() {
+        return timeofWarranty;
+    }
+
+    public void setTimeofWarranty(String timeofWarranty) {
+        this.timeofWarranty = timeofWarranty;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
