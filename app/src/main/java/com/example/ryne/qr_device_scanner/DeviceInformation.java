@@ -18,9 +18,10 @@ public class DeviceInformation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_information);
         initToolBar();
-        Device device = (Device) getIntent().getParcelableExtra("objDevice");
-        device.getName();
-        Log.d("namedevice", device.getName());
+
+        Intent intent = getIntent();
+        Device device = (Device) intent.getSerializableExtra("objDevice");
+        Log.d("device", device.toString());
     }
     public void initToolBar(){
         toolbar = (Toolbar)this.findViewById(R.id.toolbar);
@@ -34,5 +35,9 @@ public class DeviceInformation extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void setValueForItem(){
+
     }
 }

@@ -22,7 +22,7 @@ public class QRScanner extends AppCompatActivity {
     private Button btScan;
 
     private JSONDeviceParser jsonDeviceParser = new JSONDeviceParser();
-    private Device device = new Device();
+    private Device device = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +55,7 @@ public class QRScanner extends AppCompatActivity {
                 mediaPlayer.start();
                 DataTask dataTask = new DataTask();
                 dataTask.execute("D01");
-                Intent intent = new Intent(QRScanner.this, DeviceInformation.class);
-                intent.putExtra("objDevice", device);
-                startActivity(intent);
+                //Toast.makeText(QRScanner.this, "t nef",Toast.LENGTH_LONG).show();
             }else{
                 //Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
                 MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
@@ -84,7 +82,12 @@ public class QRScanner extends AppCompatActivity {
         protected void onPostExecute(String jsonString) {
             super.onPostExecute(jsonString);
             Toast.makeText(QRScanner.this,jsonString,Toast.LENGTH_LONG).show();
+            //create device object
             device = jsonDeviceParser.getDeviceData(jsonString);
+            //pass to DeviceInformation activity
+            Intent intent = new Intent(QRScanner.this, DeviceInformation.class);
+            intent.putExtra("objDevice", device);
+            startActivity(intent);
         }
     }
 
