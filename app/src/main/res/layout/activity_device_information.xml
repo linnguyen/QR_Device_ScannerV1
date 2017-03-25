@@ -23,7 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
-            android:text="Dell voutro"
+            android:text="delo"
+            android:id="@+id/nameDevice"
             android:textSize="40px"
             android:textColor="#3e64a0"
             android:layout_marginLeft="50px"

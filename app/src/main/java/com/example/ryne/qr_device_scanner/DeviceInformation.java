@@ -6,22 +6,31 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import model.Device;
 
 public class DeviceInformation extends AppCompatActivity {
+    private Device device = null;
 
     private Toolbar toolbar;
+    private TextView tvNameDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_information);
+        tvNameDevice = (TextView)findViewById(R.id.nameDevice);
+        //tvNameDevice.setText("heloo");
         initToolBar();
+        device = new Device();
 
         Intent intent = getIntent();
-        Device device = (Device) intent.getSerializableExtra("objDevice");
+        device = (Device) intent.getSerializableExtra("objDevice");
+
         Log.d("device", device.toString());
+        tvNameDevice.setText(device.getDescription());
+        setValueForItem();
     }
     public void initToolBar(){
         toolbar = (Toolbar)this.findViewById(R.id.toolbar);
@@ -36,8 +45,10 @@ public class DeviceInformation extends AppCompatActivity {
             }
         });
     }
+    public void initView(){
 
+    }
     public void setValueForItem(){
-
+      // tvNameDevice.setText(device.getCountry());
     }
 }

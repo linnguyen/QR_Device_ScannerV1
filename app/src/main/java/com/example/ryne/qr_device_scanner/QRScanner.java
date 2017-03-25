@@ -7,9 +7,12 @@ import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -19,30 +22,37 @@ import data.JSONDeviceParser;
 import model.Device;
 
 public class QRScanner extends AppCompatActivity {
+    private Toolbar toolBar;
     private Button btScan;
-
+    private ImageView imQrSCanner;
     private JSONDeviceParser jsonDeviceParser = new JSONDeviceParser();
     private Device device = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //this.startActivity(new Intent(QRScanner.this,DeviceInformation.class));
-        btScan = (Button) findViewById(R.id.btClick);
-        final Activity activity = this;
+        initToolBar();
+//        btScan = (Button) findViewById(R.id.btClick);
+         final Activity activity = this;
+         imQrSCanner = (ImageView)findViewById(R.id.qrScanner);
+         imQrSCanner.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
+                 intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                 intentIntegrator.setPrompt("Scanning");
+                 intentIntegrator.setCameraId(0);
+                 intentIntegrator.setBeepEnabled(true);
+                 intentIntegrator.setBarcodeImageEnabled(false);
+                 intentIntegrator.initiateScan();
+             }
+         });
+    }
 
-        btScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
-                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                intentIntegrator.setPrompt("Scanning");
-                intentIntegrator.setCameraId(0);
-                intentIntegrator.setBeepEnabled(true);
-                intentIntegrator.setBarcodeImageEnabled(false);
-                intentIntegrator.initiateScan();
-            }
-        });
+    public void initToolBar(){
+        toolBar = (Toolbar) findViewById(R.id.toolBarQRSCanner);
+        toolBar.setNavigationIcon(R.drawable.qrcode);
+        toolBar.setTitle("Device Scanner");
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
