@@ -21,7 +21,6 @@ public class DeviceInformation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_information);
         tvNameDevice = (TextView)findViewById(R.id.nameDevice);
-        //tvNameDevice.setText("heloo");
         initToolBar();
         device = new Device();
 

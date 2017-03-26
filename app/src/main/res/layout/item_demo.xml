@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:shrinkColumns="*"
+        android:stretchColumns="*">
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:text="CPU Architecture"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:gravity="right"
+                android:padding="4dp"/>
+
+            <TextView
+                android:id="@+id/name"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:padding="4dp"/>
+        </TableRow>
+
+        <!-- Row 2 -->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:text="Board"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:gravity="right"
+                android:padding="4dp"/>
+
+            <TextView
+                android:id="@+id/board"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:padding="4dp"/>
+        </TableRow>
+
+        <!-- Row 3 -->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:text="Cores"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:gravity="right"
+                android:padding="4dp"/>
+
+            <TextView
+                android:id="@+id/cores"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:padding="4dp"/>
+        </TableRow>
+
+        <!-- Row 4 -->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:text="Clock Speed"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:gravity="right"
+                android:padding="4dp"/>
+
+            <TextView
+                android:id="@+id/clockspeed"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:padding="4dp"/>
+        </TableRow>
+
+        <!-- Row 5 -->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:text="CPU Features"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:gravity="right"
+                android:padding="4dp"/>
+
+            <TextView
+                android:id="@+id/cpu"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:padding="4dp"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:text="CPU Governor"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:gravity="right"
+                android:padding="4dp"/>
+
+            <TextView
+                android:id="@+id/govemor"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:padding="4dp"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:text="Kernel Version"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:gravity="right"
+                android:padding="4dp"/>
+
+            <TextView
+                android:id="@+id/version"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:padding="4dp"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:text="Kernel Architecture"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:gravity="right"
+                android:padding="4dp"/>
+            <TextView
+                android:id="@+id/arm7"
+                android:textSize="18dp"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:padding="4dp"/>
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

@@ -31,6 +31,7 @@ public class QRScanner extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.startActivity(new Intent(this,ActivityDem.class));
         initToolBar();
 //        btScan = (Button) findViewById(R.id.btClick);
          final Activity activity = this;
