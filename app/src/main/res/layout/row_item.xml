@@ -3,29 +3,28 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:shrinkColumns="1"
-        android:stretchColumns="1">
+        android:shrinkColumns="*"
+        android:stretchColumns="*">
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/row_shape"
             android:gravity="center_horizontal">
             <TextView
-                android:text="CPU Architecture"
-                android:textSize="18dp"
+                android:text="@string/name"
+                android:textSize="16dp"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_span="1"
                 android:gravity="right"
                 android:padding="4dp"/>
-
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/nameDevice"
                 android:textSize="18dp"
+                android:textColor="#146FA4"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_span="1"
@@ -35,11 +34,12 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/row_shape"
             android:gravity="center_horizontal">
 
             <TextView
-                android:text="Board"
-                android:textSize="18dp"
+                android:text="@string/parentcode"
+                android:textSize="16dp"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_span="1"
@@ -47,23 +47,24 @@
                 android:padding="4dp"/>
 
             <TextView
-                android:id="@+id/board"
+                android:id="@+id/parentCode"
                 android:textSize="18dp"
+                android:textColor="#146FA4"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_span="1"
                 android:padding="4dp"/>
         </TableRow>
-
         <!-- Row 3 -->
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/row_shape"
             android:gravity="center_horizontal">
 
             <TextView
-                android:text="Cores"
-                android:textSize="18dp"
+                android:text="@string/origin"
+                android:textSize="16dp"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_span="1"
@@ -71,23 +72,24 @@
                 android:padding="4dp"/>
 
             <TextView
-                android:id="@+id/cores"
+                android:id="@+id/origin"
                 android:textSize="18dp"
+                android:textColor="#146FA4"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_span="1"
                 android:padding="4dp"/>
         </TableRow>
-
         <!-- Row 4 -->
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/row_shape"
             android:gravity="center_horizontal">
 
             <TextView
-                android:text="Clock Speed"
-                android:textSize="18dp"
+                android:text="@string/dateofproduce"
+                android:textSize="16dp"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_span="1"
@@ -95,23 +97,24 @@
                 android:padding="4dp"/>
 
             <TextView
-                android:id="@+id/clockspeed"
+                android:id="@+id/dateOfProduce"
                 android:textSize="18dp"
+                android:textColor="#146FA4"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_span="1"
                 android:padding="4dp"/>
         </TableRow>
-
         <!-- Row 5 -->
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/row_shape"
             android:gravity="center_horizontal">
 
             <TextView
-                android:text="CPU Features"
-                android:textSize="18dp"
+                android:text="@string/staff"
+                android:textSize="16dp"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_span="1"
@@ -119,22 +122,24 @@
                 android:padding="4dp"/>
 
             <TextView
-                android:id="@+id/cpu"
+                android:id="@+id/staff"
                 android:textSize="18dp"
+                android:textColor="#146FA4"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_span="1"
                 android:padding="4dp"/>
         </TableRow>
-
+        <!-- Row 6 -->
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/row_shape"
             android:gravity="center_horizontal">
 
             <TextView
-                android:text="CPU Governor"
-                android:textSize="18dp"
+                android:text="@string/digital"
+                android:textSize="16dp"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_span="1"
@@ -142,58 +147,13 @@
                 android:padding="4dp"/>
 
             <TextView
-                android:id="@+id/govemor"
+                android:id="@+id/digital"
                 android:textSize="18dp"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:layout_span="1"
-                android:padding="4dp"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:text="Kernel Version"
-                android:textSize="18dp"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:layout_span="1"
-                android:gravity="right"
-                android:padding="4dp"/>
-
-            <TextView
-                android:id="@+id/version"
-                android:textSize="18dp"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:layout_span="1"
-                android:padding="4dp"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:text="Kernel Architecture"
-                android:textSize="18dp"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:layout_span="1"
-                android:gravity="right"
-                android:padding="4dp"/>
-            <TextView
-                android:id="@+id/arm7"
-                android:textSize="18dp"
+                android:textColor="#146FA4"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_span="1"
                 android:padding="4dp"/>
         </TableRow>
     </TableLayout>
-
 </LinearLayout>

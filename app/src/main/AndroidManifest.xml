@@ -23,7 +23,7 @@
         <activity
             android:name=".DeviceInformation"
             android:theme="@style/DeviceInformationTheme" />
-        <activity android:name=".ActivityDem"></activity>
+        <activity android:name=".Inventory" />
     </application>
 
 </manifest>

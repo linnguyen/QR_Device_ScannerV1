@@ -10,7 +10,7 @@ import model.Device;
  */
 
 public class JSONDeviceParser {
-    public Device getDeviceData(String jsonString){
+    public static Device getDeviceData(String jsonString){
         Device device = null;
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
