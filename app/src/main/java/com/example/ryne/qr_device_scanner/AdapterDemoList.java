@@ -50,7 +50,7 @@ public class AdapterDemoList extends BaseAdapter {
         ViewHolder holder;
         Device device = (Device)getItem(i);
         if (view == null) {
-            view = layoutInflater.inflate(R.layout.item_demo, null);
+            view = layoutInflater.inflate(R.layout.row_item, null);
             holder = new ViewHolder();
 
             holder.name = (TextView) view.findViewById(R.id.name);

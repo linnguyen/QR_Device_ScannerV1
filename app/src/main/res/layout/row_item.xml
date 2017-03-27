@@ -7,13 +7,13 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:shrinkColumns="*"
-        android:stretchColumns="*">
+        android:shrinkColumns="1"
+        android:stretchColumns="1">
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/row_shape"
             android:gravity="center_horizontal">
-
             <TextView
                 android:text="CPU Architecture"
                 android:textSize="18dp"
@@ -31,7 +31,6 @@
                 android:layout_span="1"
                 android:padding="4dp"/>
         </TableRow>
-
         <!-- Row 2 -->
         <TableRow
             android:layout_width="match_parent"

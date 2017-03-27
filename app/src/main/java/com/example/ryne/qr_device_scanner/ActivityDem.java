@@ -11,6 +11,7 @@ import model.Device;
 
 public class ActivityDem extends AppCompatActivity {
     private ListView listView;
+    private ListView listView2;
     private AdapterDemoList adapter;
     private List<Device> deviceList;
     @Override
@@ -19,6 +20,7 @@ public class ActivityDem extends AppCompatActivity {
         setContentView(R.layout.activity_dem);
 
         listView = (ListView)this.findViewById(R.id.listView);
+        listView2 = (ListView)this.findViewById(R.id.listView2);
         deviceList = new ArrayList<>();
 
         Device device = new Device("","","","Viet Nam","","","","","","This is very beautiful computer in It department used for blah blah blah blah blah");
@@ -26,5 +28,6 @@ public class ActivityDem extends AppCompatActivity {
 
         adapter = new AdapterDemoList(ActivityDem.this,deviceList);
         listView.setAdapter(adapter);
+        listView2.setAdapter(adapter);
     }
 }
