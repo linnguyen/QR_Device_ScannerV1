@@ -13,4 +13,10 @@
     <string name="dateofproduce">Date of produce</string>
     <string name="staff">Staff</string>
     <string name="digital">Digital</string>
+    <string-array name="spinner_list_item_array">
+        <item>English</item>
+        <item>French</item>
+        <item>Singapore</item>
+        <item>Japan</item>
+    </string-array>
 </resources>

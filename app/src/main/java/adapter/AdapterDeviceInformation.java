@@ -52,7 +52,7 @@ public class AdapterDeviceInformation extends BaseAdapter {
         ViewHolder holder = null;
         Device device = (Device)getItem(i);
         if (view == null) {
-            view = layoutInflater.inflate(R.layout.row_item, null);
+            view = layoutInflater.inflate(R.layout.row_item_device_information, null);
             holder = new ViewHolder();
 
             holder.name = (TextView) view.findViewById(R.id.nameDevice);

@@ -30,10 +30,10 @@ public class QRScanner extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.startActivity(new Intent(this,Inventory.class));
         initToolBar();
-//        btScan = (Button) findViewById(R.id.btClick);
-         final Activity activity = this;
-         imQrSCanner = (ImageView)findViewById(R.id.qrScanner);
-         imQrSCanner.setOnClickListener(new View.OnClickListener() {
+
+        final Activity activity = this;
+        imQrSCanner = (ImageView)findViewById(R.id.qrScanner);
+        imQrSCanner.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
                  IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
@@ -46,7 +46,6 @@ public class QRScanner extends AppCompatActivity {
              }
          });
     }
-
     public void initToolBar(){
         toolBar = (Toolbar) findViewById(R.id.toolBarQRSCanner);
         toolBar.setNavigationIcon(R.drawable.qrcode);

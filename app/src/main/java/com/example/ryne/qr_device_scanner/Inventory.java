@@ -1,9 +1,18 @@
 package com.example.ryne.qr_device_scanner;
 
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -15,25 +24,71 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class Inventory extends AppCompatActivity {
+import adapter.AdapterInventory;
+import model.Device;
 
+public class Inventory extends AppCompatActivity {
+    private Toolbar toolBar;
+    private Spinner spinner;
+    private ListView listView;
+    private ArrayList<Device> arrlistDevice;
+    private AdapterInventory adapterInventory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
+        initToolBar();
+        initSpinner();
+        initListView();
+
         new SendPostRequest().execute();
     }
-    public class SendPostRequest extends AsyncTask<String, Void, String>{
+    public void initSpinner(){
+        spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                Inventory.this,
+                android.R.layout.simple_list_item_1,
+                getResources().getStringArray(R.array.spinner_list_item_array));
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
 
+    }
+    public void initListView(){
+       listView = (ListView) findViewById(R.id.listViewInventory);
+
+        arrlistDevice = new ArrayList<>();
+        arrlistDevice.add(new Device("Dell Voutro","D001"));
+        arrlistDevice.add(new Device("Asus","A001"));
+        adapterInventory = new AdapterInventory(arrlistDevice,getApplicationContext());
+        listView.setAdapter(adapterInventory);
+
+
+    }
+    public void initToolBar(){
+        toolBar = (Toolbar) findViewById(R.id.toolBarQRSCanner);
+        toolBar.setNavigationIcon(R.drawable.left_arrow_small);
+        toolBar.setTitle("Select Room");
+        toolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Inventory.this, QRScanner.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public class SendPostRequest extends AsyncTask<String, Void, String>{
         @Override
         protected String doInBackground(String... params) {
             try {
-                URL url = new URL("http://10.0.3.2:3000/inventories");
+               // URL url = new URL("https://apiqrcode-v1.herokuapp.com/inventories");
+                URL url = new URL("https://apiqrcode-v1.herokuapp.com/inven");
                 JSONObject postParams = new JSONObject();
-                postParams.put("date_of_inventory","01/04/2020");
+                postParams.put("date_of_inventory","01/05/1994");
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestProperty("Content-Type", "application/json");

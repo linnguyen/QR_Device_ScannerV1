@@ -21,6 +21,10 @@ public class Device implements  Serializable{
     public  Device(){
 
     }
+    public Device(String name, String parentcode){
+        this.name = name;
+        this.parentcode = parentcode;
+    }
     public Device(String name, String parentcode, String producer, String country, String dateofProduce, String digital, String staff, String room, String timeofWarranty, String description) {
         this.name = name;
         this.parentcode = parentcode;
