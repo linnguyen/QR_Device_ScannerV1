@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import Utils.Config;
+
 /**
  * Created by lin on 26/12/2016.
  */
@@ -18,10 +20,11 @@ public class HttpHandler {
 
     public HttpHandler(){
     }
-    public static String makeServiceCall(String userCode){
+    public static String makeServiceCall(String extendUrl){
         String response = null;
         try {
-            URL url = new URL("https://apiqrcode-v1.herokuapp.com/device_informations/api/2017D001CNTT4");
+            URL url = new URL(Config.URL+extendUrl);
+            Log.d("URL",Config.URL + extendUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             // read the response

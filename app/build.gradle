@@ -19,6 +19,9 @@ android {
     }
 }
 
+ext {
+    supportLibVersion = '25.2.0'  // variable that can be referenced to keep support libs consistent
+}
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -29,5 +32,7 @@ dependencies {
     compile 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
     testCompile 'junit:junit:4.12'
 }

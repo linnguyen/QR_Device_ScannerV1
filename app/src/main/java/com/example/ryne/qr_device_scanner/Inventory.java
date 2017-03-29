@@ -2,6 +2,8 @@ package com.example.ryne.qr_device_scanner;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -29,44 +32,40 @@ import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 
 import adapter.AdapterInventory;
+import data.JSONDeviceParser;
 import model.Device;
+import model.Labroom;
 
 public class Inventory extends AppCompatActivity {
     private Toolbar toolBar;
     private Spinner spinner;
     private ListView listView;
+    private FloatingActionButton fabSave;
+
     private ArrayList<Device> arrlistDevice;
+    private ArrayList<Labroom> arrlistLabRoom;
     private AdapterInventory adapterInventory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
         initToolBar();
-        initSpinner();
+      //  initSpinner();
         initListView();
+        fabSave = (FloatingActionButton) findViewById(R.id.fabSave);
+        arrlistLabRoom = new ArrayList<>();
 
+        // call dattask to load LabRoom from server
+        DataTask dataTask = new DataTask();
+        dataTask.execute("lab_rooms");
+        // process event for FloatActionButton Save
+        fabSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              // listView.ge
+            }
+        });
         new SendPostRequest().execute();
-    }
-    public void initSpinner(){
-        spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                Inventory.this,
-                android.R.layout.simple_list_item_1,
-                getResources().getStringArray(R.array.spinner_list_item_array));
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(arrayAdapter);
-
-    }
-    public void initListView(){
-       listView = (ListView) findViewById(R.id.listViewInventory);
-
-        arrlistDevice = new ArrayList<>();
-        arrlistDevice.add(new Device("Dell Voutro","D001"));
-        arrlistDevice.add(new Device("Asus","A001"));
-        adapterInventory = new AdapterInventory(arrlistDevice,getApplicationContext());
-        listView.setAdapter(adapterInventory);
-
-
     }
     public void initToolBar(){
         toolBar = (Toolbar) findViewById(R.id.toolBarQRSCanner);
@@ -80,7 +79,48 @@ public class Inventory extends AppCompatActivity {
             }
         });
     }
+    public void initSpinner(){
+        spinner = (Spinner) findViewById(R.id.spinner);
+        //Device device = new Device("Hehhe","akakka");
+       // arrlistLabRoom.add(device);
+       // arrlistLabRoom.add(device);
+       // arrlistLabRoom.add(device);
+        ArrayAdapter<Labroom> arrayAdapter = new ArrayAdapter<Labroom>(
+                Inventory.this,
+                android.R.layout.simple_list_item_1,
+                arrlistLabRoom);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Labroom labroom = (Labroom)parent.getItemAtPosition(position);
+                if(labroom.getId() == 1){
+                    initListView();
+                }else{
+                   // initListView1();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+    }
+    public void initListView(){
+        listView = (ListView) findViewById(R.id.listViewInventory);
+        arrlistDevice = new ArrayList<>();
+        arrlistDevice.add(new Device("Dell Voutro","D001"));
+        arrlistDevice.add(new Device("Asus","A001"));
+        arrlistDevice.add(new Device("Asus","A001"));
+        arrlistDevice.add(new Device("Asus","A001"));
+        arrlistDevice.add(new Device("Asus","A001"));
+        arrlistDevice.add(new Device("Asus","A001"));
+        arrlistDevice.add(new Device("Asus","A001"));
+        arrlistDevice.add(new Device("Asus","A001"));
+        adapterInventory = new AdapterInventory(arrlistDevice,getApplicationContext());
+        listView.setAdapter(adapterInventory);
+    }
     public class SendPostRequest extends AsyncTask<String, Void, String>{
         @Override
         protected String doInBackground(String... params) {
@@ -108,7 +148,6 @@ public class Inventory extends AppCompatActivity {
                 outputStream.close();
 
                 int responseCode=connection.getResponseCode();
-
                 if (responseCode == HttpsURLConnection.HTTP_OK) {
 
                     BufferedReader in=new BufferedReader(
@@ -136,10 +175,21 @@ public class Inventory extends AppCompatActivity {
             return null;
 
         }
-
         @Override
         protected void onPostExecute(String s) {
             Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+        }
+    }
+    private class DataTask extends AsyncTask<String,Void,String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String data = HttpHandler.makeServiceCall(params[0]);
+            return data;
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            arrlistLabRoom = JSONDeviceParser.getLabRoomData(s);
+            initSpinner();
         }
     }
 }

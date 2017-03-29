@@ -22,17 +22,18 @@ public class QRScanner extends AppCompatActivity {
     private Toolbar toolBar;
     private Button btScan;
     private ImageView imQrSCanner;
+    private ImageView imInventory;
     private JSONDeviceParser jsonDeviceParser = new JSONDeviceParser();
     private Device device = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.startActivity(new Intent(this,Inventory.class));
+        //this.startActivity(new Intent(this,Inventory.class));
         initToolBar();
-
         final Activity activity = this;
         imQrSCanner = (ImageView)findViewById(R.id.qrScanner);
+        imInventory = (ImageView)findViewById(R.id.inventory);
         imQrSCanner.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -45,6 +46,14 @@ public class QRScanner extends AppCompatActivity {
                  intentIntegrator.initiateScan();
              }
          });
+        imInventory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QRScanner.this, Inventory.class);
+                startActivity(intent);
+            }
+        });
+
     }
     public void initToolBar(){
         toolBar = (Toolbar) findViewById(R.id.toolBarQRSCanner);
@@ -61,10 +70,8 @@ public class QRScanner extends AppCompatActivity {
                 MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
                 mediaPlayer.start();
                 DataTask dataTask = new DataTask();
-                dataTask.execute("D01");
-                //Toast.makeText(QRScanner.this, "t nef",Toast.LENGTH_LONG).show();
+                dataTask.execute("device_informations/2017D001CNTT1");
             }else{
-                //Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
                 MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
                 mediaPlayer.start();
                 Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();

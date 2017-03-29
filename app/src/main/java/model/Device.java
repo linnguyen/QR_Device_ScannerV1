@@ -119,6 +119,6 @@ public class Device implements  Serializable{
     }
 
     public String toString(){
-        return this.getName()+" "+this.getParentcode();
+        return this.getName();
     }
 }

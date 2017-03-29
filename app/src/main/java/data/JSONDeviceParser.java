@@ -1,9 +1,15 @@
 package data;
 
+import android.util.Log;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import model.Device;
+import model.Labroom;
 
 /**
  * Created by ryne on 22/03/2017.
@@ -33,5 +39,22 @@ public class JSONDeviceParser {
             e.printStackTrace();
         }
         return device;
+    }
+    public static ArrayList<Labroom> getLabRoomData(String jsonString) {
+        ArrayList<Labroom> arrLabRoom = new ArrayList<>();
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONArray arrayLabRoomJson = jsonObject.getJSONArray("labrooms");
+            for (int i=0; i < arrayLabRoomJson.length(); i++){
+               JSONObject objectLabRoomJson = arrayLabRoomJson.getJSONObject(i);
+                int id = objectLabRoomJson.getInt("id");
+                String name = objectLabRoomJson.getString("name");
+                Labroom labroom = new Labroom(id,name);
+                arrLabRoom.add(labroom);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return arrLabRoom;
     }
 }
