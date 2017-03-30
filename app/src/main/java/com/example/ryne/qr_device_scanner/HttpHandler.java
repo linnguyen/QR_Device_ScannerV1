@@ -24,7 +24,7 @@ public class HttpHandler {
         String response = null;
         try {
             URL url = new URL(Config.URL+extendUrl);
-            Log.d("URL",Config.URL + extendUrl);
+           // Log.d("URL",Config.URL + extendUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             // read the response

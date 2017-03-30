@@ -1,5 +1,7 @@
 package com.example.ryne.qr_device_scanner;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
@@ -14,10 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -37,6 +42,7 @@ import model.Device;
 import model.Labroom;
 
 public class Inventory extends AppCompatActivity {
+    private Context context;
     private Toolbar toolBar;
     private Spinner spinner;
     private ListView listView;
@@ -62,10 +68,24 @@ public class Inventory extends AppCompatActivity {
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              // listView.ge
+            ArrayList<Labroom> arrLabRoom =  getListViewDataandSendToServer();
+                new SendPostRequest().execute(arrLabRoom);
+
             }
         });
-        new SendPostRequest().execute();
+       // new SendPostRequest().execute();
+//        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+////                Log.d("idne",Integer.toString(position));
+////                Dialog openDialog = new Dialog(Inventory.this);
+////                openDialog.setContentView(R.layout.row_dialog);
+////                openDialog.setTitle("Device inventory");
+////                openDialog.show();
+//                Toast.makeText(Inventory.this, "hehe",Toast.LENGTH_LONG).show();
+//            }
+//        });
+
     }
     public void initToolBar(){
         toolBar = (Toolbar) findViewById(R.id.toolBarQRSCanner);
@@ -113,62 +133,103 @@ public class Inventory extends AppCompatActivity {
         arrlistDevice.add(new Device("Dell Voutro","D001"));
         arrlistDevice.add(new Device("Asus","A001"));
         arrlistDevice.add(new Device("Asus","A001"));
-        arrlistDevice.add(new Device("Asus","A001"));
-        arrlistDevice.add(new Device("Asus","A001"));
-        arrlistDevice.add(new Device("Asus","A001"));
-        arrlistDevice.add(new Device("Asus","A001"));
-        arrlistDevice.add(new Device("Asus","A001"));
         adapterInventory = new AdapterInventory(arrlistDevice,getApplicationContext());
         listView.setAdapter(adapterInventory);
+
+
+
+        // Event ListView
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("idne",Integer.toString(position));
+                Dialog openDialog = new Dialog(Inventory.this);
+                openDialog.setContentView(R.layout.row_dialog);
+                openDialog.setTitle("Device inventory");
+                openDialog.show();
+                Log.d("TAG","Item 1");
+
+                Toast.makeText(Inventory.this, "hehe",Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
-    public class SendPostRequest extends AsyncTask<String, Void, String>{
+    public ArrayList<Labroom> getListViewDataandSendToServer(){
+        ArrayList<Labroom> arrLabRoom = new ArrayList<>();
+        for(int i=0; i<listView.getCount(); i++){
+            View view = listView.getChildAt(i);
+            TextView nameDeviceInventory =(TextView) view.findViewById(R.id.nameDeviceInventory);
+             EditText edTextBox = (EditText) view.findViewById(R.id.editTextBox);
+             Labroom labroom = new Labroom(Integer.parseInt(edTextBox.getText().toString()),nameDeviceInventory.getText().toString());
+          //  Log.d("text"+i, String.valueOf(edTextBox.getText()));
+             arrLabRoom.add(labroom);
+
+        }
+           // adapterInventory.getItem(0)
+        return arrLabRoom;
+
+    }
+    public class SendPostRequest extends AsyncTask<ArrayList<Labroom>, Void, String>{
+        OutputStream outputStream;
+        BufferedWriter bufferedWriter;
+        JSONObject postParams;
+        JSONObject paramsArray;
+        JSONArray jsonArray;
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(ArrayList<Labroom>... params) {
             try {
                // URL url = new URL("https://apiqrcode-v1.herokuapp.com/inventories");
-                URL url = new URL("https://apiqrcode-v1.herokuapp.com/inven");
-                JSONObject postParams = new JSONObject();
-                postParams.put("date_of_inventory","01/05/1994");
-
+                URL url = new URL("http://10.0.3.2:3000/inventories");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setRequestMethod("POST");
-
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
+                ArrayList<Labroom> arrayListLabroom = params[0];
+                paramsArray = new JSONObject();
+                jsonArray = new JSONArray();
+              //  Log.d("params", Integer.toString(arrayListLabroom.size()));
+                for(int i=0; i< arrayListLabroom.size();i++) {
+                    postParams = new JSONObject();
 
-                OutputStream outputStream = connection.getOutputStream();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                bufferedWriter.write(String.valueOf(postParams));
+                    // postParams.put("amount_real",arrayListLabroom.get(i).getId());
+                    postParams.put("date_of_inventory", arrayListLabroom.get(i).getName());
+                    jsonArray.put(postParams);
+                    // postParams.put("id_inventory", arrayListLabroom.get(0).getId());
+                }
+                   paramsArray.put("arraydevice",jsonArray);
+                   outputStream = connection.getOutputStream();
+                   bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                   bufferedWriter.write(String.valueOf(paramsArray));
 
-                Log.d("params", String.valueOf(postParams));
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
+                   Log.d("params", String.valueOf(postParams));
 
-                int responseCode=connection.getResponseCode();
-                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                   bufferedWriter.flush();
+                   bufferedWriter.close();
+                   outputStream.close();
 
-                    BufferedReader in=new BufferedReader(
-                            new InputStreamReader(
-                                    connection.getInputStream()));
-                    StringBuffer sb = new StringBuffer("");
-                    String line="";
+                    int responseCode = connection.getResponseCode();
+                    if (responseCode == HttpsURLConnection.HTTP_OK) {
 
-                    while((line = in.readLine()) != null) {
+                        BufferedReader in = new BufferedReader(
+                                new InputStreamReader(
+                                        connection.getInputStream()));
+                        StringBuffer sb = new StringBuffer("");
+                        String line = "";
 
-                        sb.append(line);
-                        break;
+                        while ((line = in.readLine()) != null) {
+
+                            sb.append(line);
+                            break;
+                        }
+
+                        in.close();
+                        return sb.toString();
+
+                    } else {
+                        return new String("false : " + responseCode);
                     }
-
-                    in.close();
-                    return sb.toString();
-
-                }
-                else {
-                    return new String("false : "+responseCode);
-                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
