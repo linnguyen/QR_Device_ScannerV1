@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class Device implements  Serializable{
     private String name;
-    private String parentcode;
+    private String parentCode;
     private String producer;
     private String country;
     private String dateofProduce;
@@ -21,13 +21,13 @@ public class Device implements  Serializable{
     public  Device(){
 
     }
-    public Device(String name, String parentcode){
+    public Device(String name, String parentCode){
         this.name = name;
-        this.parentcode = parentcode;
+        this.parentCode = parentCode;
     }
     public Device(String name, String parentcode, String producer, String country, String dateofProduce, String digital, String staff, String room, String timeofWarranty, String description) {
         this.name = name;
-        this.parentcode = parentcode;
+        this.parentCode = parentcode;
         this.producer = producer;
         this.country = country;
         this.dateofProduce = dateofProduce;
@@ -47,11 +47,11 @@ public class Device implements  Serializable{
     }
 
     public String getParentcode() {
-        return parentcode;
+        return parentCode;
     }
 
     public void setParentcode(String parentcode) {
-        this.parentcode = parentcode;
+        this.parentCode = parentcode;
     }
 
     public String getProducer() {
