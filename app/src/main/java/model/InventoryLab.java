@@ -9,13 +9,11 @@ public class InventoryLab {
     private String parentCode;
     private int numberOfDeviceLeft;
     private String noteDevice;
-    private int labRoomid;
 
-    public InventoryLab(String parentCode, int numberOfDeviceLeft, String noteDevice, int labRoomid) {
+    public InventoryLab(String parentCode, int numberOfDeviceLeft, String noteDevice) {
         this.parentCode = parentCode;
         this.numberOfDeviceLeft = numberOfDeviceLeft;
         this.noteDevice = noteDevice;
-        this.labRoomid = labRoomid;
     }
 
     public String getParentCode() {
@@ -42,11 +40,4 @@ public class InventoryLab {
         this.noteDevice = noteDevice;
     }
 
-    public int getLabRoomid() {
-        return labRoomid;
-    }
-
-    public void setLabRoomid(int labRoomid) {
-        this.labRoomid = labRoomid;
-    }
 }

@@ -1,7 +1,9 @@
 package com.example.ryne.qr_device_scanner;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.test.suitebuilder.TestMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -47,6 +50,9 @@ public class Inventory extends AppCompatActivity {
     private Spinner spinner;
     private ListView listView;
     private FloatingActionButton fabSave;
+    private TextView codeParent;
+    private EditText editTextBox;
+    private EditText noteDeviceSave;
     private EditText numberofDeviceLeft;
     private EditText noteDevice;
 
@@ -70,9 +76,22 @@ public class Inventory extends AppCompatActivity {
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<InventoryLab> arrLabRoom =  getListViewData();
-                new SendPostRequest().execute(arrLabRoom);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Inventory.this);
+                builder.setMessage("You must check your input carefully before submitting.\n Are you sure?")
+                        .setTitle("Inventory Submit")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                  ArrayList<InventoryLab> arrLabRoom =  getListViewData();
+                                  new SendPostRequest().execute(arrLabRoom);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
+                            }
+                        }).show();
             }
         });
     }
@@ -118,28 +137,37 @@ public class Inventory extends AppCompatActivity {
         arrlistDevice.add(new Device("Dell Voutro","D001"));
         arrlistDevice.add(new Device("Asus","A001"));
         arrlistDevice.add(new Device("Asus","A001"));
+        arrlistDevice.add(new Device("Dell Voutro","D001"));
+        arrlistDevice.add(new Device("Dell Voutro","D001"));
+        arrlistDevice.add(new Device("Dell Voutro","D001"));
+        arrlistDevice.add(new Device("Dell Voutro","D001"));
         adapterInventory = new AdapterInventory(arrlistDevice,getApplicationContext());
         listView.setAdapter(adapterInventory);
         // event ListView
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                Log.d("idne",Integer.toString(position));
+                view = listView.getChildAt(position);
+                editTextBox = (EditText) view.findViewById(R.id.editTextBox);
+                noteDeviceSave = (EditText) view.findViewById(R.id.noteDeviceSave);
+                // dialogbox for each row
                 final Dialog openDialog = new Dialog(Inventory.this);
+                //openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 openDialog.setContentView(R.layout.row_dialog);
-                openDialog.setTitle("Device inventory");
+
+                openDialog.setTitle("Inventory input");
                 openDialog.show();
                 numberofDeviceLeft = (EditText) openDialog.findViewById(R.id.numberofDeviceLeft);
                 noteDevice = (EditText) openDialog.findViewById(R.id.noteDevice);
-                Button diologButton = (Button) openDialog.findViewById(R.id.dialogButton);
+                Button diologButton = (Button) openDialog.findViewById(R.id.dialogButtonOK);
                 diologButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String parentCode = getListViewData(position);
-                        int numberOfDeviceLeft = Integer.parseInt(numberofDeviceLeft.getText().toString());
-                        String noteDevice = Inventory.this.noteDevice.getText().toString();
-                        InventoryLab inventoryLab = new InventoryLab(parentCode,numberOfDeviceLeft,noteDevice,labroom.getId());
-                        //new SendPostRequest().execute(inventoryLab);
+                        //String parentCode = getListViewData(position);
+                          String numberOfDeviceLeft = numberofDeviceLeft.getText().toString();
+                          String noteDevice = Inventory.this.noteDevice.getText().toString();
+                          editTextBox.setText(numberOfDeviceLeft);
+                          noteDeviceSave.setText(noteDevice);
                         openDialog.dismiss();
                     }
                 });
@@ -161,13 +189,15 @@ public class Inventory extends AppCompatActivity {
     // this function for test
     public ArrayList<InventoryLab> getListViewData(){
         ArrayList<InventoryLab> arrayLabRoom =new ArrayList<>();
-        TextView nameDeviceInventory;
         for (int i=0; i< listView.getCount(); i++){
             View view = listView.getChildAt(i);
-            nameDeviceInventory =(TextView) view.findViewById(R.id.nameDeviceInventory);
-            //EditText edTextBox = (EditText) view.findViewById(R.id.editTextBox);
-            Log.d("lab",Integer.toString(labroom.getId()));
-            InventoryLab inventoryLab = new InventoryLab(nameDeviceInventory.getText().toString(),4,"",labroom.getId());
+            codeParent =(TextView) view.findViewById(R.id.codeParent);
+            editTextBox = (EditText) view.findViewById(R.id.editTextBox);
+           // Log.d("sone",editTextBox.getText().toString());
+            noteDeviceSave = (EditText) view.findViewById(R.id.noteDeviceSave);
+            InventoryLab inventoryLab = new InventoryLab(codeParent.getText().toString(),
+                                                         Integer.parseInt(editTextBox.getText().toString()),
+                                                         noteDeviceSave.getText().toString());
             arrayLabRoom.add(inventoryLab);
         }
        // Log.d("arrayne", arrayLabRoom.get(1).getParentCode());
@@ -197,9 +227,8 @@ public class Inventory extends AppCompatActivity {
                 for(int i=0; i< arrayLab.size(); i++) {
                     jsonObjectDevice = new JSONObject();
                     jsonObjectDevice.put("code_of_device", arrayLab.get(i).getParentCode());
-                    jsonObjectDevice.put("number_of_device_left", arrayLab.get(i).getNumberOfDeviceLeft());
-                    jsonObjectDevice.put("note_device", arrayLab.get(i).getNoteDevice());
-                    jsonObjectDevice.put("lab_room_id", arrayLab.get(i).getLabRoomid());
+                    jsonObjectDevice.put("actual_amount", arrayLab.get(i).getNumberOfDeviceLeft());
+                    jsonObjectDevice.put("note", arrayLab.get(i).getNoteDevice());
                     jsonArrayDevice.put(jsonObjectDevice);
                 }
                 postParams.put("array_of_device", jsonArrayDevice);
@@ -243,66 +272,7 @@ public class Inventory extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
         }
     }
-    public class SendPostRequest1 extends AsyncTask<InventoryLab, Void, String>{
-        OutputStream outputStream;
-        BufferedWriter bufferedWriter;
-        JSONObject postParams;
-        @Override
-        protected String doInBackground(InventoryLab... params) {
-            try {
-                // URL url = new URL("https://apiqrcode-v1.herokuapp.com/inventories");
-                URL url = new URL("http://10.0.3.2:3000/inventories");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestProperty("Content-Type", "application/json");
-                connection.setRequestProperty("Accept", "application/json");
-                connection.setRequestMethod("POST");
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
-                InventoryLab inventoryLab = params[0];
-                postParams = new JSONObject();
-                postParams.put("code_of_device",inventoryLab.getParentCode());
-                postParams.put("number_of_device_left", inventoryLab.getNumberOfDeviceLeft());
-                postParams.put("note_device",inventoryLab.getNoteDevice());
-                postParams.put("lab_room_id",inventoryLab.getLabRoomid());
-                outputStream = connection.getOutputStream();
-                bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                bufferedWriter.write(String.valueOf(postParams));
-                Log.d("params", String.valueOf(postParams));
-                bufferedWriter.flush();
-                bufferedWriter.close();
-                outputStream.close();
 
-                int responseCode = connection.getResponseCode();
-                if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                    BufferedReader in = new BufferedReader(
-                            new InputStreamReader(
-                                    connection.getInputStream()));
-                    StringBuffer sb = new StringBuffer("");
-                    String line = "";
-
-                    while ((line = in.readLine()) != null) {
-
-                        sb.append(line);
-                        break;
-                    }
-
-                    in.close();
-                    return sb.toString();
-
-                } else {
-                    return new String("false : " + responseCode);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-        @Override
-        protected void onPostExecute(String s) {
-            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-        }
-    }
     private class DataTask extends AsyncTask<String,Void,String> {
         @Override
         protected String doInBackground(String... params) {

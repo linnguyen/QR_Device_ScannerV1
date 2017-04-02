@@ -29,7 +29,7 @@ public class QRScanner extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //this.startActivity(new Intent(this,InventoryLab.class));
+       // this.startActivity(new Intent(this,Inventory.class));
         initToolBar();
         final Activity activity = this;
         imQrSCanner = (ImageView)findViewById(R.id.qrScanner);

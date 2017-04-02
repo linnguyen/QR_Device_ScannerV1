@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="@dimen/activity_horizontal_margin"
+    android:descendantFocusability="blocksDescendants"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants">
+    android:layout_height="match_parent">
     <ImageView
         android:id="@+id/imgDevice"
-        android:src="@drawable/device"
+        android:src="@drawable/tool"
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -39,7 +39,12 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:inputType="number"
-        android:background="@drawable/zxing_result_view"
+        android:background="@drawable/row_shape"
         android:layout_width="100px"
         android:layout_height="80px" />
+    <EditText
+        android:id="@+id/noteDeviceSave"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>
