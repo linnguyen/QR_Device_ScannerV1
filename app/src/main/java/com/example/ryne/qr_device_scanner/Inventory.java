@@ -155,7 +155,7 @@ public class Inventory extends AppCompatActivity {
                 //openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 openDialog.setContentView(R.layout.row_dialog);
 
-                openDialog.setTitle("Inventory input");
+                openDialog.setTitle("Inventory Input");
                 openDialog.show();
                 numberofDeviceLeft = (EditText) openDialog.findViewById(R.id.numberofDeviceLeft);
                 noteDevice = (EditText) openDialog.findViewById(R.id.noteDevice);
@@ -193,7 +193,6 @@ public class Inventory extends AppCompatActivity {
             View view = listView.getChildAt(i);
             codeParent =(TextView) view.findViewById(R.id.codeParent);
             editTextBox = (EditText) view.findViewById(R.id.editTextBox);
-            Log.d("sone",editTextBox.getText().toString());
             noteDeviceSave = (EditText) view.findViewById(R.id.noteDeviceSave);
             InventoryLab inventoryLab = new InventoryLab(codeParent.getText().toString(),
                                                          Integer.parseInt(editTextBox.getText().toString()),
