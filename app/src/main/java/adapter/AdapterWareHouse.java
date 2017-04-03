@@ -57,7 +57,7 @@ public class AdapterWareHouse extends ArrayAdapter<Device> {
         Device device = getItem(position);
         if (convertView == null){
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.row_item_inventory, parent, false);
+            convertView = inflater.inflate(R.layout.row_item_ware_house, parent, false);
             nameDevice = (TextView) convertView.findViewById(R.id.nameDeviceInventory);
             result = convertView;
         }else{

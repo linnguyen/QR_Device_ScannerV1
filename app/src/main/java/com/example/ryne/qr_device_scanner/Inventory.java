@@ -61,7 +61,7 @@ public class Inventory extends AppCompatActivity {
     private AdapterInventory adapterInventory;
     private Labroom labroom;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
         initToolBar();
@@ -189,14 +189,19 @@ public class Inventory extends AppCompatActivity {
     // this function for test
     public ArrayList<InventoryLab> getListViewData(){
         ArrayList<InventoryLab> arrayLabRoom =new ArrayList<>();
+        InventoryLab inventoryLab = null;
         for (int i=0; i< listView.getCount(); i++){
             View view = listView.getChildAt(i);
             codeParent =(TextView) view.findViewById(R.id.codeParent);
             editTextBox = (EditText) view.findViewById(R.id.editTextBox);
             noteDeviceSave = (EditText) view.findViewById(R.id.noteDeviceSave);
-            InventoryLab inventoryLab = new InventoryLab(codeParent.getText().toString(),
-                                                         Integer.parseInt(editTextBox.getText().toString()),
-                                                         noteDeviceSave.getText().toString());
+            if (editTextBox.getText().toString().equals("")) {
+                 continue;
+            }else{
+                inventoryLab = new InventoryLab(codeParent.getText().toString(),
+                        Integer.parseInt(editTextBox.getText().toString()),
+                        noteDeviceSave.getText().toString());
+            }
             arrayLabRoom.add(inventoryLab);
         }
        // Log.d("arrayne", arrayLabRoom.get(1).getParentCode());
