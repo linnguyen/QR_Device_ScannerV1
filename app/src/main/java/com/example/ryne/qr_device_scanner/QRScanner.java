@@ -23,6 +23,7 @@ public class QRScanner extends AppCompatActivity {
     private Button btScan;
     private ImageView imQrSCanner;
     private ImageView imInventory;
+    private ImageView imWareHouse;
     private JSONDeviceParser jsonDeviceParser = new JSONDeviceParser();
     private Device device = null;
     @Override
@@ -34,6 +35,7 @@ public class QRScanner extends AppCompatActivity {
         final Activity activity = this;
         imQrSCanner = (ImageView)findViewById(R.id.qrScanner);
         imInventory = (ImageView)findViewById(R.id.inventory);
+        imWareHouse = (ImageView)findViewById(R.id.wareHouse);
         imQrSCanner.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -50,6 +52,13 @@ public class QRScanner extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QRScanner.this, Inventory.class);
+                startActivity(intent);
+            }
+        });
+        imWareHouse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QRScanner.this, WareHouse.class);
                 startActivity(intent);
             }
         });

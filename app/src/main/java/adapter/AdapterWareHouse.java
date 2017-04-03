@@ -1,18 +1,15 @@
 package adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.ryne.qr_device_scanner.Inventory;
 import com.example.ryne.qr_device_scanner.R;
 
 import java.util.ArrayList;
@@ -21,16 +18,37 @@ import java.util.Locale;
 import model.Device;
 
 /**
- * Created by ryne on 28/03/2017.
+ * Created by ryne on 03/04/2017.
  */
-public class AdapterInventory extends ArrayAdapter<Device> {
+
+public class AdapterWareHouse extends ArrayAdapter<Device> {
+    private ArrayList<Device> arraySearch;
     private ArrayList<Device> arrayInventory;
+
     private Context context = null;
     private TextView nameDevice;
-    public AdapterInventory(ArrayList<Device> data, Context context){
+    public AdapterWareHouse(ArrayList<Device> data, Context context){
         super(context, R.layout.row_item_inventory, data);
         this.arrayInventory = data;
         this.context = context;
+        arraySearch = new ArrayList<>();
+        arraySearch.addAll(arrayInventory);
+    }
+
+    @Override
+    public int getCount() {
+        return arrayInventory.size();
+    }
+
+    @Nullable
+    @Override
+    public Device getItem(int position) {
+        return arrayInventory.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
@@ -45,7 +63,24 @@ public class AdapterInventory extends ArrayAdapter<Device> {
         }else{
             result = convertView;
         }
+
         nameDevice.setText(device.getName());
-      return convertView;
+        return convertView;
+    }
+
+    public void filter(String charText){
+        charText = charText.toLowerCase(Locale.getDefault());
+        arrayInventory.clear();
+        if(charText.length() == 0){
+            arrayInventory.addAll(arraySearch);
+        }else{
+            for(Device device: arraySearch){
+                if(device.getName().toLowerCase(Locale.getDefault()).contains(charText)){
+                    arrayInventory.add(device);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }
+

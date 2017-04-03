@@ -16,6 +16,7 @@
             android:theme="@style/QRScanner">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -25,6 +26,10 @@
         <activity
             android:name=".Inventory"
             android:theme="@style/Inventory" />
+        <activity
+            android:name=".WareHouse"
+            android:label="@string/title_activity_ware_house"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -7,16 +7,28 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="DeviceInformationTheme" parent="Theme.AppCompat.Light.NoActionBar" >
+
+    <style name="DeviceInformationTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@android:color/holo_blue_dark</item>
         <item name="colorPrimaryDark">@android:color/holo_blue_dark</item>
     </style>
+
     <style name="QRScanner" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@android:color/holo_blue_dark</item>
         <item name="colorPrimaryDark">@android:color/holo_blue_dark</item>
     </style>
+
     <style name="Inventory" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@android:color/holo_blue_dark</item>
         <item name="colorPrimaryDark">@android:color/holo_blue_dark</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

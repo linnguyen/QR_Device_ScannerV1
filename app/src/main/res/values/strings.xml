@@ -19,4 +19,5 @@
         <item>Singapore</item>
         <item>Japan</item>
     </string-array>
+    <string name="title_activity_ware_house">WareHouse</string>
 </resources>
