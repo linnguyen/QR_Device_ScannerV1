@@ -193,7 +193,7 @@ public class Inventory extends AppCompatActivity {
             View view = listView.getChildAt(i);
             codeParent =(TextView) view.findViewById(R.id.codeParent);
             editTextBox = (EditText) view.findViewById(R.id.editTextBox);
-           // Log.d("sone",editTextBox.getText().toString());
+            Log.d("sone",editTextBox.getText().toString());
             noteDeviceSave = (EditText) view.findViewById(R.id.noteDeviceSave);
             InventoryLab inventoryLab = new InventoryLab(codeParent.getText().toString(),
                                                          Integer.parseInt(editTextBox.getText().toString()),

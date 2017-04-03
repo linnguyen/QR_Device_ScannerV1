@@ -2,7 +2,7 @@
     <string name="app_name">QR_Device_Scanner</string>
     <string name="toolbarTitle">Back</string>
     <string name="inventory">Inventory</string>
-    <string name="status_valuation">Status Evaluation</string>
+    <string name="status_valuation">Evaluation</string>
     <string name="search">Search</string>
     <string name="warehouse">Warehouse</string>
     <string name="sub_device">Sub-Device</string>

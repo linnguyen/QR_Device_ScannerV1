@@ -12,18 +12,27 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.util.HashMap;
 
 import data.JSONDeviceParser;
 import model.Device;
 
-public class QRScanner extends AppCompatActivity {
+public class QRScanner extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     private Toolbar toolBar;
     private Button btScan;
     private ImageView imQrSCanner;
     private ImageView imInventory;
     private ImageView imWareHouse;
+    private SliderLayout imageSlider;
+
     private JSONDeviceParser jsonDeviceParser = new JSONDeviceParser();
     private Device device = null;
     @Override
@@ -32,6 +41,7 @@ public class QRScanner extends AppCompatActivity {
         setContentView(R.layout.activity_main);
        // this.startActivity(new Intent(this,Inventory.class));
         initToolBar();
+        initSlider();
         final Activity activity = this;
         imQrSCanner = (ImageView)findViewById(R.id.qrScanner);
         imInventory = (ImageView)findViewById(R.id.inventory);
@@ -69,6 +79,29 @@ public class QRScanner extends AppCompatActivity {
         toolBar.setNavigationIcon(R.drawable.qrcode);
         toolBar.setTitle("Device Scanner");
     }
+    public void initSlider(){
+        imageSlider = (SliderLayout) findViewById(R.id.sliderImage);
+        HashMap<String, Integer> file_maps = new HashMap<>();
+        file_maps.put("Cao Dang CN 1", R.drawable.caodangnghe1);
+        file_maps.put("Cao Dang CN 2", R.drawable.caodangnghe2);
+        for(String name : file_maps.keySet()){
+            TextSliderView textSliderView = new TextSliderView(this);
+            // initialize a SliderLayout
+            textSliderView.description(name)
+                    .image(file_maps.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(this);
+            textSliderView.bundle(new Bundle());
+            textSliderView.getBundle().putString("extra", name);
+            imageSlider.addSlider(textSliderView);
+        }
+        imageSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        imageSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        imageSlider.setCustomAnimation(new DescriptionAnimation());
+        imageSlider.setDuration(2000);
+        imageSlider.addOnPageChangeListener(this);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -114,4 +147,29 @@ public class QRScanner extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+
+    }
+
+    @Override
+    protected void onStop() {
+        imageSlider.stopAutoCycle();
+        super.onStop();
+    }
 }

@@ -66,7 +66,8 @@ public class WareHouse extends AppCompatActivity {
                     adapterWareHouse.filter("");
                     listView.clearTextFilter();
                 }else{
-                    adapterWareHouse.filter(newText);
+                      adapterWareHouse.filter(newText);
+                   //  adapterWareHouse.getFilter().filter(newText);
                 }
                 return true;
             }
@@ -86,8 +87,5 @@ public class WareHouse extends AppCompatActivity {
         arrlistDevice.add(new Device("Acer","D001"));
         adapterWareHouse = new AdapterWareHouse(arrlistDevice,getApplicationContext());
         listView.setAdapter(adapterWareHouse);
-        TextView textView = new TextView(context);
-        textView.setText("HEHE");
-        listView.addHeaderView(textView);
     }
 }
