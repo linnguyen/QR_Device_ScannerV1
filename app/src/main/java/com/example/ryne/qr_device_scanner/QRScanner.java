@@ -2,8 +2,10 @@ package com.example.ryne.qr_device_scanner;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -82,8 +84,8 @@ public class QRScanner extends AppCompatActivity implements BaseSliderView.OnSli
     public void initSlider(){
         imageSlider = (SliderLayout) findViewById(R.id.sliderImage);
         HashMap<String, Integer> file_maps = new HashMap<>();
-        file_maps.put("Cao Dang CN 1", R.drawable.caodangnghe1);
-        file_maps.put("Cao Dang CN 2", R.drawable.caodangnghe2);
+        file_maps.put("Welcome to DN Vocational College", R.drawable.caodangnghe1);
+        file_maps.put("Device Management", R.drawable.caodangnghe2);
         for(String name : file_maps.keySet()){
             TextSliderView textSliderView = new TextSliderView(this);
             // initialize a SliderLayout
@@ -116,9 +118,9 @@ public class QRScanner extends AppCompatActivity implements BaseSliderView.OnSli
             }else{
                 MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
                 mediaPlayer.start();
-                Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+               // Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
                 DataTask dataTask = new DataTask();
-                dataTask.execute(result.getContents());
+                dataTask.execute("device_informations/"+result.getContents());
             }
         }else{
             super.onActivityResult(requestCode, resultCode, data);
@@ -137,7 +139,7 @@ public class QRScanner extends AppCompatActivity implements BaseSliderView.OnSli
         @Override
         protected void onPostExecute(String jsonString) {
             super.onPostExecute(jsonString);
-            Toast.makeText(QRScanner.this,jsonString,Toast.LENGTH_LONG).show();
+           // Toast.makeText(QRScanner.this,jsonString,Toast.LENGTH_LONG).show();
             //create device object
             device = jsonDeviceParser.getDeviceData(jsonString);
             //pass to DeviceInformation activity
@@ -146,6 +148,7 @@ public class QRScanner extends AppCompatActivity implements BaseSliderView.OnSli
             startActivity(intent);
         }
     }
+
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -172,4 +175,20 @@ public class QRScanner extends AppCompatActivity implements BaseSliderView.OnSli
         imageSlider.stopAutoCycle();
         super.onStop();
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    Toast.makeText(QRScanner.this, "Permission denied on this device!", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+
+
+
 }

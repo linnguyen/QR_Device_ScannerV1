@@ -41,6 +41,7 @@
     </RelativeLayout>
     <EditText
         android:id="@+id/editTextBox"
+        android:text="4"
         android:textColor="@color/colorPrimaryDark"
         android:textAlignment="center"
         android:layout_centerVertical="true"
@@ -49,9 +50,4 @@
         android:background="@drawable/row_shape"
         android:layout_width="100px"
         android:layout_height="80px" />
-    <EditText
-        android:id="@+id/noteDeviceSave"
-        android:visibility="invisible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </RelativeLayout>

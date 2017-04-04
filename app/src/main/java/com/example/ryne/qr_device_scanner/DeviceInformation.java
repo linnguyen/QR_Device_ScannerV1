@@ -30,7 +30,7 @@ public class DeviceInformation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_information);
         initToolBar();
-        listViewDevice = (ListView) findViewById(R.id.listViewDevice);
+      //  listViewDevice = (ListView) findViewById(R.id.listViewDevice);
         // initual
         device = new Device();
         deviceList = new ArrayList<>();
@@ -39,8 +39,8 @@ public class DeviceInformation extends AppCompatActivity {
         device = (Device) intent.getSerializableExtra("objDevice");
         deviceList.add(device);
 
-        adapterDeviceInformation = new AdapterDeviceInformation(DeviceInformation.this, deviceList);
-        listViewDevice.setAdapter(adapterDeviceInformation);
+       // adapterDeviceInformation = new AdapterDeviceInformation(DeviceInformation.this, deviceList);
+        //listViewDevice.setAdapter(adapterDeviceInformation);
         //  Log.d("device", device.toString()+ device.getDateofProduce());
     }
     public void initToolBar(){

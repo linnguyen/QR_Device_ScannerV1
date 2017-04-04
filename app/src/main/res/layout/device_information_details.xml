@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="15dp"
+    android:background="@drawable/infor_shape"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="300dp">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+        <TableRow
+            android:layout_marginBottom="15dp">
+            <TextView
+                android:text="Name:"
+                android:textSize="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="Dell Voutro"
+                android:textSize="16dp"
+                android:textColor="#212121"
+                android:textStyle="bold"
+                android:layout_marginLeft="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+        <TableRow
+            android:layout_marginBottom="15dp">
+            <TextView
+                android:text="Parent code:"
+                android:textSize="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="Dell Voutro"
+                android:textSize="16dp"
+                android:textColor="#212121"
+                android:textStyle="bold"
+                android:layout_marginLeft="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="Origin:"
+                android:textSize="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="Dell Voutro"
+                android:textSize="16dp"
+                android:textColor="#212121"
+                android:textStyle="bold"
+                android:layout_marginLeft="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.example.ryne.qr_device_scanner.QRScanner">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolBarQRSCanner"
@@ -22,20 +21,17 @@
     </android.support.v7.widget.Toolbar>
     <ListView
         android:id="@+id/listViewInventory"
-        android:layout_below="@+id/toolBarQRSCanner"
+        android:layout_marginTop="56dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
     <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabSave"
-            android:backgroundTint="#00BCD4"
-            android:layout_gravity="bottom|right"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="16dp"
-            app:fabSize="mini"
-            android:src="@drawable/plus"
-            app:elevation="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-</RelativeLayout>
+        android:id="@+id/fabSave"
+        android:backgroundTint="#00BCD4"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@drawable/plus"
+        android:layout_gravity="bottom|end"
+        app:layout_anchorGravity="bottom|center|end"
+        android:layout_margin="@dimen/fab_margin"/>
+</android.support.design.widget.CoordinatorLayout>

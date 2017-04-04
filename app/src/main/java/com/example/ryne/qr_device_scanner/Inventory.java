@@ -38,6 +38,7 @@ import java.util.HashMap;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import Utils.Config;
 import adapter.AdapterInventory;
 import data.JSONDeviceParser;
 import model.Device;
@@ -77,13 +78,15 @@ public class Inventory extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Inventory.this);
-                builder.setMessage("You must check your input carefully before submitting.\n Are you sure?")
+                builder.setMessage("You must check your input carefully before submitting.\nAre you sure?")
                         .setTitle("Inventory Submit")
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                   ArrayList<InventoryLab> arrLabRoom =  getListViewData();
                                   new SendPostRequest().execute(arrLabRoom);
+                                 // hide fabbutton not to allow user submit data second time
+                                  fabSave.hide();
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -190,9 +193,13 @@ public class Inventory extends AppCompatActivity {
     public ArrayList<InventoryLab> getListViewData(){
         ArrayList<InventoryLab> arrayLabRoom =new ArrayList<>();
         InventoryLab inventoryLab = null;
+
+        Log.d("Inventory.getListViewData","Running ...!");
+
         for (int i=0; i< listView.getCount(); i++){
             View view = listView.getChildAt(i);
             codeParent =(TextView) view.findViewById(R.id.codeParent);
+            Log.d("codeparent", codeParent.getText().toString());
             editTextBox = (EditText) view.findViewById(R.id.editTextBox);
             noteDeviceSave = (EditText) view.findViewById(R.id.noteDeviceSave);
             if (editTextBox.getText().toString().equals("")) {
@@ -207,7 +214,6 @@ public class Inventory extends AppCompatActivity {
        // Log.d("arrayne", arrayLabRoom.get(1).getParentCode());
         return arrayLabRoom;
     }
-
     public class SendPostRequest extends AsyncTask<ArrayList<InventoryLab>, Void, String>{
         OutputStream outputStream;
         BufferedWriter bufferedWriter;
@@ -218,7 +224,7 @@ public class Inventory extends AppCompatActivity {
         protected String doInBackground(ArrayList<InventoryLab>... params) {
             try {
                 // URL url = new URL("https://apiqrcode-v1.herokuapp.com/inventories");
-                URL url = new URL("http://10.0.3.2:3000/inventories");
+                URL url = new URL(Config.URL+"inventories");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestProperty("Accept", "application/json");
@@ -240,7 +246,6 @@ public class Inventory extends AppCompatActivity {
                 outputStream = connection.getOutputStream();
                 bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 bufferedWriter.write(String.valueOf(postParams));
-                Log.d("paramsnuane", String.valueOf(postParams));
                 bufferedWriter.flush();
                 bufferedWriter.close();
                 outputStream.close();
