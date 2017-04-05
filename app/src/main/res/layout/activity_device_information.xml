@@ -12,5 +12,14 @@
         android:background="#00BCD4"
         android:layout_height="56dp">
     </android.support.v7.widget.Toolbar>
+    <TextView
+        android:text=" DEVICE INFORMATION"
+        android:gravity="left"
+        android:layout_marginLeft="5dp"
+        android:textColor="#37474F"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <include layout="@layout/device_information_details"/>
 </LinearLayout>

@@ -9,7 +9,13 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import adapter.AdapterDeviceInformation;
@@ -18,30 +24,45 @@ import model.Device;
 
 public class DeviceInformation extends AppCompatActivity {
     private Device device = null;
-
     private Toolbar toolbar;
-    private TextView tvNameDevice;
-    private ListView listViewDevice;
-    private AdapterDeviceInformation adapterDeviceInformation;
-    private List<Device> deviceList;
+    private Date date;
+
+    private TextView name;
+    private TextView parentCode;
+    private TextView origin;
+    private TextView dateOfProduce;
+    private TextView staff;
+    private TextView digital;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_information);
         initToolBar();
-      //  listViewDevice = (ListView) findViewById(R.id.listViewDevice);
-        // initual
         device = new Device();
-        deviceList = new ArrayList<>();
-
         Intent intent = getIntent();
         device = (Device) intent.getSerializableExtra("objDevice");
-        deviceList.add(device);
+        name = (TextView) findViewById(R.id.nameDevice);
+        parentCode = (TextView) findViewById(R.id.parentCode);
+        origin = (TextView) findViewById(R.id.origin);
+        dateOfProduce = (TextView) findViewById(R.id.dateOfProduce);
+        staff = (TextView) findViewById(R.id.staff);
+        digital = (TextView) findViewById(R.id.digital);
 
-       // adapterDeviceInformation = new AdapterDeviceInformation(DeviceInformation.this, deviceList);
-        //listViewDevice.setAdapter(adapterDeviceInformation);
-        //  Log.d("device", device.toString()+ device.getDateofProduce());
+        name.setText(device.getName());
+        parentCode.setText(device.getParentcode());
+        origin.setText(device.getCountry());
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            date = simpleDateFormat.parse(dateOfProduce.getText().toString());
+            String  dateFormat = DateFormat.getDateInstance().format(date);
+            Log.d("datene", dateFormat);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        dateOfProduce.setText(date.toString());
+        staff.setText(device.getStaff());
+        digital.setText(device.getDigital());
     }
     public void initToolBar(){
         toolbar = (Toolbar)this.findViewById(R.id.toolBarDeviceInformation);

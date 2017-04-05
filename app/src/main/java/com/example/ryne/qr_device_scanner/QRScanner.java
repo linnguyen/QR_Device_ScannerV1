@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -139,7 +140,7 @@ public class QRScanner extends AppCompatActivity implements BaseSliderView.OnSli
         @Override
         protected void onPostExecute(String jsonString) {
             super.onPostExecute(jsonString);
-           // Toast.makeText(QRScanner.this,jsonString,Toast.LENGTH_LONG).show();
+            Toast.makeText(QRScanner.this,jsonString,Toast.LENGTH_LONG).show();
             //create device object
             device = jsonDeviceParser.getDeviceData(jsonString);
             //pass to DeviceInformation activity

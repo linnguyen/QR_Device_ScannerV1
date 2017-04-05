@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_margin="15dp"
-    android:background="@drawable/infor_shape"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="300dp">
+    android:layout_height="match_parent">
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp">
-        <TableRow
-            android:layout_marginBottom="15dp">
-            <TextView
-                android:text="Name:"
-                android:textSize="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:text="Dell Voutro"
-                android:textSize="16dp"
-                android:textColor="#212121"
-                android:textStyle="bold"
-                android:layout_marginLeft="30dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+        <TableRow android:layout_margin="8dp"
+                  android:padding="15dp"
+                  android:background="@drawable/infor_shape"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+                <TextView
+                    android:text="Name:"
+                    android:textSize="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/nameDevice"
+                    android:text="Dell Voutro"
+                    android:textSize="16dp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
         </TableRow>
-        <TableRow
-            android:layout_marginBottom="15dp">
+        <TableRow android:layout_margin="8dp"
+            android:padding="15dp"
+            android:background="@drawable/infor_shape"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <TextView
                 android:text="Parent code:"
                 android:textSize="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+                android:id="@+id/parentCode"
                 android:text="Dell Voutro"
                 android:textSize="16dp"
                 android:textColor="#212121"
@@ -40,13 +46,78 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </TableRow>
-        <TableRow>
+        <TableRow android:layout_margin="8dp"
+            android:padding="15dp"
+            android:background="@drawable/infor_shape"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <TextView
                 android:text="Origin:"
                 android:textSize="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+                android:id="@+id/origin"
+                android:text="Dell Voutro"
+                android:textSize="16dp"
+                android:textColor="#212121"
+                android:textStyle="bold"
+                android:layout_marginLeft="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+        <TableRow android:layout_margin="8dp"
+            android:padding="15dp"
+            android:background="@drawable/infor_shape"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Date of produce:"
+                android:textSize="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/dateOfProduce"
+                android:text="Dell Voutro"
+                android:textSize="16dp"
+                android:textColor="#212121"
+                android:textStyle="bold"
+                android:layout_marginLeft="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+        <TableRow android:layout_margin="8dp"
+            android:padding="15dp"
+            android:background="@drawable/infor_shape"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Staff:"
+                android:textSize="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/staff"
+                android:text="Dell Voutro"
+                android:textSize="16dp"
+                android:textColor="#212121"
+                android:textStyle="bold"
+                android:layout_marginLeft="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+        <TableRow android:layout_margin="8dp"
+            android:padding="15dp"
+            android:background="@drawable/infor_shape"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Digital:"
+                android:textSize="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/digital"
                 android:text="Dell Voutro"
                 android:textSize="16dp"
                 android:textColor="#212121"

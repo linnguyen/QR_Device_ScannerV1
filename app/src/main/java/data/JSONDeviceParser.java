@@ -20,7 +20,6 @@ public class JSONDeviceParser {
         Device device = null;
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
-            //String name = jsonObject.getString("nameofdevice");
             JSONObject jsonObjectStaff = jsonObject.getJSONObject("staff");
             String staff = jsonObjectStaff.getString("name");
 
