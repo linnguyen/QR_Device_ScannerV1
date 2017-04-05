@@ -140,7 +140,8 @@ public class QRScanner extends AppCompatActivity implements BaseSliderView.OnSli
         @Override
         protected void onPostExecute(String jsonString) {
             super.onPostExecute(jsonString);
-            Toast.makeText(QRScanner.this,jsonString,Toast.LENGTH_LONG).show();
+           // Toast.makeText(QRScanner.this,jsonString,Toast.LENGTH_LONG).show();
+            Log.d("datebe",jsonString);
             //create device object
             device = jsonDeviceParser.getDeviceData(jsonString);
             //pass to DeviceInformation activity

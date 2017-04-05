@@ -52,15 +52,20 @@ public class DeviceInformation extends AppCompatActivity {
         name.setText(device.getName());
         parentCode.setText(device.getParentcode());
         origin.setText(device.getCountry());
+        String dateFormat = "";
+        Log.d("realdate",dateOfProduce.getText().toString());
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            date = simpleDateFormat.parse(dateOfProduce.getText().toString());
-            String  dateFormat = DateFormat.getDateInstance().format(date);
+            //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+            SimpleDateFormat destFormat = new SimpleDateFormat("dd-MM-yyyy");
+            date = sourceFormat.parse(device.getDateofProduce());
+           // String  dateFormat = DateFormat.getDateInstance().format(date);
+            dateFormat = destFormat.format(date);
             Log.d("datene", dateFormat);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        dateOfProduce.setText(date.toString());
+        dateOfProduce.setText(dateFormat);
         staff.setText(device.getStaff());
         digital.setText(device.getDigital());
     }
