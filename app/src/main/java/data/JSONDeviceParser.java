@@ -57,4 +57,21 @@ public class JSONDeviceParser {
         }
         return arrLabRoom;
     }
+    public static ArrayList<Device> getOutputDevice(String jsonString){
+        ArrayList<Device> arrDevice = new ArrayList<>();
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONArray arrDeviceJSon = jsonObject.getJSONArray("devices");
+            for (int i=0; i<arrDeviceJSon.length(); i++){
+                JSONObject objectDevice = arrDeviceJSon.getJSONObject(i);
+                String name = objectDevice.getString("name");
+                String code_of_parent = objectDevice.getString("code_of_device");
+                Device device = new Device(name, code_of_parent);
+                arrDevice.add(device);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return arrDevice;
+    }
 }

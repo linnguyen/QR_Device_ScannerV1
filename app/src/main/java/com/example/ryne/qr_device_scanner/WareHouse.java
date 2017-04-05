@@ -67,7 +67,6 @@ public class WareHouse extends AppCompatActivity {
                     listView.clearTextFilter();
                 }else{
                       adapterWareHouse.filter(newText);
-                   //  adapterWareHouse.getFilter().filter(newText);
                 }
                 return true;
             }

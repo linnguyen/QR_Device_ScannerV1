@@ -26,7 +26,7 @@
         android:background="@drawable/row_shape"
         android:inputType="number"
         android:layout_marginTop="10px"
-        android:layout_width="40dp"
+        android:layout_width="60dp"
         android:layout_height="30dp" />
     <TextView
         android:text="Note"
@@ -47,7 +47,7 @@
         <Button
             android:id="@+id/dialogButtonOK"
             android:text="OK"
-            android:background="#00BCD4"
+            android:background="@drawable/button_shape"
             android:layout_marginTop="15px"
             android:layout_width="120px"
             android:layout_height="100px" />

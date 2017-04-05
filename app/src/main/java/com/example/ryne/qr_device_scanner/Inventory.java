@@ -67,12 +67,13 @@ public class Inventory extends AppCompatActivity {
         setContentView(R.layout.activity_inventory);
         initToolBar();
       //  initSpinner();
-        initListView();
+      //  initListView();
         fabSave = (FloatingActionButton) findViewById(R.id.fabSave);
         arrlistLabRoom = new ArrayList<>();
+        arrlistDevice = new ArrayList<>();
         // call dattask to load LabRoom from server
-        DataTask dataTask = new DataTask();
-        dataTask.execute("lab_rooms");
+        DataTaskLabRoom dataTaskLabRoom = new DataTaskLabRoom();
+        dataTaskLabRoom.execute("lab_rooms");
         // process event for FloatActionButton Save
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,16 +81,16 @@ public class Inventory extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Inventory.this);
                 builder.setMessage("You must check your input carefully before submitting.\nAre you sure?")
                         .setTitle("Inventory Submit")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                   ArrayList<InventoryLab> arrLabRoom =  getListViewData();
                                   new SendPostRequest().execute(arrLabRoom);
                                  // hide fabbutton not to allow user submit data second time
-                                  fabSave.hide();
+                                 // fabSave.hide();
                             }
                         })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
@@ -122,11 +123,9 @@ public class Inventory extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 labroom = (Labroom)parent.getItemAtPosition(position);
-                if(labroom.getId() == 1){
-                    initListView();
-                }else{
-                   // initListView1();
-                }
+                DataTaskDevices dataTaskDevices = new DataTaskDevices();
+                dataTaskDevices.execute("/devices/"+labroom.getId());
+                //fabSave.show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -136,14 +135,10 @@ public class Inventory extends AppCompatActivity {
     }
     public void initListView(){
         listView = (ListView) findViewById(R.id.listViewInventory);
-        arrlistDevice = new ArrayList<>();
-        arrlistDevice.add(new Device("Dell Voutro","D001"));
-        arrlistDevice.add(new Device("Asus","A001"));
-        arrlistDevice.add(new Device("Asus","A001"));
-        arrlistDevice.add(new Device("Dell Voutro","D001"));
-        arrlistDevice.add(new Device("Dell Voutro","D001"));
-        arrlistDevice.add(new Device("Dell Voutro","D001"));
-        arrlistDevice.add(new Device("Dell Voutro","D001"));
+       // arrlistDevice = new ArrayList<>();
+//        arrlistDevice.add(new Device("Dell Voutro","D001"));
+//        arrlistDevice.add(new Device("Dell Voutro","D001"));
+//        arrlistDevice.add(new Device("Dell Voutro","D001"));
         adapterInventory = new AdapterInventory(arrlistDevice,getApplicationContext());
         listView.setAdapter(adapterInventory);
         // event ListView
@@ -157,7 +152,6 @@ public class Inventory extends AppCompatActivity {
                 final Dialog openDialog = new Dialog(Inventory.this);
                 //openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 openDialog.setContentView(R.layout.row_dialog);
-
                 openDialog.setTitle("Inventory Input");
                 openDialog.show();
                 numberofDeviceLeft = (EditText) openDialog.findViewById(R.id.numberofDeviceLeft);
@@ -174,7 +168,6 @@ public class Inventory extends AppCompatActivity {
                         openDialog.dismiss();
                     }
                 });
-
             }
         });
     }
@@ -193,9 +186,6 @@ public class Inventory extends AppCompatActivity {
     public ArrayList<InventoryLab> getListViewData(){
         ArrayList<InventoryLab> arrayLabRoom =new ArrayList<>();
         InventoryLab inventoryLab = null;
-
-        Log.d("Inventory.getListViewData","Running ...!");
-
         for (int i=0; i< listView.getCount(); i++){
             View view = listView.getChildAt(i);
             codeParent =(TextView) view.findViewById(R.id.codeParent);
@@ -282,16 +272,28 @@ public class Inventory extends AppCompatActivity {
         }
     }
 
-    private class DataTask extends AsyncTask<String,Void,String> {
+    private class DataTaskLabRoom extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-            String data = HttpHandler.makeServiceCall(params[0]);
-            return data;
+            String dataLabRoom = HttpHandler.makeServiceCall(params[0]);
+            return dataLabRoom;
         }
         @Override
-        protected void onPostExecute(String s) {
-            arrlistLabRoom = JSONDeviceParser.getLabRoomData(s);
+        protected void onPostExecute(String dataLabRoom) {
+            arrlistLabRoom = JSONDeviceParser.getLabRoomData(dataLabRoom);
             initSpinner();
+        }
+    }
+    private  class DataTaskDevices extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String dataDevices = HttpHandler.makeServiceCall(params[0]);
+            return dataDevices;
+        }
+        @Override
+        protected void onPostExecute(String jsonString) {
+            arrlistDevice = JSONDeviceParser.getOutputDevice(jsonString);
+            initListView();
         }
     }
 }
