@@ -53,7 +53,6 @@ public class DeviceInformation extends AppCompatActivity {
         parentCode.setText(device.getParentcode());
         origin.setText(device.getCountry());
         String dateFormat = "";
-        Log.d("realdate",dateOfProduce.getText().toString());
         try {
             //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
@@ -61,7 +60,6 @@ public class DeviceInformation extends AppCompatActivity {
             date = sourceFormat.parse(device.getDateofProduce());
            // String  dateFormat = DateFormat.getDateInstance().format(date);
             dateFormat = destFormat.format(date);
-            Log.d("datene", dateFormat);
         } catch (ParseException e) {
             e.printStackTrace();
         }

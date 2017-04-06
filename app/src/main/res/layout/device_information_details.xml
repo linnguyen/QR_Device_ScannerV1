@@ -111,20 +111,20 @@
             android:background="@drawable/infor_shape"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:text="Digital:"
-                android:textSize="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/digital"
-                android:text="Dell Voutro"
-                android:textSize="16dp"
-                android:textColor="#212121"
-                android:textStyle="bold"
-                android:layout_marginLeft="30dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Digital:"
+                    android:textSize="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/digital"
+                    android:text="Dell Voutro"
+                    android:textSize="16dp"
+                    android:textColor="#212121"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content" />
         </TableRow>
     </TableLayout>
 </LinearLayout>

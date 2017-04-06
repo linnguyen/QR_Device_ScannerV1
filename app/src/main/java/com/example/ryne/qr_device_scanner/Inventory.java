@@ -86,8 +86,10 @@ public class Inventory extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                   ArrayList<InventoryLab> arrLabRoom =  getListViewData();
                                   new SendPostRequest().execute(arrLabRoom);
+                                 // Inform sucess for user
+                                 Toast.makeText(Inventory.this, "Save data inventory successfully!", Toast.LENGTH_LONG).show();
                                  // hide fabbutton not to allow user submit data second time
-                                 // fabSave.hide();
+                                 fabSave.hide();
                             }
                         })
                         .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -124,8 +126,8 @@ public class Inventory extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 labroom = (Labroom)parent.getItemAtPosition(position);
                 DataTaskDevices dataTaskDevices = new DataTaskDevices();
-                dataTaskDevices.execute("/devices/"+labroom.getId());
-                //fabSave.show();
+                dataTaskDevices.execute("devices/"+labroom.getId());
+                fabSave.show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -135,7 +137,7 @@ public class Inventory extends AppCompatActivity {
     }
     public void initListView(){
         listView = (ListView) findViewById(R.id.listViewInventory);
-       // arrlistDevice = new ArrayList<>();
+        // arrlistDevice = new ArrayList<>();
 //        arrlistDevice.add(new Device("Dell Voutro","D001"));
 //        arrlistDevice.add(new Device("Dell Voutro","D001"));
 //        arrlistDevice.add(new Device("Dell Voutro","D001"));
@@ -165,7 +167,7 @@ public class Inventory extends AppCompatActivity {
                           String noteDevice = Inventory.this.noteDevice.getText().toString();
                           editTextBox.setText(numberOfDeviceLeft);
                           noteDeviceSave.setText(noteDevice);
-                        openDialog.dismiss();
+                          openDialog.dismiss();
                     }
                 });
             }
@@ -189,10 +191,10 @@ public class Inventory extends AppCompatActivity {
         for (int i=0; i< listView.getCount(); i++){
             View view = listView.getChildAt(i);
             codeParent =(TextView) view.findViewById(R.id.codeParent);
-            Log.d("codeparent", codeParent.getText().toString());
+            //Log.d("codeparent", codeParent.getText().toString());
             editTextBox = (EditText) view.findViewById(R.id.editTextBox);
             noteDeviceSave = (EditText) view.findViewById(R.id.noteDeviceSave);
-            if (editTextBox.getText().toString().equals("")) {
+            if (editTextBox.getText().toString().equals("") && codeParent.getText()!=null) {
                  continue;
             }else{
                 inventoryLab = new InventoryLab(codeParent.getText().toString(),
