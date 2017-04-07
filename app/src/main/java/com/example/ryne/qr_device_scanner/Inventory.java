@@ -89,15 +89,12 @@ public class Inventory extends AppCompatActivity {
                                  // Inform sucess for user
                                  Toast.makeText(Inventory.this, "Save data inventory successfully!", Toast.LENGTH_LONG).show();
                                  // hide fabbutton not to allow user submit data second time
-<<<<<<< HEAD
                                  // fabSave.hide();
                                  final Dialog openDialog = new Dialog(Inventory.this);
                                  openDialog.setTitle("Success");
                                  openDialog.setContentView(R.layout.success_inventory_dialog);
                                  openDialog.show();
-=======
-                                 fabSave.hide();
->>>>>>> e371ed92b142de783a70c575c5596765ab09492d
+
                             }
                         })
                         .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
