@@ -59,9 +59,7 @@ public class DeviceInformation extends AppCompatActivity {
             SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
             SimpleDateFormat destFormat = new SimpleDateFormat("dd-MM-yyyy");
             date = sourceFormat.parse(device.getDateofProduce());
-           // String  dateFormat = DateFormat.getDateInstance().format(date);
             dateFormat = destFormat.format(date);
-            Log.d("datene", dateFormat);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -72,7 +70,7 @@ public class DeviceInformation extends AppCompatActivity {
     public void initToolBar(){
         toolbar = (Toolbar)this.findViewById(R.id.toolBarDeviceInformation);
         toolbar.setTitle(R.string.toolbarTitle);
-        toolbar.setNavigationIcon(R.drawable.left_arrow_small);
+        toolbar.setNavigationIcon(R.drawable.left_arrow_white);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

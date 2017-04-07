@@ -27,6 +27,7 @@ public class AdapterInventory extends ArrayAdapter<Device> {
     private ArrayList<Device> arrayInventory;
     private Context context = null;
     private TextView nameDevice;
+    private TextView codeParent;
     public AdapterInventory(ArrayList<Device> data, Context context){
         super(context, R.layout.row_item_inventory, data);
         this.arrayInventory = data;
@@ -41,11 +42,13 @@ public class AdapterInventory extends ArrayAdapter<Device> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.row_item_inventory, parent, false);
             nameDevice = (TextView) convertView.findViewById(R.id.nameDeviceInventory);
+            codeParent = (TextView) convertView.findViewById(R.id.codeParent);
             result = convertView;
         }else{
             result = convertView;
         }
         nameDevice.setText(device.getName());
+        codeParent.setText(device.getParentcode());
       return convertView;
     }
 }

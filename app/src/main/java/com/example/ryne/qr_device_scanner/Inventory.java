@@ -88,6 +88,10 @@ public class Inventory extends AppCompatActivity {
                                   new SendPostRequest().execute(arrLabRoom);
                                  // hide fabbutton not to allow user submit data second time
                                  // fabSave.hide();
+                                 final Dialog openDialog = new Dialog(Inventory.this);
+                                 openDialog.setTitle("Success");
+                                 openDialog.setContentView(R.layout.success_inventory_dialog);
+                                 openDialog.show();
                             }
                         })
                         .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -101,8 +105,8 @@ public class Inventory extends AppCompatActivity {
     }
     public void initToolBar(){
         toolBar = (Toolbar) findViewById(R.id.toolBarQRSCanner);
-        toolBar.setNavigationIcon(R.drawable.left_arrow_small);
-        toolBar.setTitle("Select Room");
+        toolBar.setNavigationIcon(R.drawable.left_arrow_white);
+        //toolBar.setTitle("Select Room");
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -268,7 +272,7 @@ public class Inventory extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(String s) {
-            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
         }
     }
 

@@ -25,7 +25,6 @@
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/codeParent"
-            android:text="D0001"
             android:textStyle="italic"
             android:layout_below="@+id/nameDeviceInventory"
             android:textColor="#212121"
