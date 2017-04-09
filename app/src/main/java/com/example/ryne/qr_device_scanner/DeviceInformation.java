@@ -1,9 +1,13 @@
 package com.example.ryne.qr_device_scanner;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -34,6 +38,7 @@ public class DeviceInformation extends AppCompatActivity {
     private TextView staff;
     private TextView digital;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +69,8 @@ public class DeviceInformation extends AppCompatActivity {
         }
         dateOfProduce.setText(dateFormat);
         staff.setText(device.getStaff());
-        digital.setText(device.getDigital());
+        //digital.setTextColor(Color.parseColor("#212121"));
+        digital.setText("Digital:\n"+device.getDigital());
     }
     public void initToolBar(){
         toolbar = (Toolbar)this.findViewById(R.id.toolBarDeviceInformation);
@@ -78,5 +84,9 @@ public class DeviceInformation extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    private String getColoredSpanned(String text, String color) {
+        String input = "<font color=" + color + ">" + text + "</font>";
+        return input;
     }
 }
