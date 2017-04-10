@@ -1,29 +1,18 @@
 package com.example.ryne.qr_device_scanner;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.FieldPosition;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import adapter.AdapterDeviceInformation;
-import data.JSONDeviceParser;
 import model.Device;
 
 public class DeviceInformation extends AppCompatActivity {

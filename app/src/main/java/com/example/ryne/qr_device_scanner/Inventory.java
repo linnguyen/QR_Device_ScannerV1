@@ -10,8 +10,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.test.suitebuilder.TestMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -86,14 +84,20 @@ public class Inventory extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                   ArrayList<InventoryLab> arrLabRoom =  getListViewData();
                                   new SendPostRequest().execute(arrLabRoom);
-                                 // Inform sucess for user
-                                 Toast.makeText(Inventory.this, "Save data inventory successfully!", Toast.LENGTH_LONG).show();
                                  // hide fabbutton not to allow user submit data second time
                                  // fabSave.hide();
+                                // Inform success for user
                                  final Dialog openDialog = new Dialog(Inventory.this);
-                                 openDialog.setTitle("Success");
-                                 openDialog.setContentView(R.layout.success_inventory_dialog);
+                                 openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                 openDialog.setContentView(R.layout.dialog_inventory_success);
                                  openDialog.show();
+                                 final Button dialogButtonSuccess = (Button)openDialog.findViewById(R.id.daButtonSuccess);
+                                 dialogButtonSuccess.setOnClickListener(new View.OnClickListener() {
+                                     @Override
+                                     public void onClick(View v) {
+                                         openDialog.dismiss();
+                                     }
+                                 });
 
                             }
                         })
@@ -158,12 +162,12 @@ public class Inventory extends AppCompatActivity {
                 // dialogbox for each row
                 final Dialog openDialog = new Dialog(Inventory.this);
                 //openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                openDialog.setContentView(R.layout.row_dialog);
+                openDialog.setContentView(R.layout.dialog_row_inventory);
                 openDialog.setTitle("Inventory Input");
                 openDialog.show();
                 numberofDeviceLeft = (EditText) openDialog.findViewById(R.id.numberofDeviceLeft);
                 noteDevice = (EditText) openDialog.findViewById(R.id.noteDevice);
-                Button diologButton = (Button) openDialog.findViewById(R.id.dialogButtonOK);
+                Button diologButton = (Button) openDialog.findViewById(R.id.daButtonOK);
                 diologButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

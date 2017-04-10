@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:id="@+id/dialogButtonOK"
+            android:id="@+id/daButtonOK"
             android:text="OK"
             android:background="@drawable/button_shape"
             android:layout_marginTop="15px"
