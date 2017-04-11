@@ -2,6 +2,7 @@ package com.example.ryne.qr_device_scanner;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -296,6 +298,18 @@ public class Inventory extends AppCompatActivity {
         }
     }
     private  class DataTaskDevices extends AsyncTask<String, Void, String> {
+        private ProgressBar progressBar;
+        @Override
+        protected void onPreExecute() {
+            progressBar = (ProgressBar) findViewById(R.id.pgBar);
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+//            progressDialog = new ProgressDialog(Inventory.this);
+//            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            progressDialog.setTitle("Please wait");
+//            progressDialog.show();
+            super.onPreExecute();
+        }
+
         @Override
         protected String doInBackground(String... params) {
             String dataDevices = HttpHandler.makeServiceCall(params[0]);
@@ -303,6 +317,7 @@ public class Inventory extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(String jsonString) {
+            progressBar.setVisibility(ProgressBar.GONE);
             arrlistDevice = JSONDeviceParser.getOutputDevice(jsonString);
             initListView();
         }
