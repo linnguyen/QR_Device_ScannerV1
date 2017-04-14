@@ -46,8 +46,8 @@ public class JSONDeviceParser {
             JSONArray arrayLabRoomJson = jsonObject.getJSONArray("labrooms");
             for (int i=0; i < arrayLabRoomJson.length(); i++){
                JSONObject objectLabRoomJson = arrayLabRoomJson.getJSONObject(i);
-                int id = objectLabRoomJson.getInt("id");
-                String name = objectLabRoomJson.getString("name");
+                String id = objectLabRoomJson.getString("ma_pth");
+                String name = objectLabRoomJson.getString("phong_thuc_hanh");
                 Labroom labroom = new Labroom(id,name);
                 arrLabRoom.add(labroom);
             }
@@ -63,8 +63,8 @@ public class JSONDeviceParser {
             JSONArray arrDeviceJSon = jsonObject.getJSONArray("devices");
             for (int i=0; i<arrDeviceJSon.length(); i++){
                 JSONObject objectDevice = arrDeviceJSon.getJSONObject(i);
-                String name = objectDevice.getString("name");
-                String code_of_parent = objectDevice.getString("code_of_device");
+                String name = objectDevice.getString("ten_thiet_bi");
+                String code_of_parent = objectDevice.getString("thiet_bi_id");
                 Device device = new Device(name, code_of_parent);
                 arrDevice.add(device);
             }

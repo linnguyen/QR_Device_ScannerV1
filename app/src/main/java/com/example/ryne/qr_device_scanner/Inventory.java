@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -289,6 +290,7 @@ public class Inventory extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             String dataLabRoom = HttpHandler.makeServiceCall(params[0]);
+            //Log.d("dulieu", dataLabRoom);
             return dataLabRoom;
         }
         @Override
@@ -313,6 +315,7 @@ public class Inventory extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             String dataDevices = HttpHandler.makeServiceCall(params[0]);
+            //Log.d("thietbvi",dataDevices);
             return dataDevices;
         }
         @Override
