@@ -240,9 +240,9 @@ public class Inventory extends AppCompatActivity {
                 jsonArrayDevice = new JSONArray();
                 for(int i=0; i< arrayLab.size(); i++) {
                     jsonObjectDevice = new JSONObject();
-                    jsonObjectDevice.put("code_of_device", arrayLab.get(i).getParentCode());
-                    jsonObjectDevice.put("actual_amount", arrayLab.get(i).getNumberOfDeviceLeft());
-                    jsonObjectDevice.put("note", arrayLab.get(i).getNoteDevice());
+                    jsonObjectDevice.put("ma_thiet_bi", arrayLab.get(i).getParentCode());
+                    jsonObjectDevice.put("so_luong_thuc_te", arrayLab.get(i).getNumberOfDeviceLeft());
+                    jsonObjectDevice.put("ghi_chu", arrayLab.get(i).getNoteDevice());
                     jsonArrayDevice.put(jsonObjectDevice);
                 }
                 postParams.put("array_of_device", jsonArrayDevice);
@@ -290,7 +290,7 @@ public class Inventory extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             String dataLabRoom = HttpHandler.makeServiceCall(params[0]);
-            //Log.d("dulieu", dataLabRoom);
+            Log.d("dulieu", dataLabRoom);
             return dataLabRoom;
         }
         @Override
