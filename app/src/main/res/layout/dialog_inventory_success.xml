@@ -5,15 +5,15 @@
     android:layout_height="600px">
     <TextView
         android:id="@+id/success"
-        android:text="Success"
+        android:text="@string/success"
         android:textStyle="bold"
-        android:textSize="36dp"
+        android:textSize="34dp"
         android:layout_gravity="center"
         android:paddingTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
-        android:text="All inventory information are saved.Choose another labroom for your inventory."
+        android:text="@string/success_submit"
         android:paddingTop="50px"
         android:layout_gravity="center"
         android:layout_width="600px"

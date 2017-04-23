@@ -51,11 +51,18 @@ public class ActivityInventory extends AppCompatActivity {
     private Spinner spinner;
     private ListView listView;
     private FloatingActionButton fabSave;
-    private TextView codeParent;
-    private EditText editTextBox;
-    private EditText noteDeviceSave;
-    private EditText numberofDeviceLeft;
-    private EditText noteDevice;
+    private TextView tvCodeParent;
+    private EditText edNoteDevice;
+    private EditText edNumberOfDeviceLeft;
+    private EditText edNumberOfNormalDevice;
+    private EditText edNumberOfBrokenDevice;
+    private EditText edNumberOfUnusedDevice;
+
+    private EditText edNumberOfDeviceLeftSave;
+    private EditText edNumberOfNormalDeviceSave;
+    private EditText edNumberOfBrokenDeviceSave;
+    private EditText edNumberOfUnusedDeviceSave;
+    private EditText edNoteDeviceSave;
 
     private ArrayList<Device> arrlistDevice;
     private ArrayList<Labroom> arrlistLabRoom;
@@ -87,7 +94,7 @@ public class ActivityInventory extends AppCompatActivity {
                                   ArrayList<InventoryLab> arrLabRoom =  getListViewData();
                                   new SendPostRequest().execute(arrLabRoom);
                                  // hide fabbutton not to allow user submit data second time
-                                 // fabSave.hide();
+                                 fabSave.hide();
                                 // Inform success for user
                                  final Dialog openDialog = new Dialog(ActivityInventory.this);
                                  openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -159,25 +166,39 @@ public class ActivityInventory extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 view = listView.getChildAt(position);
-                editTextBox = (EditText) view.findViewById(R.id.editTextBox);
-                noteDeviceSave = (EditText) view.findViewById(R.id.noteDeviceSave);
+                edNumberOfDeviceLeftSave = (EditText) view.findViewById(R.id.edNumberOfDeviceLeftSave);
+                edNumberOfNormalDeviceSave = (EditText) view.findViewById(R.id.edNumberOfNormalDeviceSave);
+                edNumberOfBrokenDeviceSave = (EditText) view.findViewById(R.id.edNumberOfBrokenDeviceSave);
+                edNumberOfUnusedDeviceSave = (EditText) view.findViewById(R.id.edNumberOfUnusedDeviceSave);
+                edNoteDeviceSave = (EditText) view.findViewById(R.id.edNoteDeviceSave);
+
                 // dialogbox for each row
                 final Dialog openDialog = new Dialog(ActivityInventory.this);
                 //openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 openDialog.setContentView(R.layout.dialog_row_inventory);
-                openDialog.setTitle("ActivityInventory Input");
+                openDialog.setTitle("Thông Tin Kiểm Kê Thiết Bị");
                 openDialog.show();
-                numberofDeviceLeft = (EditText) openDialog.findViewById(R.id.numberofDeviceLeft);
-                noteDevice = (EditText) openDialog.findViewById(R.id.noteDevice);
+                edNumberOfDeviceLeft = (EditText) openDialog.findViewById(R.id.edNumberOfDeviceLeft);
+                edNumberOfNormalDevice = (EditText) openDialog.findViewById(R.id.edNumberOfNormalDevice);
+                edNumberOfBrokenDevice = (EditText) openDialog.findViewById(R.id.edNumberOfBrokenDevice);
+                edNumberOfUnusedDevice = (EditText) openDialog.findViewById(R.id.edNumberOfUnusedDevice);
+                edNoteDevice = edNoteDevice = (EditText) openDialog.findViewById(R.id.edNoteDevice);
+
                 Button diologButton = (Button) openDialog.findViewById(R.id.daButtonOK);
                 diologButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //String parentCode = getListViewData(position);
-                          String numberOfDeviceLeft = numberofDeviceLeft.getText().toString();
-                          String noteDevice = ActivityInventory.this.noteDevice.getText().toString();
-                          editTextBox.setText(numberOfDeviceLeft);
-                          noteDeviceSave.setText(noteDevice);
+                         //String parentCode = getListViewData(position);
+                          String numberOfDeviceLeft = edNumberOfDeviceLeft.getText().toString();
+                          String numberOfNormalDevice = edNumberOfNormalDevice.getText().toString();
+                          String numberOfBorkenDevice = edNumberOfBrokenDevice.getText().toString();
+                          String numberOfUnusedDevice = edNumberOfUnusedDevice.getText().toString();
+                          String noteDevice = ActivityInventory.this.edNoteDevice.getText().toString();
+                          edNoteDeviceSave.setText(noteDevice);
+                          edNumberOfDeviceLeftSave.setText(numberOfDeviceLeft);
+                          edNumberOfNormalDeviceSave.setText(numberOfNormalDevice);
+                          edNumberOfBrokenDeviceSave.setText(numberOfBorkenDevice);
+                          edNumberOfUnusedDeviceSave.setText(numberOfUnusedDevice);
                           openDialog.dismiss();
                     }
                 });
@@ -201,16 +222,20 @@ public class ActivityInventory extends AppCompatActivity {
         InventoryLab inventoryLab = null;
         for (int i=0; i< listView.getCount(); i++){
             View view = listView.getChildAt(i);
-            codeParent =(TextView) view.findViewById(R.id.codeParent);
+            tvCodeParent =(TextView) view.findViewById(R.id.tvCodeParent);
             //Log.d("codeparent", codeParent.getText().toString());
-            editTextBox = (EditText) view.findViewById(R.id.editTextBox);
-            noteDeviceSave = (EditText) view.findViewById(R.id.noteDeviceSave);
-            if (editTextBox.getText().toString().equals("") && codeParent.getText()!=null) {
+            edNumberOfDeviceLeftSave = (EditText) view.findViewById(R.id.edNumberOfDeviceLeftSave);
+            edNoteDeviceSave = (EditText) view.findViewById(R.id.edNoteDeviceSave);
+            if (edNoteDeviceSave.getText().toString().equals("") && edNumberOfDeviceLeftSave.getText()!=null) {
                  continue;
             }else{
-                inventoryLab = new InventoryLab(codeParent.getText().toString(),
-                        Integer.parseInt(editTextBox.getText().toString()),
-                        noteDeviceSave.getText().toString());
+                inventoryLab = new InventoryLab(
+                        tvCodeParent.getText().toString(),
+                        Integer.parseInt(edNumberOfDeviceLeftSave.getText().toString()),
+                        Integer.parseInt(edNumberOfNormalDeviceSave.getText().toString()),
+                        Integer.parseInt(edNumberOfBrokenDeviceSave.getText().toString()),
+                        Integer.parseInt(edNumberOfUnusedDeviceSave.getText().toString()),
+                        edNoteDeviceSave.getText().toString());
             }
             arrayLabRoom.add(inventoryLab);
         }
@@ -241,7 +266,10 @@ public class ActivityInventory extends AppCompatActivity {
                     jsonObjectDevice = new JSONObject();
                     jsonObjectDevice.put("ma_thiet_bi", arrayLab.get(i).getParentCode());
                     jsonObjectDevice.put("so_luong_thuc_te", arrayLab.get(i).getNumberOfDeviceLeft());
-                    jsonObjectDevice.put("ghi_chu", arrayLab.get(i).getNoteDevice());
+                    jsonObjectDevice.put("so_luong_thiet_bi_binh_thuong", arrayLab.get(i).getNumberOfNormalDevice());
+                    jsonObjectDevice.put("so_luong_thiet_bi_hong",arrayLab.get(i).getNumberOfBrokenDevice());
+                    jsonObjectDevice.put("so_luong_thiet_bi_thanh_li",arrayLab.get(i).getNumberOfUnusedDevice());
+                    jsonObjectDevice.put("ghi_chu",arrayLab.get(i).getNoteDevice());
                     jsonArrayDevice.put(jsonObjectDevice);
                 }
                 postParams.put("array_of_device", jsonArrayDevice);

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:text="Name"
+        android:text="@string/name_device_inventory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
@@ -16,12 +16,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
-        android:text="Actual number"
+        android:text="@string/actual_number"
         android:layout_marginTop="15px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <EditText
-        android:id="@+id/numberofDeviceLeft"
+        android:id="@+id/edNumberOfDeviceLeft"
         android:textSize="14dp"
         android:background="@drawable/row_shape"
         android:inputType="number"
@@ -29,12 +29,79 @@
         android:layout_width="60dp"
         android:layout_height="30dp" />
     <TextView
-        android:text="Note"
+        android:text="@string/status_device"
+        android:layout_marginTop="15px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_margin="5px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/normal_status"
+                android:layout_marginTop="15px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/edNumberOfNormalDevice"
+                android:textSize="14dp"
+                android:background="@drawable/row_shape"
+                android:inputType="number"
+                android:layout_marginTop="10px"
+                android:layout_width="60dp"
+                android:layout_height="30dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_margin="5px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/broken_status"
+                android:layout_marginTop="15px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/edNumberOfBrokenDevice"
+                android:textSize="14dp"
+                android:background="@drawable/row_shape"
+                android:inputType="number"
+                android:layout_marginTop="10px"
+                android:layout_width="60dp"
+                android:layout_height="30dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_margin="5px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/unuseded_status"
+                android:layout_marginTop="15px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/edNumberOfUnusedDevice"
+                android:textSize="14dp"
+                android:background="@drawable/row_shape"
+                android:inputType="number"
+                android:layout_marginTop="10px"
+                android:layout_width="60dp"
+                android:layout_height="30dp" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:text="@string/note"
         android:layout_marginTop="15px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <EditText
-        android:id="@+id/noteDevice"
+        android:id="@+id/edNoteDevice"
         android:textSize="14dp"
         android:gravity="top"
         android:background="@drawable/row_shape"

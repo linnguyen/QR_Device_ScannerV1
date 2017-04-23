@@ -21,4 +21,13 @@
     </string-array>
     <string name="title_activity_ware_house">WareHouse</string>
     <string name="qrscanner">Quét Mã QR</string>
+    <string name="actual_number">Số lượng thực tế</string>
+    <string name="name_device_inventory">Tên thiết bị</string>
+    <string name="note">Ghi chú</string>
+    <string name="status_device">Tình trạng:</string>
+    <string name="normal_status">Bình thường</string>
+    <string name="broken_status">Hỏng</string>
+    <string name="unuseded_status">Xin thanh lí</string>
+    <string name="success_submit">Tất cả thông tin kiểm kê đã được lưu thành công. Chọn phòng thực hành khác để kiểm kê.</string>
+    <string name="success">Thành Công</string>
 </resources>

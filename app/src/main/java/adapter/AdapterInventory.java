@@ -19,8 +19,8 @@ import model.Device;
 public class AdapterInventory extends ArrayAdapter<Device> {
     private ArrayList<Device> arrayInventory;
     private Context context = null;
-    private TextView nameDevice;
-    private TextView codeParent;
+    private TextView tvNameDeviceInventory;
+    private TextView tvCodeParent;
     public AdapterInventory(ArrayList<Device> data, Context context){
         super(context, R.layout.row_item_inventory, data);
         this.arrayInventory = data;
@@ -34,14 +34,14 @@ public class AdapterInventory extends ArrayAdapter<Device> {
         if (convertView == null){
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.row_item_inventory, parent, false);
-            nameDevice = (TextView) convertView.findViewById(R.id.nameDeviceInventory);
-            codeParent = (TextView) convertView.findViewById(R.id.codeParent);
+            tvNameDeviceInventory = (TextView) convertView.findViewById(R.id.tvNameDeviceInventory);
+            tvCodeParent = (TextView) convertView.findViewById(R.id.tvCodeParent);
             result = convertView;
         }else{
             result = convertView;
         }
-        nameDevice.setText(device.getName());
-        codeParent.setText(device.getParentcode());
+        tvNameDeviceInventory.setText(device.getName());
+        tvCodeParent.setText(device.getParentcode());
       return convertView;
     }
 }
