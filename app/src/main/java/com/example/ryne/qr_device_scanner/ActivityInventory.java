@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -52,6 +53,7 @@ public class ActivityInventory extends AppCompatActivity {
     private ListView listView;
     private FloatingActionButton fabSave;
     private TextView tvCodeParent;
+    private EditText edShowRowStatus;
     private EditText edNoteDevice;
     private EditText edNumberOfDeviceLeft;
     private EditText edNumberOfNormalDevice;
@@ -75,6 +77,7 @@ public class ActivityInventory extends AppCompatActivity {
         initToolBar();
       //  initSpinner();
       //  initListView();
+        listView = (ListView) findViewById(R.id.listViewInventory);
         fabSave = (FloatingActionButton) findViewById(R.id.fabSave);
         arrlistLabRoom = new ArrayList<>();
         arrlistDevice = new ArrayList<>();
@@ -86,13 +89,13 @@ public class ActivityInventory extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityInventory.this);
-                builder.setMessage("You must check your input carefully before submitting.\nAre you sure?")
-                        .setTitle("ActivityInventory Submit")
+                builder.setMessage("Bạn phải kiểm tra thông tin nhập của bạn cẩn thận trước khi gửi.\nBạn có chắc chắn không?")
+                        .setTitle("Gửi Thông Tin Kiểm Kiểm Kê")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                  ArrayList<InventoryLab> arrLabRoom =  getListViewData();
-                                  new SendPostRequest().execute(arrLabRoom);
+                                  ArrayList<InventoryLab> arrLabRoom = getListViewData();
+                                 new SendPostRequest().execute(arrLabRoom);
                                  // hide fabbutton not to allow user submit data second time
                                  fabSave.hide();
                                 // Inform success for user
@@ -104,6 +107,7 @@ public class ActivityInventory extends AppCompatActivity {
                                  dialogButtonSuccess.setOnClickListener(new View.OnClickListener() {
                                      @Override
                                      public void onClick(View v) {
+                                         listView.setEnabled(false);
                                          openDialog.dismiss();
                                      }
                                  });
@@ -145,6 +149,7 @@ public class ActivityInventory extends AppCompatActivity {
                 labroom = (Labroom)parent.getItemAtPosition(position);
                 DataTaskDevices dataTaskDevices = new DataTaskDevices();
                 dataTaskDevices.execute("/devices/"+labroom.getId());
+                listView.setEnabled(true);
                 fabSave.show();
             }
             @Override
@@ -154,7 +159,6 @@ public class ActivityInventory extends AppCompatActivity {
         });
     }
     public void initListView(){
-        listView = (ListView) findViewById(R.id.listViewInventory);
         // arrlistDevice = new ArrayList<>();
 //        arrlistDevice.add(new Device("Dell Voutro","D001"));
 //        arrlistDevice.add(new Device("Dell Voutro","D001"));
@@ -166,6 +170,7 @@ public class ActivityInventory extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 view = listView.getChildAt(position);
+                edShowRowStatus = (EditText) view.findViewById(R.id.edShowRowStatus);
                 edNumberOfDeviceLeftSave = (EditText) view.findViewById(R.id.edNumberOfDeviceLeftSave);
                 edNumberOfNormalDeviceSave = (EditText) view.findViewById(R.id.edNumberOfNormalDeviceSave);
                 edNumberOfBrokenDeviceSave = (EditText) view.findViewById(R.id.edNumberOfBrokenDeviceSave);
@@ -199,11 +204,34 @@ public class ActivityInventory extends AppCompatActivity {
                           edNumberOfNormalDeviceSave.setText(numberOfNormalDevice);
                           edNumberOfBrokenDeviceSave.setText(numberOfBorkenDevice);
                           edNumberOfUnusedDeviceSave.setText(numberOfUnusedDevice);
+                          if(checkInputInventory()) {
+                              int tick = R.drawable.tick;
+                              edShowRowStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, tick);
+                          }
                           openDialog.dismiss();
                     }
                 });
             }
         });
+    }
+    public boolean checkDataInput(){
+        for(int i=0; i<listView.getCount(); i++){
+            // check if data input for each row
+            // if yes return true
+            // if no => Bạn chưa nhập thông tin kiểm kê, vui lòng kiểm tra lại
+        }
+        return true;
+    }
+    public boolean checkInputInventory(){
+        if(edNumberOfDeviceLeft.getText().toString().trim().length()>0
+         || edNumberOfNormalDevice.getText().toString().trim().length()>0
+         || edNumberOfBrokenDevice.getText().toString().trim().length()>0
+         || edNumberOfUnusedDevice.getText().toString().trim().length()>0
+         || edNoteDevice.getText().toString().trim().length()>0){
+            return true;
+        }else{
+            return false;
+        }
     }
    // this function is redundant
     public String getListViewData(int position){
@@ -312,7 +340,6 @@ public class ActivityInventory extends AppCompatActivity {
            // Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
         }
     }
-
     private class DataTaskLabRoom extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
@@ -332,10 +359,6 @@ public class ActivityInventory extends AppCompatActivity {
         protected void onPreExecute() {
             progressBar = (ProgressBar) findViewById(R.id.pgBar);
             progressBar.setVisibility(ProgressBar.VISIBLE);
-//            progressDialog = new ProgressDialog(ActivityInventory.this);
-//            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//            progressDialog.setTitle("Please wait");
-//            progressDialog.show();
             super.onPreExecute();
         }
 
