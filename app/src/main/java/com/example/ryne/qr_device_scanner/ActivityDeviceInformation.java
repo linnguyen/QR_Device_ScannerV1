@@ -15,7 +15,7 @@ import java.util.Date;
 
 import model.Device;
 
-public class DeviceInformation extends AppCompatActivity {
+public class ActivityDeviceInformation extends AppCompatActivity {
     private Device device = null;
     private Toolbar toolbar;
     private Date date;
@@ -43,23 +43,23 @@ public class DeviceInformation extends AppCompatActivity {
         staff = (TextView) findViewById(R.id.staff);
         digital = (TextView) findViewById(R.id.digital);
 
-        name.setText(device.getName());
-        parentCode.setText(device.getParentcode());
-        origin.setText(device.getCountry());
+//        name.setText(device.getName());
+//        parentCode.setText(device.getParentcode());
+         //origin.setText(device.getCountry());
         String dateFormat = "";
         try {
-            //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
             SimpleDateFormat destFormat = new SimpleDateFormat("dd-MM-yyyy");
-            date = sourceFormat.parse(device.getDateofProduce());
+//            date = sourceFormat.parse(device.getDateofProduce());
             dateFormat = destFormat.format(date);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        dateOfProduce.setText(dateFormat);
-        staff.setText(device.getStaff());
+        //dateOfProduce.setText(dateFormat);
+        //staff.setText(device.getStaff());
         //digital.setTextColor(Color.parseColor("#212121"));
-        digital.setText("Digital:\n"+device.getDigital());
+//        digital.setText("Digital:\n"+device.getDigital());
     }
     public void initToolBar(){
         toolbar = (Toolbar)this.findViewById(R.id.toolBarDeviceInformation);
@@ -69,7 +69,7 @@ public class DeviceInformation extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DeviceInformation.this, QRScanner.class);
+                Intent intent = new Intent(ActivityDeviceInformation.this, ActivityQRScanner.class);
                 startActivity(intent);
             }
         });

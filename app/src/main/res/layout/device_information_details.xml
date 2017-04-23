@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/parentCode"
-                android:text="Dell Voutro"
+                android:text="US2017MTA0001"
                 android:textSize="16dp"
                 android:textColor="#212121"
                 android:textStyle="bold"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/origin"
-                android:text="Dell Voutro"
+                android:text="China"
                 android:textSize="16dp"
                 android:textColor="#212121"
                 android:textStyle="bold"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/dateOfProduce"
-                android:text="Dell Voutro"
+                android:text="12/3/2017"
                 android:textSize="16dp"
                 android:textColor="#212121"
                 android:textStyle="bold"
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/staff"
-                android:text="Dell Voutro"
+                android:text="Nguyen Van Lin"
                 android:textSize="16dp"
                 android:textColor="#212121"
                 android:textStyle="bold"

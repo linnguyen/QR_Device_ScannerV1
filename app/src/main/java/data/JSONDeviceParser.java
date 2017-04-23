@@ -21,17 +21,17 @@ public class JSONDeviceParser {
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONObject jsonObjectStaff = jsonObject.getJSONObject("staff");
-            String staff = jsonObjectStaff.getString("name");
+            String staff = jsonObjectStaff.getString("ho_ten");
 
             JSONObject jsonObjectDevice = jsonObject.getJSONObject("device");
-            String name = jsonObjectDevice.getString("name");
-            String parentCode =  jsonObjectDevice.getString("qrcode");
-            String producer = jsonObjectDevice.getString("producer");
-            String country  = jsonObjectDevice.getString("country");
-            String dateofProduce = jsonObjectDevice.getString("date_of_produce");
-            String digital = jsonObjectDevice.getString("digital");
-            String timeofWarranty = jsonObjectDevice.getString("time_of_warranty");
-            String description = jsonObjectDevice.getString("description");
+            String name = jsonObjectDevice.getString("ten_thiet_bi");
+            String parentCode =  jsonObjectDevice.getString("ma_code");
+            String producer = jsonObjectDevice.getString("hang_san_xuat");
+            String country  = jsonObjectDevice.getString("ma_nuoc_san_xuat");
+            String dateofProduce = jsonObjectDevice.getString("ngay_san_xuat");
+            String digital = jsonObjectDevice.getString("thong_so_ki_thuat");
+            String timeofWarranty = jsonObjectDevice.getString("han_bao_hanh");
+            String description = jsonObjectDevice.getString("mo_ta");
 
             device = new Device(name, parentCode, producer, country, dateofProduce, digital, staff, "", timeofWarranty, description);
         } catch (JSONException e) {

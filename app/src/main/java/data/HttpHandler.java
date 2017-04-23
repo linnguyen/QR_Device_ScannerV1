@@ -1,4 +1,4 @@
-package com.example.ryne.qr_device_scanner;
+package data;
 
 import android.util.Log;
 

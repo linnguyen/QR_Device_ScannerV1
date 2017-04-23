@@ -25,10 +25,11 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.util.HashMap;
 
+import data.HttpHandler;
 import data.JSONDeviceParser;
 import model.Device;
 
-public class QRScanner extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
+public class ActivityQRScanner extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     private Toolbar toolBar;
     private Button btScan;
     private ImageView imQrSCanner;
@@ -42,7 +43,7 @@ public class QRScanner extends AppCompatActivity implements BaseSliderView.OnSli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       // this.startActivity(new Intent(this,Inventory.class));
+       // this.startActivity(new Intent(this,ActivityInventory.class));
         initToolBar();
         initSlider();
         final Activity activity = this;
@@ -64,14 +65,14 @@ public class QRScanner extends AppCompatActivity implements BaseSliderView.OnSli
         imInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(QRScanner.this, Inventory.class);
+                Intent intent = new Intent(ActivityQRScanner.this, ActivityInventory.class);
                 startActivity(intent);
             }
         });
         imWareHouse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(QRScanner.this, WareHouse.class);
+                Intent intent = new Intent(ActivityQRScanner.this, ActivityWareHouse.class);
                 startActivity(intent);
             }
         });
@@ -115,13 +116,13 @@ public class QRScanner extends AppCompatActivity implements BaseSliderView.OnSli
                 MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
                 mediaPlayer.start();
                 DataTask dataTask = new DataTask();
-                dataTask.execute("device_informations/2017D001CNTT1");
+                dataTask.execute("/device_informations/US2017MTM00011");
             }else{
                 MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
                 mediaPlayer.start();
                // Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
                 DataTask dataTask = new DataTask();
-                dataTask.execute("device_informations/"+result.getContents());
+                dataTask.execute("/device_informations/"+result.getContents());
             }
         }else{
             super.onActivityResult(requestCode, resultCode, data);
@@ -140,12 +141,11 @@ public class QRScanner extends AppCompatActivity implements BaseSliderView.OnSli
         @Override
         protected void onPostExecute(String jsonString) {
             super.onPostExecute(jsonString);
-           // Toast.makeText(QRScanner.this,jsonString,Toast.LENGTH_LONG).show();
-            Log.d("datebe",jsonString);
+           // Toast.makeText(ActivityQRScanner.this,jsonString,Toast.LENGTH_LONG).show()
             //create device object
             device = jsonDeviceParser.getDeviceData(jsonString);
-            //pass to DeviceInformation activity
-            Intent intent = new Intent(QRScanner.this, DeviceInformation.class);
+            //pass to ActivityDeviceInformation activity
+            Intent intent = new Intent(ActivityQRScanner.this, ActivityDeviceInformation.class);
             intent.putExtra("objDevice", device);
             startActivity(intent);
         }
@@ -184,7 +184,7 @@ public class QRScanner extends AppCompatActivity implements BaseSliderView.OnSli
             case 1: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 } else {
-                    Toast.makeText(QRScanner.this, "Permission denied on this device!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActivityQRScanner.this, "Permission denied on this device!", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }

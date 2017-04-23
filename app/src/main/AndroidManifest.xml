@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".QRScanner"
+            android:name=".ActivityQRScanner"
             android:theme="@style/QRScanner">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,13 +21,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DeviceInformation"
+            android:name=".ActivityDeviceInformation"
             android:theme="@style/DeviceInformationTheme" />
         <activity
-            android:name=".Inventory"
+            android:name=".ActivityInventory"
             android:theme="@style/Inventory" />
         <activity
-            android:name=".WareHouse"
+            android:name=".ActivityWareHouse"
             android:label="@string/title_activity_ware_house"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Main2Activity"></activity>

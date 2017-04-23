@@ -2,7 +2,6 @@ package com.example.ryne.qr_device_scanner;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,7 +21,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -41,12 +39,13 @@ import javax.net.ssl.HttpsURLConnection;
 
 import Utils.Config;
 import adapter.AdapterInventory;
+import data.HttpHandler;
 import data.JSONDeviceParser;
 import model.Device;
 import model.InventoryLab;
 import model.Labroom;
 
-public class Inventory extends AppCompatActivity {
+public class ActivityInventory extends AppCompatActivity {
     private Context context;
     private Toolbar toolBar;
     private Spinner spinner;
@@ -74,14 +73,14 @@ public class Inventory extends AppCompatActivity {
         arrlistDevice = new ArrayList<>();
         // call dattask to load LabRoom from server
         DataTaskLabRoom dataTaskLabRoom = new DataTaskLabRoom();
-        dataTaskLabRoom.execute("lab_rooms");
+        dataTaskLabRoom.execute("/lab_rooms");
         // process event for FloatActionButton Save
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Inventory.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityInventory.this);
                 builder.setMessage("You must check your input carefully before submitting.\nAre you sure?")
-                        .setTitle("Inventory Submit")
+                        .setTitle("ActivityInventory Submit")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -90,7 +89,7 @@ public class Inventory extends AppCompatActivity {
                                  // hide fabbutton not to allow user submit data second time
                                  // fabSave.hide();
                                 // Inform success for user
-                                 final Dialog openDialog = new Dialog(Inventory.this);
+                                 final Dialog openDialog = new Dialog(ActivityInventory.this);
                                  openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                  openDialog.setContentView(R.layout.dialog_inventory_success);
                                  openDialog.show();
@@ -120,7 +119,7 @@ public class Inventory extends AppCompatActivity {
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Inventory.this, QRScanner.class);
+                Intent intent = new Intent(ActivityInventory.this, ActivityQRScanner.class);
                 startActivity(intent);
             }
         });
@@ -128,7 +127,7 @@ public class Inventory extends AppCompatActivity {
     public void initSpinner(){
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<Labroom> arrayAdapter = new ArrayAdapter<Labroom>(
-                Inventory.this,
+                ActivityInventory.this,
                 android.R.layout.simple_list_item_1,
                 arrlistLabRoom);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -138,7 +137,7 @@ public class Inventory extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 labroom = (Labroom)parent.getItemAtPosition(position);
                 DataTaskDevices dataTaskDevices = new DataTaskDevices();
-                dataTaskDevices.execute("devices/"+labroom.getId());
+                dataTaskDevices.execute("/devices/"+labroom.getId());
                 fabSave.show();
             }
             @Override
@@ -163,10 +162,10 @@ public class Inventory extends AppCompatActivity {
                 editTextBox = (EditText) view.findViewById(R.id.editTextBox);
                 noteDeviceSave = (EditText) view.findViewById(R.id.noteDeviceSave);
                 // dialogbox for each row
-                final Dialog openDialog = new Dialog(Inventory.this);
+                final Dialog openDialog = new Dialog(ActivityInventory.this);
                 //openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 openDialog.setContentView(R.layout.dialog_row_inventory);
-                openDialog.setTitle("Inventory Input");
+                openDialog.setTitle("ActivityInventory Input");
                 openDialog.show();
                 numberofDeviceLeft = (EditText) openDialog.findViewById(R.id.numberofDeviceLeft);
                 noteDevice = (EditText) openDialog.findViewById(R.id.noteDevice);
@@ -176,7 +175,7 @@ public class Inventory extends AppCompatActivity {
                     public void onClick(View v) {
                         //String parentCode = getListViewData(position);
                           String numberOfDeviceLeft = numberofDeviceLeft.getText().toString();
-                          String noteDevice = Inventory.this.noteDevice.getText().toString();
+                          String noteDevice = ActivityInventory.this.noteDevice.getText().toString();
                           editTextBox.setText(numberOfDeviceLeft);
                           noteDeviceSave.setText(noteDevice);
                           openDialog.dismiss();
@@ -228,7 +227,7 @@ public class Inventory extends AppCompatActivity {
         protected String doInBackground(ArrayList<InventoryLab>... params) {
             try {
                 // URL url = new URL("https://apiqrcode-v1.herokuapp.com/inventories");
-                URL url = new URL(Config.URL+"inventories");
+                URL url = new URL(Config.URL+"/inventories");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestProperty("Accept", "application/json");
@@ -305,7 +304,7 @@ public class Inventory extends AppCompatActivity {
         protected void onPreExecute() {
             progressBar = (ProgressBar) findViewById(R.id.pgBar);
             progressBar.setVisibility(ProgressBar.VISIBLE);
-//            progressDialog = new ProgressDialog(Inventory.this);
+//            progressDialog = new ProgressDialog(ActivityInventory.this);
 //            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 //            progressDialog.setTitle("Please wait");
 //            progressDialog.show();
