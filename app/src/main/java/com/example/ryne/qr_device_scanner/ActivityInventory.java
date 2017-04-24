@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -70,6 +71,7 @@ public class ActivityInventory extends AppCompatActivity {
     private ArrayList<Labroom> arrlistLabRoom;
     private AdapterInventory adapterInventory;
     private Labroom labroom;
+    private ArrayList<InventoryLab> arrLabRoom;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -81,6 +83,7 @@ public class ActivityInventory extends AppCompatActivity {
         fabSave = (FloatingActionButton) findViewById(R.id.fabSave);
         arrlistLabRoom = new ArrayList<>();
         arrlistDevice = new ArrayList<>();
+        arrLabRoom = new ArrayList<>();
         // call dattask to load LabRoom from server
         DataTaskLabRoom dataTaskLabRoom = new DataTaskLabRoom();
         dataTaskLabRoom.execute("/lab_rooms");
@@ -88,38 +91,46 @@ public class ActivityInventory extends AppCompatActivity {
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityInventory.this);
-                builder.setMessage("Bạn phải kiểm tra thông tin nhập của bạn cẩn thận trước khi gửi.\nBạn có chắc chắn không?")
-                        .setTitle("Gửi Thông Tin Kiểm Kiểm Kê")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                  ArrayList<InventoryLab> arrLabRoom = getListViewData();
-                                 new SendPostRequest().execute(arrLabRoom);
-                                 // hide fabbutton not to allow user submit data second time
-                                 fabSave.hide();
-                                // Inform success for user
-                                 final Dialog openDialog = new Dialog(ActivityInventory.this);
-                                 openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                 openDialog.setContentView(R.layout.dialog_inventory_success);
-                                 openDialog.show();
-                                 final Button dialogButtonSuccess = (Button)openDialog.findViewById(R.id.daButtonSuccess);
-                                 dialogButtonSuccess.setOnClickListener(new View.OnClickListener() {
-                                     @Override
-                                     public void onClick(View v) {
-                                         listView.setEnabled(false);
-                                         openDialog.dismiss();
-                                     }
-                                 });
+                arrLabRoom = getListViewData();
+                if (arrLabRoom.isEmpty()) {
+                    final Dialog openDialog = new Dialog(ActivityInventory.this);
+                    openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    openDialog.setContentView(R.layout.dialog_inventory_fail);
+                    openDialog.show();
+//                    Toast.makeText(ActivityInventory.this, "Bạn chưa nhập thông tin kiểm kê. Vui lòng kiểm tra lại", Toast.LENGTH_LONG).show();
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityInventory.this);
+                    builder.setMessage("Bạn phải kiểm tra thông tin nhập của bạn cẩn thận trước khi gửi.\nBạn có chắc chắn không?")
+                            .setTitle("Gửi Thông Tin Kiểm Kê")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    new SendPostRequest().execute(arrLabRoom);
+                                    // hide fabbutton not to allow user submit data second time
+                                    fabSave.hide();
+                                    // Inform success for user
+                                    final Dialog openDialog = new Dialog(ActivityInventory.this);
+                                    openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                    openDialog.setContentView(R.layout.dialog_inventory_success);
+                                    openDialog.show();
+                                    final Button dialogButtonSuccess = (Button) openDialog.findViewById(R.id.daButtonSuccess);
+                                    dialogButtonSuccess.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            listView.setEnabled(false);
+                                            openDialog.dismiss();
+                                        }
+                                    });
 
-                            }
-                        })
-                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                            .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                        }).show();
+                                }
+                            }).show();
+                }
             }
         });
     }
@@ -139,8 +150,9 @@ public class ActivityInventory extends AppCompatActivity {
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<Labroom> arrayAdapter = new ArrayAdapter<Labroom>(
                 ActivityInventory.this,
-                android.R.layout.simple_list_item_1,
+                R.layout.spinner_item,
                 arrlistLabRoom);
+//        ArrayAdapter<Labroom> arrayAdapter = ArrayAdapter.createFromResource(this,arrlistLabRoom, R.layout.spinner_item);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -189,6 +201,13 @@ public class ActivityInventory extends AppCompatActivity {
                 edNumberOfUnusedDevice = (EditText) openDialog.findViewById(R.id.edNumberOfUnusedDevice);
                 edNoteDevice = edNoteDevice = (EditText) openDialog.findViewById(R.id.edNoteDevice);
 
+                // incase user click row item at second time
+                edNumberOfDeviceLeft.setText(edNumberOfDeviceLeftSave.getText().toString());
+                edNumberOfNormalDevice.setText(edNumberOfNormalDeviceSave.getText().toString());
+                edNumberOfBrokenDevice.setText(edNumberOfBrokenDeviceSave.getText().toString());
+                edNumberOfUnusedDevice.setText(edNumberOfUnusedDeviceSave.getText().toString());
+                edNoteDevice.setText(edNoteDeviceSave.getText().toString());
+
                 Button diologButton = (Button) openDialog.findViewById(R.id.daButtonOK);
                 diologButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -214,20 +233,46 @@ public class ActivityInventory extends AppCompatActivity {
             }
         });
     }
-    public boolean checkDataInput(){
-        for(int i=0; i<listView.getCount(); i++){
-            // check if data input for each row
-            // if yes return true
-            // if no => Bạn chưa nhập thông tin kiểm kê, vui lòng kiểm tra lại
-        }
-        return true;
-    }
+//    public boolean checkDataInput(){
+//        boolean check = false;
+//        for(int i=0; i<listView.getCount(); i++) {
+//            View view = listView.getChildAt(i);
+//            edNumberOfDeviceLeftSave = (EditText) view.findViewById(R.id.edNumberOfDeviceLeftSave);
+//            edNumberOfNormalDeviceSave = (EditText) view.findViewById(R.id.edNumberOfNormalDeviceSave);
+//            edNumberOfBrokenDeviceSave = (EditText) view.findViewById(R.id.edNumberOfBrokenDeviceSave);
+//            edNumberOfUnusedDeviceSave = (EditText) view.findViewById(R.id.edNumberOfUnusedDeviceSave);
+//            edNoteDeviceSave = (EditText) view.findViewById(R.id.edNoteDeviceSave);
+//            if (edNumberOfDeviceLeftSave.getText().toString().trim().length() > 0
+//                    || edNumberOfNormalDeviceSave.getText().toString().length() > 0
+//                    || edNumberOfBrokenDeviceSave.getText().toString().length() > 0
+//                    || edNumberOfUnusedDeviceSave.getText().toString().length() > 0
+//                    || edNoteDeviceSave.getText().toString().length() > 0) {
+//                check = true;
+//            }
+//
+//
+//            // check if data input for each row
+//            // if yes return true
+//        }    // if no => Bạn chưa nhập thông tin kiểm kê, vui lòng kiểm tra lại
+//        return check;
+//    }
     public boolean checkInputInventory(){
         if(edNumberOfDeviceLeft.getText().toString().trim().length()>0
          || edNumberOfNormalDevice.getText().toString().trim().length()>0
          || edNumberOfBrokenDevice.getText().toString().trim().length()>0
          || edNumberOfUnusedDevice.getText().toString().trim().length()>0
          || edNoteDevice.getText().toString().trim().length()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public boolean checkInputInventorySave(){
+        if(edNumberOfDeviceLeftSave.getText().toString().trim().length()==0
+                && edNumberOfNormalDeviceSave.getText().toString().trim().length()==0
+                && edNumberOfBrokenDeviceSave.getText().toString().trim().length()==0
+                && edNumberOfUnusedDeviceSave.getText().toString().trim().length()==0
+                && edNoteDeviceSave.getText().toString().trim().length()==0){
             return true;
         }else{
             return false;
@@ -252,18 +297,42 @@ public class ActivityInventory extends AppCompatActivity {
             View view = listView.getChildAt(i);
             tvCodeParent =(TextView) view.findViewById(R.id.tvCodeParent);
             //Log.d("codeparent", codeParent.getText().toString());
-            edNumberOfDeviceLeftSave = (EditText) view.findViewById(R.id.edNumberOfDeviceLeftSave);
             edNoteDeviceSave = (EditText) view.findViewById(R.id.edNoteDeviceSave);
+
             if (edNoteDeviceSave.getText().toString().equals("") && edNumberOfDeviceLeftSave.getText()==null) {
+
+            edNumberOfDeviceLeftSave = (EditText) view.findViewById(R.id.edNumberOfDeviceLeftSave);
+            edNumberOfNormalDeviceSave = (EditText) view.findViewById(R.id.edNumberOfNormalDeviceSave);
+            edNumberOfBrokenDeviceSave = (EditText) view.findViewById(R.id.edNumberOfBrokenDeviceSave);
+            edNumberOfUnusedDeviceSave = (EditText) view.findViewById(R.id.edNumberOfUnusedDeviceSave);
+            if (checkInputInventorySave()) {
+
                  continue;
             }else{
+                int numberOfDeviceLeft = -1;
+                int numberOfNormalDevice = -1;
+                int numberOfBrokenDevice = -1;
+                int numberOfUnusedDevice = -1;
+                if(edNumberOfDeviceLeftSave.getText().toString().trim().length()>0) {
+                    numberOfDeviceLeft = Integer.parseInt(edNumberOfDeviceLeftSave.getText().toString());
+                }
+                if(edNumberOfNormalDeviceSave.getText().toString().trim().length()>0){
+                    numberOfNormalDevice = Integer.parseInt(edNumberOfNormalDeviceSave.getText().toString());
+                }
+                if(edNumberOfBrokenDeviceSave.getText().toString().trim().length()>0){
+                    numberOfBrokenDevice = Integer.parseInt(edNumberOfBrokenDeviceSave.getText().toString());
+                }
+                if(edNumberOfUnusedDeviceSave.getText().toString().trim().length()>0){
+                    numberOfUnusedDevice = Integer.parseInt(edNumberOfUnusedDeviceSave.getText().toString());
+                }
                 inventoryLab = new InventoryLab(
                         tvCodeParent.getText().toString(),
-                        Integer.parseInt(edNumberOfDeviceLeftSave.getText().toString()),
-                        Integer.parseInt(edNumberOfNormalDeviceSave.getText().toString()),
-                        Integer.parseInt(edNumberOfBrokenDeviceSave.getText().toString()),
-                        Integer.parseInt(edNumberOfUnusedDeviceSave.getText().toString()),
+                        numberOfDeviceLeft,
+                        numberOfNormalDevice,
+                        numberOfBrokenDevice,
+                        numberOfUnusedDevice,
                         edNoteDeviceSave.getText().toString());
+                Log.d("dulieuday", inventoryLab.toString());
             }
             arrayLabRoom.add(inventoryLab);
         }

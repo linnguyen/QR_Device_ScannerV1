@@ -7,13 +7,13 @@
     tools:context="com.example.ryne.qr_device_scanner.ActivityDeviceInformation">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolBarDeviceInformation"
-        android:title="Back"
+        android:title="Quay lại"
         android:layout_width="match_parent"
         android:background="#00BCD4"
         android:layout_height="56dp">
     </android.support.v7.widget.Toolbar>
     <TextView
-        android:text=" DEVICE INFORMATION"
+        android:text="THÔNG TIN THIẾT BỊ"
         android:gravity="left"
         android:layout_marginLeft="5dp"
         android:textColor="#37474F"

@@ -30,4 +30,6 @@
     <string name="unuseded_status">Xin thanh lí</string>
     <string name="success_submit">Tất cả thông tin kiểm kê đã được lưu thành công. Chọn phòng thực hành khác để kiểm kê.</string>
     <string name="success">Thành Công</string>
+    <string name="fail">Thất Bại</string>
+    <string name="fail_submit">Bạn chưa nhập thông tin kiểm kê. Vui lòng kiểm tra lại</string>
 </resources>
