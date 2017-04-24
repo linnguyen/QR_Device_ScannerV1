@@ -254,7 +254,7 @@ public class ActivityInventory extends AppCompatActivity {
             //Log.d("codeparent", codeParent.getText().toString());
             edNumberOfDeviceLeftSave = (EditText) view.findViewById(R.id.edNumberOfDeviceLeftSave);
             edNoteDeviceSave = (EditText) view.findViewById(R.id.edNoteDeviceSave);
-            if (edNoteDeviceSave.getText().toString().equals("") && edNumberOfDeviceLeftSave.getText()!=null) {
+            if (edNoteDeviceSave.getText().toString().equals("") && edNumberOfDeviceLeftSave.getText()==null) {
                  continue;
             }else{
                 inventoryLab = new InventoryLab(
