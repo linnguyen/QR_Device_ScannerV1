@@ -12,7 +12,7 @@
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content">
                 <TextView
-                    android:text="Name:"
+                    android:text="Tên:"
                     android:textSize="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="Parent code:"
+                android:text="Mã thiết bị:"
                 android:textSize="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="Origin:"
+                android:text="Nguốn gốc:"
                 android:textSize="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="Date of produce:"
+                android:text="Ngày sản xuất:"
                 android:textSize="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -92,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="Staff:"
+                android:text="Người quản lí:"
                 android:textSize="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -114,7 +114,7 @@
             android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/digital"
-                    android:text="Digital:"
+                    android:text="Thông số kĩ thuật:"
                     android:textSize="16dp"
                     android:layout_weight="1"
                     android:layout_span="2"

@@ -201,6 +201,13 @@ public class ActivityInventory extends AppCompatActivity {
                 edNumberOfUnusedDevice = (EditText) openDialog.findViewById(R.id.edNumberOfUnusedDevice);
                 edNoteDevice = edNoteDevice = (EditText) openDialog.findViewById(R.id.edNoteDevice);
 
+                // incase user click row item at second time
+                edNumberOfDeviceLeft.setText(edNumberOfDeviceLeftSave.getText().toString());
+                edNumberOfNormalDevice.setText(edNumberOfNormalDeviceSave.getText().toString());
+                edNumberOfBrokenDevice.setText(edNumberOfBrokenDeviceSave.getText().toString());
+                edNumberOfUnusedDevice.setText(edNumberOfUnusedDeviceSave.getText().toString());
+                edNoteDevice.setText(edNoteDeviceSave.getText().toString());
+
                 Button diologButton = (Button) openDialog.findViewById(R.id.daButtonOK);
                 diologButton.setOnClickListener(new View.OnClickListener() {
                     @Override
