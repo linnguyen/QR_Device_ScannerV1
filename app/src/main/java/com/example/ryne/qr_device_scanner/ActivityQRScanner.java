@@ -81,7 +81,7 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
     public void initToolBar(){
         toolBar = (Toolbar) findViewById(R.id.toolBarQRSCanner);
         toolBar.setNavigationIcon(R.drawable.qrcode);
-        toolBar.setTitle("Device Scanner");
+        toolBar.setTitle("Quản Lí Thiết Bị");
     }
     public void initSlider(){
         imageSlider = (SliderLayout) findViewById(R.id.sliderImage);

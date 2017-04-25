@@ -64,7 +64,7 @@ public class JSONDeviceParser {
             for (int i=0; i<arrDeviceJSon.length(); i++){
                 JSONObject objectDevice = arrDeviceJSon.getJSONObject(i);
                 String name = objectDevice.getString("ten_thiet_bi");
-                String code_of_parent = objectDevice.getString("thiet_bi_id");
+                String code_of_parent = objectDevice.getString("ma_thiet_bi");
                 Device device = new Device(name, code_of_parent);
                 arrDevice.add(device);
             }

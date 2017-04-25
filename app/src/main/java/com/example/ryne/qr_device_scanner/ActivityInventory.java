@@ -233,29 +233,6 @@ public class ActivityInventory extends AppCompatActivity {
             }
         });
     }
-//    public boolean checkDataInput(){
-//        boolean check = false;
-//        for(int i=0; i<listView.getCount(); i++) {
-//            View view = listView.getChildAt(i);
-//            edNumberOfDeviceLeftSave = (EditText) view.findViewById(R.id.edNumberOfDeviceLeftSave);
-//            edNumberOfNormalDeviceSave = (EditText) view.findViewById(R.id.edNumberOfNormalDeviceSave);
-//            edNumberOfBrokenDeviceSave = (EditText) view.findViewById(R.id.edNumberOfBrokenDeviceSave);
-//            edNumberOfUnusedDeviceSave = (EditText) view.findViewById(R.id.edNumberOfUnusedDeviceSave);
-//            edNoteDeviceSave = (EditText) view.findViewById(R.id.edNoteDeviceSave);
-//            if (edNumberOfDeviceLeftSave.getText().toString().trim().length() > 0
-//                    || edNumberOfNormalDeviceSave.getText().toString().length() > 0
-//                    || edNumberOfBrokenDeviceSave.getText().toString().length() > 0
-//                    || edNumberOfUnusedDeviceSave.getText().toString().length() > 0
-//                    || edNoteDeviceSave.getText().toString().length() > 0) {
-//                check = true;
-//            }
-//
-//
-//            // check if data input for each row
-//            // if yes return true
-//        }    // if no => Bạn chưa nhập thông tin kiểm kê, vui lòng kiểm tra lại
-//        return check;
-//    }
     public boolean checkInputInventory(){
         if(edNumberOfDeviceLeft.getText().toString().trim().length()>0
          || edNumberOfNormalDevice.getText().toString().trim().length()>0
@@ -290,39 +267,36 @@ public class ActivityInventory extends AppCompatActivity {
         return codeParent.getText().toString();
     }
     // this function for test
-    public ArrayList<InventoryLab> getListViewData(){
-        ArrayList<InventoryLab> arrayLabRoom =new ArrayList<>();
+    public ArrayList<InventoryLab> getListViewData() {
+        ArrayList<InventoryLab> arrayLabRoom = new ArrayList<>();
         InventoryLab inventoryLab = null;
-        for (int i=0; i< listView.getCount(); i++){
+        for (int i = 0; i < listView.getCount(); i++) {
             View view = listView.getChildAt(i);
-            tvCodeParent =(TextView) view.findViewById(R.id.tvCodeParent);
+            tvCodeParent = (TextView) view.findViewById(R.id.tvCodeParent);
             //Log.d("codeparent", codeParent.getText().toString());
             edNoteDeviceSave = (EditText) view.findViewById(R.id.edNoteDeviceSave);
-
-            if (edNoteDeviceSave.getText().toString().equals("") && edNumberOfDeviceLeftSave.getText()==null) {
-
             edNumberOfDeviceLeftSave = (EditText) view.findViewById(R.id.edNumberOfDeviceLeftSave);
             edNumberOfNormalDeviceSave = (EditText) view.findViewById(R.id.edNumberOfNormalDeviceSave);
             edNumberOfBrokenDeviceSave = (EditText) view.findViewById(R.id.edNumberOfBrokenDeviceSave);
             edNumberOfUnusedDeviceSave = (EditText) view.findViewById(R.id.edNumberOfUnusedDeviceSave);
             if (checkInputInventorySave()) {
 
-                 continue;
-            }else{
+                continue;
+            } else {
                 int numberOfDeviceLeft = -1;
                 int numberOfNormalDevice = -1;
                 int numberOfBrokenDevice = -1;
                 int numberOfUnusedDevice = -1;
-                if(edNumberOfDeviceLeftSave.getText().toString().trim().length()>0) {
+                if (edNumberOfDeviceLeftSave.getText().toString().trim().length() > 0) {
                     numberOfDeviceLeft = Integer.parseInt(edNumberOfDeviceLeftSave.getText().toString());
                 }
-                if(edNumberOfNormalDeviceSave.getText().toString().trim().length()>0){
+                if (edNumberOfNormalDeviceSave.getText().toString().trim().length() > 0) {
                     numberOfNormalDevice = Integer.parseInt(edNumberOfNormalDeviceSave.getText().toString());
                 }
-                if(edNumberOfBrokenDeviceSave.getText().toString().trim().length()>0){
+                if (edNumberOfBrokenDeviceSave.getText().toString().trim().length() > 0) {
                     numberOfBrokenDevice = Integer.parseInt(edNumberOfBrokenDeviceSave.getText().toString());
                 }
-                if(edNumberOfUnusedDeviceSave.getText().toString().trim().length()>0){
+                if (edNumberOfUnusedDeviceSave.getText().toString().trim().length() > 0) {
                     numberOfUnusedDevice = Integer.parseInt(edNumberOfUnusedDeviceSave.getText().toString());
                 }
                 inventoryLab = new InventoryLab(
@@ -336,7 +310,7 @@ public class ActivityInventory extends AppCompatActivity {
             }
             arrayLabRoom.add(inventoryLab);
         }
-       // Log.d("arrayne", arrayLabRoom.get(1).getParentCode());
+            // Log.d("arrayne", arrayLabRoom.get(1).getParentCode());
         return arrayLabRoom;
     }
     public class SendPostRequest extends AsyncTask<ArrayList<InventoryLab>, Void, String>{
