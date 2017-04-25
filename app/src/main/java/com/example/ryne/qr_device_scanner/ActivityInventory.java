@@ -298,11 +298,15 @@ public class ActivityInventory extends AppCompatActivity {
             tvCodeParent =(TextView) view.findViewById(R.id.tvCodeParent);
             //Log.d("codeparent", codeParent.getText().toString());
             edNoteDeviceSave = (EditText) view.findViewById(R.id.edNoteDeviceSave);
+
+            if (edNoteDeviceSave.getText().toString().equals("") && edNumberOfDeviceLeftSave.getText()==null) {
+
             edNumberOfDeviceLeftSave = (EditText) view.findViewById(R.id.edNumberOfDeviceLeftSave);
             edNumberOfNormalDeviceSave = (EditText) view.findViewById(R.id.edNumberOfNormalDeviceSave);
             edNumberOfBrokenDeviceSave = (EditText) view.findViewById(R.id.edNumberOfBrokenDeviceSave);
             edNumberOfUnusedDeviceSave = (EditText) view.findViewById(R.id.edNumberOfUnusedDeviceSave);
             if (checkInputInventorySave()) {
+
                  continue;
             }else{
                 int numberOfDeviceLeft = -1;
