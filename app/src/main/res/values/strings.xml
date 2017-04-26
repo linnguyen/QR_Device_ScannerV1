@@ -32,4 +32,5 @@
     <string name="success">Thành Công</string>
     <string name="fail">Thất Bại</string>
     <string name="fail_submit">Bạn chưa nhập thông tin kiểm kê. Vui lòng kiểm tra lại</string>
+    <string name="season">Chọn Đợt Kiểm Kê</string>
 </resources>

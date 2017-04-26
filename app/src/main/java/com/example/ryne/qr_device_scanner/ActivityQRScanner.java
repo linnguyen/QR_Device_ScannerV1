@@ -1,6 +1,7 @@
 package com.example.ryne.qr_device_scanner;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
@@ -11,8 +12,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -23,8 +28,10 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import adapter.AdapterSeason;
 import data.HttpHandler;
 import data.JSONDeviceParser;
 import model.Device;
@@ -36,9 +43,14 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
     private ImageView imInventory;
     private ImageView imWareHouse;
     private SliderLayout imageSlider;
+    private RadioGroup rbgSeason;
+    private ListView lvSeason;
 
     private JSONDeviceParser jsonDeviceParser = new JSONDeviceParser();
     private Device device = null;
+    private ArrayList<String> arrSeason = null;
+    private AdapterSeason adapterSeason = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +59,14 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
         initToolBar();
         initSlider();
         final Activity activity = this;
+        arrSeason = new ArrayList<>();
+        arrSeason.add("Dinh ky");
+        arrSeason.add("Cuoi Nam");
+        arrSeason.add("Theo mua");
         imQrSCanner = (ImageView)findViewById(R.id.qrScanner);
         imInventory = (ImageView)findViewById(R.id.inventory);
         imWareHouse = (ImageView)findViewById(R.id.wareHouse);
+//        rbgSeason = (RadioGroup) findViewById(R.id.rbgSeason);
         imQrSCanner.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -65,8 +82,16 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
         imInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ActivityQRScanner.this, ActivityInventory.class);
-                startActivity(intent);
+                //
+                final Dialog openDialog = new Dialog(ActivityQRScanner.this);
+                openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                openDialog.setContentView(R.layout.dialog_inventory_season);
+                adapterSeason = new AdapterSeason(arrSeason, getApplicationContext());
+                lvSeason = (ListView) openDialog.findViewById(R.id.lvSeason);
+                lvSeason.setAdapter(adapterSeason);
+                openDialog.show();
+//                Intent intent = new Intent(ActivityQRScanner.this, ActivityInventory.class);
+//                startActivity(intent);
             }
         });
         imWareHouse.setOnClickListener(new View.OnClickListener() {
@@ -78,11 +103,13 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
         });
 
     }
+
     public void initToolBar(){
         toolBar = (Toolbar) findViewById(R.id.toolBarQRSCanner);
         toolBar.setNavigationIcon(R.drawable.qrcode);
         toolBar.setTitle("Quản Lí Thiết Bị");
     }
+
     public void initSlider(){
         imageSlider = (SliderLayout) findViewById(R.id.sliderImage);
         HashMap<String, Integer> file_maps = new HashMap<>();

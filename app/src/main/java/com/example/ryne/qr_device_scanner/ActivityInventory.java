@@ -233,6 +233,7 @@ public class ActivityInventory extends AppCompatActivity {
             }
         });
     }
+
     public boolean checkInputInventory(){
         if(edNumberOfDeviceLeft.getText().toString().trim().length()>0
          || edNumberOfNormalDevice.getText().toString().trim().length()>0
@@ -244,6 +245,7 @@ public class ActivityInventory extends AppCompatActivity {
             return false;
         }
     }
+
     public boolean checkInputInventorySave(){
         if(edNumberOfDeviceLeftSave.getText().toString().trim().length()==0
                 && edNumberOfNormalDeviceSave.getText().toString().trim().length()==0
