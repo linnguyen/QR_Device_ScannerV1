@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import model.Device;
+import model.InventorySeason;
 import model.Labroom;
 
 /**
@@ -72,5 +73,22 @@ public class JSONDeviceParser {
             e.printStackTrace();
         }
         return arrDevice;
+    }
+    public static ArrayList<InventorySeason> getInventorySeason(String jsonString) {
+        ArrayList<InventorySeason> arrIvSeason = new ArrayList<>();
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONArray arrIvSeasonJSon = jsonObject.getJSONArray("inventory_season");
+            for(int i=0; i< arrIvSeasonJSon.length(); i++){
+                JSONObject objectIvSeason = arrIvSeasonJSon.getJSONObject(i);
+                int id = objectIvSeason.getInt("id_dot");
+                String name = objectIvSeason.getString("ten");
+                InventorySeason inventorySeason = new InventorySeason(id, name);
+                arrIvSeason.add(inventorySeason);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return arrIvSeason;
     }
 }

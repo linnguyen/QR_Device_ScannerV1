@@ -34,5 +34,6 @@
     <string name="fail_submit">Bạn chưa nhập thông tin kiểm kê. Vui lòng kiểm tra lại</string>
     <string name="season">Chọn Đợt Kiểm Kê</string>
     <string name="title_activity_test">Test</string>
-    <string name="inventory_equipment">Kiểm Kê</string>
+    <string name="inventory_equipment">Kiểm kê </string>
+    <string name="evaluation">Đánh giá tình trạng </string>
 </resources>

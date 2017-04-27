@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +21,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,7 +37,7 @@ import java.util.HashMap;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import Utils.Config;
+import utils.Config;
 import adapter.AdapterInventory;
 import data.HttpHandler;
 import data.JSONDeviceParser;

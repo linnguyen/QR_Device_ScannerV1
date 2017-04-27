@@ -17,7 +17,7 @@
             <item
                 android:id="@+id/action_inventory_device2"
                 android:icon="@android:drawable/ic_menu_preferences"
-                android:title="@string/inventory_equipment"
+                android:title="@string/evaluation"
                 />
         </menu>
     </item>

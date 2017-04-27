@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import Utils.Config;
+import utils.Config;
 
 /**
  * Created by lin on 26/12/2016.

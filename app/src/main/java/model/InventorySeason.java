@@ -8,6 +8,9 @@ public class InventorySeason {
     private int id;
     private String name;
 
+    public InventorySeason(){
+
+    }
     public InventorySeason(int id, String name) {
         this.id = id;
         this.name = name;

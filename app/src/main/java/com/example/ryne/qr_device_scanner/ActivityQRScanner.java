@@ -84,7 +84,7 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
         imInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //
+
                 final Dialog openDialog = new Dialog(ActivityQRScanner.this);
                 openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 openDialog.setContentView(R.layout.dialog_inventory_season);
@@ -117,7 +117,7 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
                             openDialog.dismiss();
                         }else{
                             openDialog.dismiss();
-                            Toast.makeText(ActivityQRScanner.this, "Vui chọn đợt kiểm kê", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActivityQRScanner.this, "Vui lòng chọn đợt kiểm kê", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
