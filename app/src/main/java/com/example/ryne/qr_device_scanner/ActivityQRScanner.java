@@ -11,12 +11,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -32,11 +30,9 @@ import com.google.zxing.integration.android.IntentResult;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import adapter.AdapterSeason;
 import data.HttpHandler;
 import data.JSONDeviceParser;
 import model.Device;
-import model.InventoryLab;
 import model.InventorySeason;
 
 public class ActivityQRScanner extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
@@ -52,13 +48,11 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
     private JSONDeviceParser jsonDeviceParser = new JSONDeviceParser();
     private Device device = null;
     private ArrayList<InventorySeason> arrSeason = null;
-    private AdapterSeason adapterSeason = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.startActivity(new Intent(this,ActivityDeviceInformation.class));
+        this.startActivity(new Intent(this,ActivityInventorySeason.class));
         initToolBar();
         initSlider();
         final Activity activity = this;

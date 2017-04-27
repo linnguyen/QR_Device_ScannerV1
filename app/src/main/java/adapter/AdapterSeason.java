@@ -1,43 +1,47 @@
 package adapter;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.ryne.qr_device_scanner.R;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import model.Device;
 
-
 /**
- * Created by ryne on 26/04/2017.
+ * Created by ryne on 03/04/2017.
  */
 
-public class AdapterSeason extends BaseAdapter{
-    LayoutInflater inflater;
-    ArrayList<String> data;
+public class AdapterSeason extends ArrayAdapter<Device> {
+    private ArrayList<Device> arraySearch;
+    private ArrayList<Device> arrayInventory;
 
-    public AdapterSeason(Context context, ArrayList<String> data){
-        inflater = LayoutInflater.from(context);
-        this.data = data;
+    private Context context = null;
+    private TextView nameDevice;
+    public AdapterSeason(ArrayList<Device> data, Context context){
+        super(context, R.layout.row_item_season, data);
+        this.arrayInventory = data;
+        this.context = context;
+        arraySearch = new ArrayList<>();
+        arraySearch.addAll(arrayInventory);
     }
 
     @Override
     public int getCount() {
-        return data.size();
+        return arrayInventory.size();
     }
 
+    @Nullable
     @Override
-    public Object getItem(int position) {
-        return data.get(position);
+    public Device getItem(int position) {
+        return arrayInventory.get(position);
     }
 
     @Override
@@ -47,25 +51,19 @@ public class AdapterSeason extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
-        ViewHolder holder = null;
-        if (v == null) {
-            v = inflater.inflate(R.layout.row_item_season, parent, false);
-            holder = new ViewHolder(v);
-            v.setTag(holder);
-            return null;
+        final View result;
+        Device device = getItem(position);
+        if (convertView == null){
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.row_item_season, parent, false);
+            nameDevice = (TextView) convertView.findViewById(R.id.nameDeviceInventory);
+            result = convertView;
         }else{
-            holder = (ViewHolder) v.getTag();
+            result = convertView;
         }
-        holder.radioGroup.setTag(new Integer(position));
 
-        return v;
-    }
-
-    class ViewHolder {
-        RadioGroup radioGroup;
-        ViewHolder(View v){
-            radioGroup = (RadioGroup) v.findViewById(R.id.rbgSeason);
-        }
+        nameDevice.setText(device.getName());
+        return convertView;
     }
 }
+
