@@ -72,6 +72,7 @@ public class ActivityInventory extends AppCompatActivity {
     private AdapterInventory adapterInventory;
     private Labroom labroom;
     private ArrayList<InventoryLab> arrLabRoom;
+    private int id_dot;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -87,6 +88,10 @@ public class ActivityInventory extends AppCompatActivity {
         // call dattask to load LabRoom from server
         DataTaskLabRoom dataTaskLabRoom = new DataTaskLabRoom();
         dataTaskLabRoom.execute("/lab_rooms");
+        // receive id_dot from activity_qrscanner
+        Intent intent = getIntent();
+        id_dot = intent.getExtras().getInt("id_dot");
+        Log.d("id_dot",Integer.toString(id_dot));
         // process event for FloatActionButton Save
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -345,6 +350,7 @@ public class ActivityInventory extends AppCompatActivity {
                     jsonObjectDevice.put("ghi_chu",arrayLab.get(i).getNoteDevice());
                     jsonArrayDevice.put(jsonObjectDevice);
                 }
+                postParams.put("id_dot",id_dot);
                 postParams.put("array_of_device", jsonArrayDevice);
                 postParams.put("lab_room_id", labroom.getId());
                 outputStream = connection.getOutputStream();

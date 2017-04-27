@@ -33,4 +33,6 @@
     <string name="fail">Thất Bại</string>
     <string name="fail_submit">Bạn chưa nhập thông tin kiểm kê. Vui lòng kiểm tra lại</string>
     <string name="season">Chọn Đợt Kiểm Kê</string>
+    <string name="title_activity_test">Test</string>
+    <string name="inventory_equipment">Kiểm Kê</string>
 </resources>

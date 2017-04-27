@@ -6,6 +6,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -61,6 +63,25 @@ public class ActivityDeviceInformation extends AppCompatActivity {
         //digital.setTextColor(Color.parseColor("#212121"));
 //        digital.setText("Digital:\n"+device.getDigital());
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_inventory, menu);
+        MenuItem myInventoryMenuItem = menu.findItem(R.id.action_inventory);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.miInventory:
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void initToolBar(){
         toolbar = (Toolbar)this.findViewById(R.id.toolBarDeviceInformation);
         toolbar.setTitle(R.string.toolbarTitle);
@@ -74,8 +95,14 @@ public class ActivityDeviceInformation extends AppCompatActivity {
             }
         });
     }
+
+    public void showFormInvenrory(){
+
+    }
     private String getColoredSpanned(String text, String color) {
         String input = "<font color=" + color + ">" + text + "</font>";
         return input;
     }
+
+
 }

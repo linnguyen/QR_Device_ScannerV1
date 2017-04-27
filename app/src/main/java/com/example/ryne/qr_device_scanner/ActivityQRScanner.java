@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ import adapter.AdapterSeason;
 import data.HttpHandler;
 import data.JSONDeviceParser;
 import model.Device;
+import model.InventoryLab;
+import model.InventorySeason;
 
 public class ActivityQRScanner extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     private Toolbar toolBar;
@@ -44,29 +47,28 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
     private ImageView imWareHouse;
     private SliderLayout imageSlider;
     private RadioGroup rbgSeason;
-    private ListView lvSeason;
+    private InventorySeason inventorySeasonSelected;
 
     private JSONDeviceParser jsonDeviceParser = new JSONDeviceParser();
     private Device device = null;
-    private ArrayList<String> arrSeason = null;
+    private ArrayList<InventorySeason> arrSeason = null;
     private AdapterSeason adapterSeason = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       // this.startActivity(new Intent(this,ActivityInventory.class));
+        this.startActivity(new Intent(this,ActivityDeviceInformation.class));
         initToolBar();
         initSlider();
         final Activity activity = this;
         arrSeason = new ArrayList<>();
-        arrSeason.add("Dinh ky");
-        arrSeason.add("Cuoi Nam");
-        arrSeason.add("Theo mua");
+        arrSeason.add(new InventorySeason(1, "Thường xuyên"));
+        arrSeason.add(new InventorySeason(2,"Định Kì"));
+        arrSeason.add(new InventorySeason(3, "Đột Xuất"));
         imQrSCanner = (ImageView)findViewById(R.id.qrScanner);
         imInventory = (ImageView)findViewById(R.id.inventory);
         imWareHouse = (ImageView)findViewById(R.id.wareHouse);
-//        rbgSeason = (RadioGroup) findViewById(R.id.rbgSeason);
         imQrSCanner.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -86,12 +88,40 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
                 final Dialog openDialog = new Dialog(ActivityQRScanner.this);
                 openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 openDialog.setContentView(R.layout.dialog_inventory_season);
-                adapterSeason = new AdapterSeason(arrSeason, getApplicationContext());
-                lvSeason = (ListView) openDialog.findViewById(R.id.lvSeason);
-                lvSeason.setAdapter(adapterSeason);
+                rbgSeason = (RadioGroup) openDialog.findViewById(R.id.rbgSeason);
+                for(int i=0; i< arrSeason.size(); i++){
+                    RadioButton radioButton = new RadioButton(ActivityQRScanner.this);
+                    radioButton.setText(arrSeason.get(i).getName());
+                    radioButton.setTag(arrSeason.get(i));
+                    rbgSeason.addView(radioButton);
+                }
                 openDialog.show();
-//                Intent intent = new Intent(ActivityQRScanner.this, ActivityInventory.class);
-//                startActivity(intent);
+                rbgSeason.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                        int idex =  rbgSeason.getCheckedRadioButtonId();
+                        RadioButton rbSelected = (RadioButton) rbgSeason.findViewById(idex);
+                        inventorySeasonSelected = (InventorySeason) rbSelected.getTag();
+
+//                        Log.d("season ne:", inventorySeason.getName()+ inventorySeason.getId());
+                    }
+                });
+                final Button dialogButtonSeason = (Button) openDialog.findViewById(R.id.daButtonSeason);
+                dialogButtonSeason.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (inventorySeasonSelected != null) {
+                            Intent intent = new Intent(ActivityQRScanner.this, ActivityInventory.class);
+                            intent.putExtra("id_dot",inventorySeasonSelected.getId());
+                            startActivity(intent);
+                            openDialog.dismiss();
+                        }else{
+                            openDialog.dismiss();
+                            Toast.makeText(ActivityQRScanner.this, "Vui chọn đợt kiểm kê", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
             }
         });
         imWareHouse.setOnClickListener(new View.OnClickListener() {
