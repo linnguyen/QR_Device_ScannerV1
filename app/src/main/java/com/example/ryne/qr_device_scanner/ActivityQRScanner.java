@@ -65,6 +65,7 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
         imInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("labroomne", "tired");
                 Intent intent = new Intent(ActivityQRScanner.this, ActivityInventory.class);
                 startActivity(intent);
             }

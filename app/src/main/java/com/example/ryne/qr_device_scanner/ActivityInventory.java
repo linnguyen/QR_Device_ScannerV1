@@ -290,56 +290,52 @@ public class ActivityInventory extends AppCompatActivity {
         return codeParent.getText().toString();
     }
     // this function for test
-    public ArrayList<InventoryLab> getListViewData(){
-        ArrayList<InventoryLab> arrayLabRoom =new ArrayList<>();
+    public ArrayList<InventoryLab> getListViewData() {
+        ArrayList<InventoryLab> arrayLabRoom = new ArrayList<>();
         InventoryLab inventoryLab = null;
-        for (int i=0; i< listView.getCount(); i++){
+        for (int i = 0; i < listView.getCount(); i++) {
             View view = listView.getChildAt(i);
-            tvCodeParent =(TextView) view.findViewById(R.id.tvCodeParent);
+            tvCodeParent = (TextView) view.findViewById(R.id.tvCodeParent);
             //Log.d("codeparent", codeParent.getText().toString());
             edNoteDeviceSave = (EditText) view.findViewById(R.id.edNoteDeviceSave);
-
-            if (edNoteDeviceSave.getText().toString().equals("") && edNumberOfDeviceLeftSave.getText()==null) {
-
             edNumberOfDeviceLeftSave = (EditText) view.findViewById(R.id.edNumberOfDeviceLeftSave);
             edNumberOfNormalDeviceSave = (EditText) view.findViewById(R.id.edNumberOfNormalDeviceSave);
             edNumberOfBrokenDeviceSave = (EditText) view.findViewById(R.id.edNumberOfBrokenDeviceSave);
             edNumberOfUnusedDeviceSave = (EditText) view.findViewById(R.id.edNumberOfUnusedDeviceSave);
             if (checkInputInventorySave()) {
-
-                 continue;
-            }else{
-                int numberOfDeviceLeft = -1;
-                int numberOfNormalDevice = -1;
-                int numberOfBrokenDevice = -1;
-                int numberOfUnusedDevice = -1;
-                if(edNumberOfDeviceLeftSave.getText().toString().trim().length()>0) {
-                    numberOfDeviceLeft = Integer.parseInt(edNumberOfDeviceLeftSave.getText().toString());
+                continue;
+            } else {
+                    int numberOfDeviceLeft = -1;
+                    int numberOfNormalDevice = -1;
+                    int numberOfBrokenDevice = -1;
+                    int numberOfUnusedDevice = -1;
+                    if (edNumberOfDeviceLeftSave.getText().toString().trim().length() > 0) {
+                        numberOfDeviceLeft = Integer.parseInt(edNumberOfDeviceLeftSave.getText().toString());
+                    }
+                    if (edNumberOfNormalDeviceSave.getText().toString().trim().length() > 0) {
+                        numberOfNormalDevice = Integer.parseInt(edNumberOfNormalDeviceSave.getText().toString());
+                    }
+                    if (edNumberOfBrokenDeviceSave.getText().toString().trim().length() > 0) {
+                        numberOfBrokenDevice = Integer.parseInt(edNumberOfBrokenDeviceSave.getText().toString());
+                    }
+                    if (edNumberOfUnusedDeviceSave.getText().toString().trim().length() > 0) {
+                        numberOfUnusedDevice = Integer.parseInt(edNumberOfUnusedDeviceSave.getText().toString());
+                    }
+                    inventoryLab = new InventoryLab(
+                            tvCodeParent.getText().toString(),
+                            numberOfDeviceLeft,
+                            numberOfNormalDevice,
+                            numberOfBrokenDevice,
+                            numberOfUnusedDevice,
+                            edNoteDeviceSave.getText().toString());
+                    Log.d("dulieuday", inventoryLab.toString());
                 }
-                if(edNumberOfNormalDeviceSave.getText().toString().trim().length()>0){
-                    numberOfNormalDevice = Integer.parseInt(edNumberOfNormalDeviceSave.getText().toString());
-                }
-                if(edNumberOfBrokenDeviceSave.getText().toString().trim().length()>0){
-                    numberOfBrokenDevice = Integer.parseInt(edNumberOfBrokenDeviceSave.getText().toString());
-                }
-                if(edNumberOfUnusedDeviceSave.getText().toString().trim().length()>0){
-                    numberOfUnusedDevice = Integer.parseInt(edNumberOfUnusedDeviceSave.getText().toString());
-                }
-                inventoryLab = new InventoryLab(
-                        tvCodeParent.getText().toString(),
-                        numberOfDeviceLeft,
-                        numberOfNormalDevice,
-                        numberOfBrokenDevice,
-                        numberOfUnusedDevice,
-                        edNoteDeviceSave.getText().toString());
-                Log.d("dulieuday", inventoryLab.toString());
+                arrayLabRoom.add(inventoryLab);
             }
-            arrayLabRoom.add(inventoryLab);
-        }
-       // Log.d("arrayne", arrayLabRoom.get(1).getParentCode());
+            // Log.d("arrayne", arrayLabRoom.get(1).getParentCode());
         return arrayLabRoom;
     }
-    public class SendPostRequest extends AsyncTask<ArrayList<InventoryLab>, Void, String>{
+    private class SendPostRequest extends AsyncTask<ArrayList<InventoryLab>, Void, String>{
         OutputStream outputStream;
         BufferedWriter bufferedWriter;
         JSONObject jsonObjectDevice;
