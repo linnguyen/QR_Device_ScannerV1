@@ -43,6 +43,8 @@ public class ActivityDeviceInformation extends AppCompatActivity {
     private Toolbar toolbar;
     private Date date;
     private InventorySeason inventorySeasonSelected;
+    // xoa di
+    private String device_code = "Fdldd";
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,21 +93,25 @@ public class ActivityDeviceInformation extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.miInventory:
-                Form.showDialogInventorySeasonSelect(ActivityDeviceInformation.this);
-                Form.btDaSeason.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        inventorySeasonSelected = Form.inventorySeasonSelected;
-                        if (inventorySeasonSelected != null) {
-                           // Log.d("ses ne", inventorySeasonSelected.toString());
-                            Toast.makeText(ActivityDeviceInformation.this, "Duoc ma", Toast.LENGTH_LONG).show();
-                            showFormInvenrory();
-                        }else{
-                            Form.openDialog.dismiss();
-                            Toast.makeText(ActivityDeviceInformation.this, "Vui lòng chọn đợt kiểm kê", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+//                Form.showDialogInventorySeasonSelect(ActivityDeviceInformation.this);
+//                Form.btDaSeason.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        inventorySeasonSelected = Form.inventorySeasonSelected;
+//                        if (inventorySeasonSelected != null) {
+//                           // Log.d("ses ne", inventorySeasonSelected.toString());
+//                            Toast.makeText(ActivityDeviceInformation.this, "Duoc ma", Toast.LENGTH_LONG).show();
+//                            showFormInvenrory();
+//                        }else{
+//                            Form.openDialog.dismiss();
+//                            Toast.makeText(ActivityDeviceInformation.this, "Vui lòng chọn đợt kiểm kê", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                });
+                Intent intent = new Intent(ActivityDeviceInformation.this, ActivityInventorySeason.class);
+                intent.putExtra("device_code", device_code);
+                startActivity(intent);
+                overridePendingTransition(R.anim.top_in, R.anim.bottom_out);
                 return true;
         }
         return super.onOptionsItemSelected(item);

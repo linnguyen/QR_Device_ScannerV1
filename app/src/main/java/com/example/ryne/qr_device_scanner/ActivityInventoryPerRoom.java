@@ -45,7 +45,7 @@ import model.Device;
 import model.InventoryLab;
 import model.Labroom;
 
-public class ActivityInventory extends AppCompatActivity {
+public class ActivityInventoryPerRoom extends AppCompatActivity {
     private Context context;
     private Toolbar toolBar;
     private Spinner spinner;
@@ -89,20 +89,19 @@ public class ActivityInventory extends AppCompatActivity {
         // receive id_dot from activity_qrscanner
         Intent intent = getIntent();
         id_dot = intent.getExtras().getInt("id_dot");
-        Log.d("id_dot",Integer.toString(id_dot));
         // process event for FloatActionButton Save
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 arrLabRoom = getListViewData();
                 if (arrLabRoom.isEmpty()) {
-                    final Dialog openDialog = new Dialog(ActivityInventory.this);
+                    final Dialog openDialog = new Dialog(ActivityInventoryPerRoom.this);
                     openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     openDialog.setContentView(R.layout.dialog_inventory_fail);
                     openDialog.show();
-//                    Toast.makeText(ActivityInventory.this, "Bạn chưa nhập thông tin kiểm kê. Vui lòng kiểm tra lại", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(ActivityInventoryPerRoom.this, "Bạn chưa nhập thông tin kiểm kê. Vui lòng kiểm tra lại", Toast.LENGTH_LONG).show();
                 }else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityInventory.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityInventoryPerRoom.this);
                     builder.setMessage("Bạn phải kiểm tra thông tin nhập của bạn cẩn thận trước khi gửi.\nBạn có chắc chắn không?")
                             .setTitle("Gửi Thông Tin Kiểm Kê")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -112,7 +111,7 @@ public class ActivityInventory extends AppCompatActivity {
                                     // hide fabbutton not to allow user submit data second time
                                     fabSave.hide();
                                     // Inform success for user
-                                    final Dialog openDialog = new Dialog(ActivityInventory.this);
+                                    final Dialog openDialog = new Dialog(ActivityInventoryPerRoom.this);
                                     openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                     openDialog.setContentView(R.layout.dialog_inventory_success);
                                     openDialog.show();
@@ -144,7 +143,7 @@ public class ActivityInventory extends AppCompatActivity {
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ActivityInventory.this, ActivityQRScanner.class);
+                Intent intent = new Intent(ActivityInventoryPerRoom.this, ActivityInventorySeason.class);
                 startActivity(intent);
             }
         });
@@ -152,7 +151,7 @@ public class ActivityInventory extends AppCompatActivity {
     public void initSpinner(){
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<Labroom> arrayAdapter = new ArrayAdapter<Labroom>(
-                ActivityInventory.this,
+                ActivityInventoryPerRoom.this,
                 R.layout.spinner_item,
                 arrlistLabRoom);
 //        ArrayAdapter<Labroom> arrayAdapter = ArrayAdapter.createFromResource(this,arrlistLabRoom, R.layout.spinner_item);
@@ -193,7 +192,7 @@ public class ActivityInventory extends AppCompatActivity {
                 edNoteDeviceSave = (EditText) view.findViewById(R.id.edNoteDeviceSave);
 
                 // dialogbox for each row
-                final Dialog openDialog = new Dialog(ActivityInventory.this);
+                final Dialog openDialog = new Dialog(ActivityInventoryPerRoom.this);
                 //openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 openDialog.setContentView(R.layout.dialog_row_inventory);
                 openDialog.setTitle("Thông Tin Kiểm Kê Thiết Bị");
@@ -220,7 +219,7 @@ public class ActivityInventory extends AppCompatActivity {
                           String numberOfNormalDevice = edNumberOfNormalDevice.getText().toString();
                           String numberOfBorkenDevice = edNumberOfBrokenDevice.getText().toString();
                           String numberOfUnusedDevice = edNumberOfUnusedDevice.getText().toString();
-                          String noteDevice = ActivityInventory.this.edNoteDevice.getText().toString();
+                          String noteDevice = ActivityInventoryPerRoom.this.edNoteDevice.getText().toString();
                           edNoteDeviceSave.setText(noteDevice);
                           edNumberOfDeviceLeftSave.setText(numberOfDeviceLeft);
                           edNumberOfNormalDeviceSave.setText(numberOfNormalDevice);

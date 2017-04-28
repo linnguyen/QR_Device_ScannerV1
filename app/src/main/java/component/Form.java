@@ -2,19 +2,14 @@ package component;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.IdRes;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
-import com.example.ryne.qr_device_scanner.ActivityInventory;
-import com.example.ryne.qr_device_scanner.ActivityQRScanner;
 import com.example.ryne.qr_device_scanner.R;
 
 import java.util.ArrayList;

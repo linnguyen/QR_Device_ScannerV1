@@ -1,13 +1,16 @@
 package com.example.ryne.qr_device_scanner;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -52,12 +55,12 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.startActivity(new Intent(this,ActivityInventorySeason.class));
+        this.startActivity(new Intent(this,ActivityDeviceInformation.class));
         initToolBar();
         initSlider();
         final Activity activity = this;
         arrSeason = new ArrayList<>();
-        arrSeason.add(new InventorySeason(1, "Thường xuyên"));
+        arrSeason.add(new InventorySeason(1,"Thường xuyên"));
         arrSeason.add(new InventorySeason(2,"Định Kì"));
         arrSeason.add(new InventorySeason(3, "Đột Xuất"));
         imQrSCanner = (ImageView)findViewById(R.id.qrScanner);
@@ -76,45 +79,49 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
              }
          });
         imInventory.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(ActivityQRScanner.this, ActivityInventorySeason.class);
+//                intent.putExtra("id_dot",inventorySeasonSelected.getId());
+                startActivity(intent);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
-                final Dialog openDialog = new Dialog(ActivityQRScanner.this);
-                openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                openDialog.setContentView(R.layout.dialog_inventory_season);
-                rbgSeason = (RadioGroup) openDialog.findViewById(R.id.rbgSeason);
-                for(int i=0; i< arrSeason.size(); i++){
-                    RadioButton radioButton = new RadioButton(ActivityQRScanner.this);
-                    radioButton.setText(arrSeason.get(i).getName());
-                    radioButton.setTag(arrSeason.get(i));
-                    rbgSeason.addView(radioButton);
-                }
-                openDialog.show();
-                rbgSeason.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                        int idex =  rbgSeason.getCheckedRadioButtonId();
-                        RadioButton rbSelected = (RadioButton) rbgSeason.findViewById(idex);
-                        inventorySeasonSelected = (InventorySeason) rbSelected.getTag();
-
-//                        Log.d("season ne:", inventorySeason.getName()+ inventorySeason.getId());
-                    }
-                });
-                final Button dialogButtonSeason = (Button) openDialog.findViewById(R.id.daButtonSeason);
-                dialogButtonSeason.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (inventorySeasonSelected != null) {
-                            Intent intent = new Intent(ActivityQRScanner.this, ActivityInventory.class);
-                            intent.putExtra("id_dot",inventorySeasonSelected.getId());
-                            startActivity(intent);
-                            openDialog.dismiss();
-                        }else{
-                            openDialog.dismiss();
-                            Toast.makeText(ActivityQRScanner.this, "Vui lòng chọn đợt kiểm kê", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+//                final Dialog openDialog = new Dialog(ActivityQRScanner.this);
+//                openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                openDialog.setContentView(R.layout.dialog_inventory_season);
+//                rbgSeason = (RadioGroup) openDialog.findViewById(R.id.rbgSeason);
+//                for(int i=0; i< arrSeason.size(); i++){
+//                    RadioButton radioButton = new RadioButton(ActivityQRScanner.this);
+//                    radioButton.setText(arrSeason.get(i).getName());
+//                    radioButton.setTag(arrSeason.get(i));
+//                    rbgSeason.addView(radioButton);
+//                }
+//                openDialog.show();
+//                rbgSeason.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//                    @Override
+//                    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+//                        int idex =  rbgSeason.getCheckedRadioButtonId();
+//                        RadioButton rbSelected = (RadioButton) rbgSeason.findViewById(idex);
+//                        inventorySeasonSelected = (InventorySeason) rbSelected.getTag();
+//
+//                    }
+//                });
+//                final Button dialogButtonSeason = (Button) openDialog.findViewById(R.id.daButtonSeason);
+//                dialogButtonSeason.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (inventorySeasonSelected != null) {
+//                            Intent intent = new Intent(ActivityQRScanner.this, ActivityInventoryPerRoom.class);
+//                            intent.putExtra("id_dot",inventorySeasonSelected.getId());
+//                            startActivity(intent);
+//                            openDialog.dismiss();
+//                        }else{
+//                            openDialog.dismiss();
+//                            Toast.makeText(ActivityQRScanner.this, "Vui lòng chọn đợt kiểm kê", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                });
 
             }
         });

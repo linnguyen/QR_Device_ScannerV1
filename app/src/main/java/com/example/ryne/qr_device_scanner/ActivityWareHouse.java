@@ -35,7 +35,7 @@ public class ActivityWareHouse extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolBarWareHouse);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.left_arrow_white);
-        toolbar.setTitle("Back");
+        toolbar.setTitle("Quay l");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
