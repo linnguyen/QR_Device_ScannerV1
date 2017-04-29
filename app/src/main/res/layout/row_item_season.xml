@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:descendantFocusability="blocksDescendants"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/edIdSeasonSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/imgDevice"
+        android:layout_marginLeft="40px"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvSeason"
+            android:text="Thường xuyên"
+            android:textSize="18dp"
+            android:textColor="#6a1b9a"
+            android:layout_below="@+id/codeParent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <CheckBox
+        android:id="@+id/cbSeasonSelect"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

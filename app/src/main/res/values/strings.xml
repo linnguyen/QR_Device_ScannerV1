@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">QR_Device_Scanner</string>
-    <string name="toolbarTitle">Back</string>
+    <string name="toolbarTitle">Quay lại</string>
     <string name="inventory">Kiểm Kê</string>
     <string name="status_valuation">Tình Trạng</string>
     <string name="search">Search</string>
@@ -32,4 +32,8 @@
     <string name="success">Thành Công</string>
     <string name="fail">Thất Bại</string>
     <string name="fail_submit">Bạn chưa nhập thông tin kiểm kê. Vui lòng kiểm tra lại</string>
+    <string name="season">Chọn Đợt Kiểm Kê</string>
+    <string name="title_activity_test">Test</string>
+    <string name="inventory_equipment">Kiểm kê </string>
+    <string name="evaluation">Đánh giá tình trạng </string>
 </resources>

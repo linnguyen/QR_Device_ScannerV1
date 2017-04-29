@@ -24,12 +24,24 @@
             android:name=".ActivityDeviceInformation"
             android:theme="@style/DeviceInformationTheme" />
         <activity
-            android:name=".ActivityInventory"
+            android:name=".ActivityInventoryPerRoom"
             android:theme="@style/Inventory" />
         <activity
             android:name=".ActivityWareHouse"
             android:label="@string/title_activity_ware_house"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ActivityInventorySeason"
+            android:label="Chọn đợt kiểm kê"
+            android:theme="@style/InventorySeason"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Test"
+            android:label="@string/title_activity_test"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ActivityInventoryPerDevice"
+            android:label="Nhập thông tin thiết bị"
+            android:theme="@style/InventoryPerDevice"/>
     </application>
 
 </manifest>

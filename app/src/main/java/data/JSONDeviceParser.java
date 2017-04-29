@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import model.Device;
+import model.InventorySeason;
 import model.Labroom;
 
 /**
@@ -32,8 +33,9 @@ public class JSONDeviceParser {
             String digital = jsonObjectDevice.getString("thong_so_ki_thuat");
             String timeofWarranty = jsonObjectDevice.getString("han_bao_hanh");
             String description = jsonObjectDevice.getString("mo_ta");
+            String room = jsonObjectDevice.getString("ma_pth");
 
-            device = new Device(name, parentCode, producer, country, dateofProduce, digital, staff, "", timeofWarranty, description);
+            device = new Device(name, parentCode, producer, country, dateofProduce, digital, staff, room, timeofWarranty, description);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -64,7 +66,7 @@ public class JSONDeviceParser {
             for (int i=0; i<arrDeviceJSon.length(); i++){
                 JSONObject objectDevice = arrDeviceJSon.getJSONObject(i);
                 String name = objectDevice.getString("ten_thiet_bi");
-                String code_of_parent = objectDevice.getString("thiet_bi_id");
+                String code_of_parent = objectDevice.getString("ma_thiet_bi");
                 Device device = new Device(name, code_of_parent);
                 arrDevice.add(device);
             }
@@ -72,5 +74,22 @@ public class JSONDeviceParser {
             e.printStackTrace();
         }
         return arrDevice;
+    }
+    public static ArrayList<InventorySeason> getInventorySeason(String jsonString) {
+        ArrayList<InventorySeason> arrIvSeason = new ArrayList<>();
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONArray arrIvSeasonJSon = jsonObject.getJSONArray("inventory_season");
+            for(int i=0; i< arrIvSeasonJSon.length(); i++){
+                JSONObject objectIvSeason = arrIvSeasonJSon.getJSONObject(i);
+                int id = objectIvSeason.getInt("id_dot");
+                String name = objectIvSeason.getString("ten");
+                InventorySeason inventorySeason = new InventorySeason(id, name);
+                arrIvSeason.add(inventorySeason);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return arrIvSeason;
     }
 }

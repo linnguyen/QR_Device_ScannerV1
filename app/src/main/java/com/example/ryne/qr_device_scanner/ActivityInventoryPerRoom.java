@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +21,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,7 +37,7 @@ import java.util.HashMap;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import Utils.Config;
+import utils.Config;
 import adapter.AdapterInventory;
 import data.HttpHandler;
 import data.JSONDeviceParser;
@@ -47,7 +45,7 @@ import model.Device;
 import model.InventoryLab;
 import model.Labroom;
 
-public class ActivityInventory extends AppCompatActivity {
+public class ActivityInventoryPerRoom extends AppCompatActivity {
     private Context context;
     private Toolbar toolBar;
     private Spinner spinner;
@@ -72,6 +70,7 @@ public class ActivityInventory extends AppCompatActivity {
     private AdapterInventory adapterInventory;
     private Labroom labroom;
     private ArrayList<InventoryLab> arrLabRoom;
+    private int id_dot;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -87,19 +86,23 @@ public class ActivityInventory extends AppCompatActivity {
         // call dattask to load LabRoom from server
         DataTaskLabRoom dataTaskLabRoom = new DataTaskLabRoom();
         dataTaskLabRoom.execute("/lab_rooms");
+        // receive id_dot from activity_qrscanner
+        Intent intent = getIntent();
+        id_dot = intent.getExtras().getInt("id_dot");
         // process event for FloatActionButton Save
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 arrLabRoom = getListViewData();
+                Log.d("dulieuday", arrLabRoom.toString());
                 if (arrLabRoom.isEmpty()) {
-                    final Dialog openDialog = new Dialog(ActivityInventory.this);
+                    final Dialog openDialog = new Dialog(ActivityInventoryPerRoom.this);
                     openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     openDialog.setContentView(R.layout.dialog_inventory_fail);
                     openDialog.show();
-//                    Toast.makeText(ActivityInventory.this, "Bạn chưa nhập thông tin kiểm kê. Vui lòng kiểm tra lại", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(ActivityInventoryPerRoom.this, "Bạn chưa nhập thông tin kiểm kê. Vui lòng kiểm tra lại", Toast.LENGTH_LONG).show();
                 }else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityInventory.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityInventoryPerRoom.this);
                     builder.setMessage("Bạn phải kiểm tra thông tin nhập của bạn cẩn thận trước khi gửi.\nBạn có chắc chắn không?")
                             .setTitle("Gửi Thông Tin Kiểm Kê")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -109,7 +112,7 @@ public class ActivityInventory extends AppCompatActivity {
                                     // hide fabbutton not to allow user submit data second time
                                     fabSave.hide();
                                     // Inform success for user
-                                    final Dialog openDialog = new Dialog(ActivityInventory.this);
+                                    final Dialog openDialog = new Dialog(ActivityInventoryPerRoom.this);
                                     openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                     openDialog.setContentView(R.layout.dialog_inventory_success);
                                     openDialog.show();
@@ -141,7 +144,7 @@ public class ActivityInventory extends AppCompatActivity {
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ActivityInventory.this, ActivityQRScanner.class);
+                Intent intent = new Intent(ActivityInventoryPerRoom.this, ActivityInventorySeason.class);
                 startActivity(intent);
             }
         });
@@ -149,7 +152,7 @@ public class ActivityInventory extends AppCompatActivity {
     public void initSpinner(){
         spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<Labroom> arrayAdapter = new ArrayAdapter<Labroom>(
-                ActivityInventory.this,
+                ActivityInventoryPerRoom.this,
                 R.layout.spinner_item,
                 arrlistLabRoom);
 //        ArrayAdapter<Labroom> arrayAdapter = ArrayAdapter.createFromResource(this,arrlistLabRoom, R.layout.spinner_item);
@@ -190,7 +193,7 @@ public class ActivityInventory extends AppCompatActivity {
                 edNoteDeviceSave = (EditText) view.findViewById(R.id.edNoteDeviceSave);
 
                 // dialogbox for each row
-                final Dialog openDialog = new Dialog(ActivityInventory.this);
+                final Dialog openDialog = new Dialog(ActivityInventoryPerRoom.this);
                 //openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 openDialog.setContentView(R.layout.dialog_row_inventory);
                 openDialog.setTitle("Thông Tin Kiểm Kê Thiết Bị");
@@ -217,7 +220,7 @@ public class ActivityInventory extends AppCompatActivity {
                           String numberOfNormalDevice = edNumberOfNormalDevice.getText().toString();
                           String numberOfBorkenDevice = edNumberOfBrokenDevice.getText().toString();
                           String numberOfUnusedDevice = edNumberOfUnusedDevice.getText().toString();
-                          String noteDevice = ActivityInventory.this.edNoteDevice.getText().toString();
+                          String noteDevice = ActivityInventoryPerRoom.this.edNoteDevice.getText().toString();
                           edNoteDeviceSave.setText(noteDevice);
                           edNumberOfDeviceLeftSave.setText(numberOfDeviceLeft);
                           edNumberOfNormalDeviceSave.setText(numberOfNormalDevice);
@@ -233,29 +236,7 @@ public class ActivityInventory extends AppCompatActivity {
             }
         });
     }
-//    public boolean checkDataInput(){
-//        boolean check = false;
-//        for(int i=0; i<listView.getCount(); i++) {
-//            View view = listView.getChildAt(i);
-//            edNumberOfDeviceLeftSave = (EditText) view.findViewById(R.id.edNumberOfDeviceLeftSave);
-//            edNumberOfNormalDeviceSave = (EditText) view.findViewById(R.id.edNumberOfNormalDeviceSave);
-//            edNumberOfBrokenDeviceSave = (EditText) view.findViewById(R.id.edNumberOfBrokenDeviceSave);
-//            edNumberOfUnusedDeviceSave = (EditText) view.findViewById(R.id.edNumberOfUnusedDeviceSave);
-//            edNoteDeviceSave = (EditText) view.findViewById(R.id.edNoteDeviceSave);
-//            if (edNumberOfDeviceLeftSave.getText().toString().trim().length() > 0
-//                    || edNumberOfNormalDeviceSave.getText().toString().length() > 0
-//                    || edNumberOfBrokenDeviceSave.getText().toString().length() > 0
-//                    || edNumberOfUnusedDeviceSave.getText().toString().length() > 0
-//                    || edNoteDeviceSave.getText().toString().length() > 0) {
-//                check = true;
-//            }
-//
-//
-//            // check if data input for each row
-//            // if yes return true
-//        }    // if no => Bạn chưa nhập thông tin kiểm kê, vui lòng kiểm tra lại
-//        return check;
-//    }
+
     public boolean checkInputInventory(){
         if(edNumberOfDeviceLeft.getText().toString().trim().length()>0
          || edNumberOfNormalDevice.getText().toString().trim().length()>0
@@ -267,6 +248,7 @@ public class ActivityInventory extends AppCompatActivity {
             return false;
         }
     }
+
     public boolean checkInputInventorySave(){
         if(edNumberOfDeviceLeftSave.getText().toString().trim().length()==0
                 && edNumberOfNormalDeviceSave.getText().toString().trim().length()==0
@@ -305,34 +287,33 @@ public class ActivityInventory extends AppCompatActivity {
             if (checkInputInventorySave()) {
                 continue;
             } else {
-                    int numberOfDeviceLeft = -1;
-                    int numberOfNormalDevice = -1;
-                    int numberOfBrokenDevice = -1;
-                    int numberOfUnusedDevice = -1;
-                    if (edNumberOfDeviceLeftSave.getText().toString().trim().length() > 0) {
-                        numberOfDeviceLeft = Integer.parseInt(edNumberOfDeviceLeftSave.getText().toString());
-                    }
-                    if (edNumberOfNormalDeviceSave.getText().toString().trim().length() > 0) {
-                        numberOfNormalDevice = Integer.parseInt(edNumberOfNormalDeviceSave.getText().toString());
-                    }
-                    if (edNumberOfBrokenDeviceSave.getText().toString().trim().length() > 0) {
-                        numberOfBrokenDevice = Integer.parseInt(edNumberOfBrokenDeviceSave.getText().toString());
-                    }
-                    if (edNumberOfUnusedDeviceSave.getText().toString().trim().length() > 0) {
-                        numberOfUnusedDevice = Integer.parseInt(edNumberOfUnusedDeviceSave.getText().toString());
-                    }
-                    inventoryLab = new InventoryLab(
-                            tvCodeParent.getText().toString(),
-                            numberOfDeviceLeft,
-                            numberOfNormalDevice,
-                            numberOfBrokenDevice,
-                            numberOfUnusedDevice,
-                            edNoteDeviceSave.getText().toString());
-                    Log.d("dulieuday", inventoryLab.toString());
+                int numberOfDeviceLeft = -1;
+                int numberOfNormalDevice = -1;
+                int numberOfBrokenDevice = -1;
+                int numberOfUnusedDevice = -1;
+                if (edNumberOfDeviceLeftSave.getText().toString().trim().length() > 0) {
+                    numberOfDeviceLeft = Integer.parseInt(edNumberOfDeviceLeftSave.getText().toString());
                 }
+                if (edNumberOfNormalDeviceSave.getText().toString().trim().length() > 0) {
+                    numberOfNormalDevice = Integer.parseInt(edNumberOfNormalDeviceSave.getText().toString());
+                }
+                if (edNumberOfBrokenDeviceSave.getText().toString().trim().length() > 0) {
+                    numberOfBrokenDevice = Integer.parseInt(edNumberOfBrokenDeviceSave.getText().toString());
+                }
+                if (edNumberOfUnusedDeviceSave.getText().toString().trim().length() > 0) {
+                    numberOfUnusedDevice = Integer.parseInt(edNumberOfUnusedDeviceSave.getText().toString());
+                }
+                inventoryLab = new InventoryLab(
+                        tvCodeParent.getText().toString(),
+                        numberOfDeviceLeft,
+                        numberOfNormalDevice,
+                        numberOfBrokenDevice,
+                        numberOfUnusedDevice,
+                        edNoteDeviceSave.getText().toString());
                 arrayLabRoom.add(inventoryLab);
             }
-            // Log.d("arrayne", arrayLabRoom.get(1).getParentCode());
+
+        }
         return arrayLabRoom;
     }
     private class SendPostRequest extends AsyncTask<ArrayList<InventoryLab>, Void, String>{
@@ -365,6 +346,7 @@ public class ActivityInventory extends AppCompatActivity {
                     jsonObjectDevice.put("ghi_chu",arrayLab.get(i).getNoteDevice());
                     jsonArrayDevice.put(jsonObjectDevice);
                 }
+                postParams.put("id_dot",id_dot);
                 postParams.put("array_of_device", jsonArrayDevice);
                 postParams.put("lab_room_id", labroom.getId());
                 outputStream = connection.getOutputStream();

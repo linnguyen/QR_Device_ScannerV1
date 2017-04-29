@@ -35,7 +35,7 @@ public class ActivityWareHouse extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolBarWareHouse);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.left_arrow_white);
-        toolbar.setTitle("Back");
+        toolbar.setTitle("Quay l");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +47,7 @@ public class ActivityWareHouse extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
+        getMenuInflater().inflate(R.menu.menu_search,menu);
         MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) myActionMenuItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

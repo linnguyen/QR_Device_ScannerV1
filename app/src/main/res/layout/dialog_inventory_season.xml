@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="700px"
+    android:layout_height="600px">
+    <TextView
+        android:id="@+id/success"
+        android:text="@string/season"
+        android:textStyle="bold"
+        android:textSize="28dp"
+        android:layout_gravity="center"
+        android:paddingTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <RadioGroup
+        android:id="@+id/rbgSeason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/daButtonSeason"
+        android:text="OK"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="40px"
+        android:layout_gravity="center"
+        android:background="@drawable/button_shape"
+        android:layout_width="600px"
+        android:layout_height="80px" />
+</LinearLayout>
