@@ -29,38 +29,26 @@ public class ActivityInventorySeason extends AppCompatActivity {
 
     private AdapterSeason adapterSeason;
     private ArrayList<InventorySeason> arrSeason;
-//  xoa di
-    private String macode;
+    private String device_code;
     private String room_code;
+    private String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_season);
         //initToolBar();
         Intent intent = getIntent();
-        if(intent.getExtras() != null){
-            macode = intent.getExtras().getString("device_code");
+        if (intent.getExtras() != null) {
+            device_code = intent.getExtras().getString("device_code");
             room_code = intent.getExtras().getString("room_code");
-            Log.d("room_ne", room_code);
+            name = intent.getExtras().getString("name");
         }
         arrSeason = new ArrayList<>();
         InventorySeasonDataTasks inventorySeasonDataTasks = new InventorySeasonDataTasks(ActivityInventorySeason.this);
         inventorySeasonDataTasks.execute("/inventory_seasons");
     }
-//    public void initToolBar(){
-//        toolbar = (Toolbar) findViewById(R.id.toolBarInventorySeason);
-//        setSupportActionBar(toolbar);
-//        toolbar.setNavigationIcon(R.drawable.left_arrow_white);
-//        toolbar.setTitle("Quay lại");
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ActivityInventorySeason.this, ActivityQRScanner.class);
-//                startActivity(intent);
-//            }
-//        });
-//    }
-    public void initListView(){
+
+    public void initListView() {
         listView = (ListView) findViewById(R.id.lvSeason);
 //        arrSeason.add(new InventorySeason(1,"Giờ vàng"));
 //        arrSeason.add(new InventorySeason(2,"Giờ cao điểm"));
@@ -72,15 +60,18 @@ public class ActivityInventorySeason extends AppCompatActivity {
                 view = listView.getChildAt(position);
                 CheckBox checkBox = (CheckBox) view.findViewById(R.id.cbSeasonSelect);
                 EditText edIdSeasonSelect = (EditText) view.findViewById(R.id.edIdSeasonSelect);
-                InventorySeason inventorySeason = (InventorySeason) edIdSeasonSelect.getTag();
+                InventorySeason ivSeason = (InventorySeason) edIdSeasonSelect.getTag();
                 checkBox.setChecked(true);
-                if(macode == null){
+                if (device_code == null) {
                     Intent intent = new Intent(ActivityInventorySeason.this, ActivityInventoryPerRoom.class);
-                    intent.putExtra("id_dot", inventorySeason.getId());
+                    intent.putExtra("id_dot", ivSeason.getId());
                     startActivity(intent);
-                }else{
+                } else {
                     Intent intent = new Intent(ActivityInventorySeason.this, ActivityInventoryPerDevice.class);
-                    intent.putExtra("id_dot", inventorySeason.getId());
+                    intent.putExtra("id_dot", ivSeason.getId());
+                    intent.putExtra("device_code", device_code);
+                    intent.putExtra("room_code", room_code);
+                    intent.putExtra("name", name);
                     startActivity(intent);
                 }
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
@@ -88,16 +79,19 @@ public class ActivityInventorySeason extends AppCompatActivity {
         });
     }
 
-    private class InventorySeasonDataTasks extends AsyncTask<String, Void, String> {
+    private class InventorySeasonDataTasks extends AsyncTask<String, Void, String>{
         private Context context;
-        public  InventorySeasonDataTasks(Context context){
+
+        public InventorySeasonDataTasks(Context context) {
             this.context = context;
         }
+
         @Override
         protected String doInBackground(String... params) {
             String dataInventorySeason = HttpHandler.makeServiceCall(params[0]);
             return dataInventorySeason;
         }
+
         @Override
         protected void onPostExecute(String dataInventorySeason) {
             arrSeason = JSONDeviceParser.getInventorySeason(dataInventorySeason);

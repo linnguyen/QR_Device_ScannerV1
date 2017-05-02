@@ -23,17 +23,17 @@ public class JSONDeviceParser {
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONObject jsonObjectStaff = jsonObject.getJSONObject("staff");
             String staff = jsonObjectStaff.getString("ho_ten");
+            String room = jsonObjectStaff.getString("ma_pth");
 
             JSONObject jsonObjectDevice = jsonObject.getJSONObject("device");
             String name = jsonObjectDevice.getString("ten_thiet_bi");
-            String parentCode =  jsonObjectDevice.getString("ma_code");
+            String parentCode =  jsonObjectDevice.getString("ma_thiet_bi");
             String producer = jsonObjectDevice.getString("hang_san_xuat");
             String country  = jsonObjectDevice.getString("ma_nuoc_san_xuat");
             String dateofProduce = jsonObjectDevice.getString("ngay_san_xuat");
             String digital = jsonObjectDevice.getString("thong_so_ki_thuat");
             String timeofWarranty = jsonObjectDevice.getString("han_bao_hanh");
             String description = jsonObjectDevice.getString("mo_ta");
-            String room = jsonObjectDevice.getString("ma_pth");
 
             device = new Device(name, parentCode, producer, country, dateofProduce, digital, staff, room, timeofWarranty, description);
         } catch (JSONException e) {

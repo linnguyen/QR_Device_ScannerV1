@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -86,9 +87,11 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
         // call dattask to load LabRoom from server
         DataTaskLabRoom dataTaskLabRoom = new DataTaskLabRoom();
         dataTaskLabRoom.execute("/lab_rooms");
-        // receive id_dot from activity_qrscanner
+        // receive id_dot from activity inventory_season
         Intent intent = getIntent();
-        id_dot = intent.getExtras().getInt("id_dot");
+        if(intent.getExtras() != null) {
+            id_dot = intent.getExtras().getInt("id_dot");
+        }
         // process event for FloatActionButton Save
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +168,7 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
                 DataTaskDevices dataTaskDevices = new DataTaskDevices();
                 dataTaskDevices.execute("/devices/"+labroom.getId());
                 listView.setEnabled(true);
-                fabSave.show();
+//                fabSave.show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -194,6 +197,8 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
 
                 // dialogbox for each row
                 final Dialog openDialog = new Dialog(ActivityInventoryPerRoom.this);
+//                Window window = openDialog.getWindow();
+//                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
                 //openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 openDialog.setContentView(R.layout.dialog_row_inventory);
                 openDialog.setTitle("Thông Tin Kiểm Kê Thiết Bị");
@@ -326,7 +331,7 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
         protected String doInBackground(ArrayList<InventoryLab>... params) {
             try {
                 // URL url = new URL("https://apiqrcode-v1.herokuapp.com/inventories");
-                URL url = new URL(Config.URL+"/inventories");
+                URL url = new URL(Config.URL+"/inventories/room");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestProperty("Accept", "application/json");

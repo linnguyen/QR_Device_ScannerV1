@@ -43,9 +43,6 @@ public class ActivityDeviceInformation extends AppCompatActivity {
     private Toolbar toolbar;
     private Date date;
     private InventorySeason inventorySeasonSelected;
-    // xoa di
-    private String device_code = "Fdldd";
-    private String room_code = "D021";
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,16 +67,14 @@ public class ActivityDeviceInformation extends AppCompatActivity {
          origin.setText(objDevice.getCountry());
          String dateFormat = "";
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
             SimpleDateFormat destFormat = new SimpleDateFormat("dd-MM-yyyy");
-//            date = sourceFormat.parse(device.getDateofProduce());
-            dateFormat = destFormat.format(date);
+            dateFormat = destFormat.format(objDevice.getDateofProduce());
+     //      dateFormat = destFormat.format(date);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //dateOfProduce.setText(dateFormat);
-        //staff.setText(device.getStaff());
+         dateOfProduce.setText(objDevice.getDateofProduce());
+         staff.setText(objDevice.getStaff());
         //digital.setTextColor(Color.parseColor("#212121"));
 //        digital.setText("Digital:\n"+device.getDigital());
     }
@@ -91,29 +86,14 @@ public class ActivityDeviceInformation extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.miInventory:
-//                Form.showDialogInventorySeasonSelect(ActivityDeviceInformation.this);
-//                Form.btDaSeason.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        inventorySeasonSelected = Form.inventorySeasonSelected;
-//                        if (inventorySeasonSelected != null) {
-//                           // Log.d("ses ne", inventorySeasonSelected.toString());
-//                            Toast.makeText(ActivityDeviceInformation.this, "Duoc ma", Toast.LENGTH_LONG).show();
-//                            showFormInvenrory();
-//                        }else{
-//                            Form.openDialog.dismiss();
-//                            Toast.makeText(ActivityDeviceInformation.this, "Vui lòng chọn đợt kiểm kê", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                });
                 Intent intent = new Intent(ActivityDeviceInformation.this, ActivityInventorySeason.class);
-                intent.putExtra("device_code", device_code);
-                intent.putExtra("room_code", room_code );
+                intent.putExtra("device_code", objDevice.getParentcode());
+                intent.putExtra("room_code", objDevice.getRoom() );
+                intent.putExtra("name",objDevice.getName());
                 startActivity(intent);
                 overridePendingTransition(R.anim.top_in, R.anim.bottom_out);
                 return true;
@@ -135,13 +115,6 @@ public class ActivityDeviceInformation extends AppCompatActivity {
         });
     }
 
-    public void showFormInvenrory(){
-        Dialog openDialog = new Dialog(ActivityDeviceInformation.this);
-        //openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        openDialog.setContentView(R.layout.dialog_row_inventory);
-        openDialog.setTitle("Thông Tin Kiểm Kê Thiết Bị");
-        openDialog.show();
-    }
     private String getColoredSpanned(String text, String color) {
         String input = "<font color=" + color + ">" + text + "</font>";
         return input;

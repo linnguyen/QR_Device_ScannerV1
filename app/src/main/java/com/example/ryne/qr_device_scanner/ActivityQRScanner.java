@@ -56,7 +56,7 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        this.startActivity(new Intent(this, ActivityDeviceInformation.class));
+//        this.startActivity(new Intent(this, ActivityInventoryPerRoom.class));
         initToolBar();
         initSlider();
         final Activity activity = this;

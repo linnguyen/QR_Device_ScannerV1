@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,8 +30,17 @@ import utils.Config;
 
 public class ActivityInventoryPerDevice extends AppCompatActivity {
     private Toolbar toolbar;
+    private TextView tvName;
+    private EditText edNumberOfDeviceLeft;
+    private EditText edNumberOfNormalDevice;
+    private EditText edNumberOfBrokenDevice;
+    private EditText edNumberOfUnusedDevice;
+    private EditText edNoteDevice;
+    private Button btSubmitDevice;
 
     private int id_dot;
+    private String name;
+    private String device_code;
     private String room_code;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +50,27 @@ public class ActivityInventoryPerDevice extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent.getExtras() != null){
             id_dot = intent.getExtras().getInt("id_dot");
+            name = intent.getExtras().getString("name");
+            device_code = intent.getExtras().getString("device_code");
+            room_code = intent.getExtras().getString("room_code");
         }
+
+        tvName = (TextView) findViewById(R.id.tvNameDeviceByOne);
+        edNumberOfDeviceLeft = (EditText) findViewById(R.id.edNumberOfDeviceLeftByOne);
+        edNumberOfNormalDevice = (EditText) findViewById(R.id.edNumberOfNormalDeviceByOne);
+        edNumberOfBrokenDevice = (EditText) findViewById(R.id.edNumberOfBrokenDeviceByOne);
+        edNumberOfUnusedDevice = (EditText) findViewById(R.id.edNumberOfUnusedDeviceByOne);
+        edNoteDevice = (EditText) findViewById(R.id.edNoteDeviceByOne);
+        btSubmitDevice = (Button) findViewById(R.id.btSubmitByOne);
+        tvName.setText(name);
+
+        btSubmitDevice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SendPostRequest sendPostRequest = new SendPostRequest();
+                sendPostRequest.execute(getDataDevice());
+            }
+        });
     }
     public void initToolBar(){
         toolbar = (Toolbar) findViewById(R.id.toolBarInventoryPerDevice);
@@ -53,7 +85,15 @@ public class ActivityInventoryPerDevice extends AppCompatActivity {
 //            }
 //        });
     }
-
+    public InventoryLab getDataDevice(){
+         int numberOfDeviceLeft = Integer.parseInt(edNumberOfDeviceLeft.getText().toString());
+         int numberOfNormalDevice = Integer.parseInt(edNumberOfNormalDevice.getText().toString());
+         int numberOfBrokenDevice = Integer.parseInt(edNumberOfBrokenDevice.getText().toString());
+         int numberOfUnusedDevice = Integer.parseInt(edNumberOfUnusedDevice.getText().toString());
+         String noteDevice = edNoteDevice.getText().toString();
+         return new InventoryLab(device_code, numberOfDeviceLeft, numberOfNormalDevice, numberOfBrokenDevice,
+         numberOfUnusedDevice, noteDevice);
+    }
     private class SendPostRequest extends AsyncTask<InventoryLab, Void, String> {
         OutputStream outputStream;
         BufferedWriter bufferedWriter;
@@ -64,7 +104,7 @@ public class ActivityInventoryPerDevice extends AppCompatActivity {
         protected String doInBackground(InventoryLab... params) {
             try {
                 // URL url = new URL("https://apiqrcode-v1.herokuapp.com/inventories");
-                URL url = new URL(Config.URL+"/inventories");
+                URL url = new URL(Config.URL+"/inventories/device");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestProperty("Accept", "application/json");
@@ -82,8 +122,8 @@ public class ActivityInventoryPerDevice extends AppCompatActivity {
                     jsonObjectDevice.put("ghi_chu", ivLab.getNoteDevice());
 
                 postParams.put("id_dot",id_dot);
-                postParams.put("array_of_device", jsonArrayDevice);
-               // postParams.put("lab_room_id", );
+                postParams.put("device", jsonObjectDevice);
+                postParams.put("lab_room_id",room_code);
                 outputStream = connection.getOutputStream();
                 bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 bufferedWriter.write(String.valueOf(postParams));
