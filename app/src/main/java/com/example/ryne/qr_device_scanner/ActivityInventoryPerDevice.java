@@ -1,11 +1,13 @@
 package com.example.ryne.qr_device_scanner;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -69,6 +71,11 @@ public class ActivityInventoryPerDevice extends AppCompatActivity {
             public void onClick(View v) {
                 SendPostRequest sendPostRequest = new SendPostRequest();
                 sendPostRequest.execute(getDataDevice());
+                final Dialog openDialog = new Dialog(ActivityInventoryPerDevice.this);
+                openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                openDialog.setContentView(R.layout.dialog_inventory_success_per_device);
+                openDialog.show();
+                final Button dialogButtonSuccess = (Button) openDialog.findViewById(R.id.daButtonSuccess);
             }
         });
     }
@@ -76,20 +83,31 @@ public class ActivityInventoryPerDevice extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolBarInventoryPerDevice);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.left_arrow_white);
-        //toolbar.setTitle("Quay l");
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ActivityWareHouse.this, ActivityQRScanner.class);
-//                startActivity(intent);
-//            }
-//        });
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityInventoryPerDevice.this, ActivityDeviceInformation.class);
+                startActivity(intent);
+            }
+        });
     }
     public InventoryLab getDataDevice(){
-         int numberOfDeviceLeft = Integer.parseInt(edNumberOfDeviceLeft.getText().toString());
-         int numberOfNormalDevice = Integer.parseInt(edNumberOfNormalDevice.getText().toString());
-         int numberOfBrokenDevice = Integer.parseInt(edNumberOfBrokenDevice.getText().toString());
-         int numberOfUnusedDevice = Integer.parseInt(edNumberOfUnusedDevice.getText().toString());
+         int numberOfDeviceLeft = -1;
+         int numberOfNormalDevice = -1;
+         int numberOfBrokenDevice = -1;
+         int numberOfUnusedDevice = -1;
+         if(edNumberOfDeviceLeft.getText().toString().trim().length() > 0){
+             numberOfDeviceLeft = Integer.parseInt(edNumberOfDeviceLeft.getText().toString());
+         }
+         if(edNumberOfNormalDevice.getText().toString().trim().length()>0){
+             numberOfNormalDevice = Integer.parseInt(edNumberOfNormalDevice.getText().toString());
+         }
+         if(edNumberOfBrokenDevice.getText().toString().trim().length()>0){
+             numberOfBrokenDevice = Integer.parseInt(edNumberOfBrokenDevice.getText().toString());
+         }
+         if(edNumberOfUnusedDevice.getText().toString().trim().length()>0){
+             numberOfUnusedDevice = Integer.parseInt(edNumberOfUnusedDevice.getText().toString());
+         }
          String noteDevice = edNoteDevice.getText().toString();
          return new InventoryLab(device_code, numberOfDeviceLeft, numberOfNormalDevice, numberOfBrokenDevice,
          numberOfUnusedDevice, noteDevice);

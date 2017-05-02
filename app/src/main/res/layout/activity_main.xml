@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/status"/>
             <TextView
-                android:text="@string/status_valuation"
+                android:text="@string/guide"
                 android:textStyle="bold"
                 android:textSize="18dp"
                 android:textColor="#91215c"

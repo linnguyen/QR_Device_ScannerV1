@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
-        android:text="@string/success_submit"
+        android:text="@string/success_submit_per_device"
         android:paddingTop="50px"
         android:layout_gravity="center"
         android:layout_width="600px"

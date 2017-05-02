@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -117,7 +116,7 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
                                     // Inform success for user
                                     final Dialog openDialog = new Dialog(ActivityInventoryPerRoom.this);
                                     openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                    openDialog.setContentView(R.layout.dialog_inventory_success);
+                                    openDialog.setContentView(R.layout.dialog_inventory_success_per_room);
                                     openDialog.show();
                                     final Button dialogButtonSuccess = (Button) openDialog.findViewById(R.id.daButtonSuccess);
                                     dialogButtonSuccess.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +146,7 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ActivityInventoryPerRoom.this, ActivityInventorySeason.class);
+                Intent intent = new Intent(ActivityInventoryPerRoom.this, ActivityQRScanner.class);
                 startActivity(intent);
             }
         });
@@ -168,7 +167,7 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
                 DataTaskDevices dataTaskDevices = new DataTaskDevices();
                 dataTaskDevices.execute("/devices/"+labroom.getId());
                 listView.setEnabled(true);
-//                fabSave.show();
+                fabSave.show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {

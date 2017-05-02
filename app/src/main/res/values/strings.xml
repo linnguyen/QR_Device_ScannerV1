@@ -28,12 +28,14 @@
     <string name="normal_status">Bình thường</string>
     <string name="broken_status">Hỏng</string>
     <string name="unuseded_status">Xin thanh lí</string>
-    <string name="success_submit">Tất cả thông tin kiểm kê đã được lưu thành công. Chọn phòng thực hành khác để kiểm kê.</string>
+    <string name="success_submit_per_room">Tất cả thông tin kiểm kê đã được lưu thành công. Chọn phòng thực hành khác để kiểm kê.</string>
+    <string name="success_submit_per_device">Lưu thông tin kiểm kê thành công. Quét mã QR để tiếp tục thực hiện kiểm kê</string>
     <string name="success">Thành Công</string>
     <string name="fail">Thất Bại</string>
     <string name="fail_submit">Bạn chưa nhập thông tin kiểm kê. Vui lòng kiểm tra lại</string>
     <string name="season">Chọn Đợt Kiểm Kê</string>
     <string name="title_activity_test">Test</string>
     <string name="inventory_equipment">Kiểm kê </string>
-    <string name="evaluation">Đánh giá tình trạng </string>
+    <string name="guide">Sử dụng </string>
+    <string name="evaluation">Đánh giá tình trạng</string>
 </resources>
