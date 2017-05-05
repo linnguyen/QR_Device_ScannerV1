@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class ActivityInventorySeason extends AppCompatActivity {
     private Toolbar toolbar;
     private ListView listView;
     private EditText edSelectSeason;
+    private ProgressBar pgBar;
 
     private AdapterSeason adapterSeason;
     private ArrayList<InventorySeason> arrSeason;
@@ -81,9 +83,14 @@ public class ActivityInventorySeason extends AppCompatActivity {
 
     private class InventorySeasonDataTasks extends AsyncTask<String, Void, String>{
         private Context context;
-
         public InventorySeasonDataTasks(Context context) {
             this.context = context;
+        }
+
+        protected void onPreExecute() {
+            pgBar = (ProgressBar) findViewById(R.id.pgBarSeaSon);
+            pgBar.setVisibility(ProgressBar.VISIBLE);
+            super.onPreExecute();
         }
 
         @Override
@@ -94,6 +101,7 @@ public class ActivityInventorySeason extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String dataInventorySeason) {
+            pgBar.setVisibility(ProgressBar.GONE);
             arrSeason = JSONDeviceParser.getInventorySeason(dataInventorySeason);
             initListView();
         }

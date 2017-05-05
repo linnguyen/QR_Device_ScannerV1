@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -47,8 +48,8 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
     private ImageView imWareHouse;
     private SliderLayout imageSlider;
     private RadioGroup rbgSeason;
-    private InventorySeason inventorySeasonSelected;
 
+    private InventorySeason inventorySeasonSelected;
     private JSONDeviceParser jsonDeviceParser = new JSONDeviceParser();
     private Device device = null;
     private ArrayList<InventorySeason> arrSeason = null;
@@ -56,7 +57,7 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        this.startActivity(new Intent(this, ActivityInventoryPerRoom.class));
+      //  this.startActivity(new Intent(this, Test.class));
         initToolBar();
         initSlider();
         final Activity activity = this;

@@ -71,6 +71,7 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
     private Labroom labroom;
     private ArrayList<InventoryLab> arrLabRoom;
     private int id_dot;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -405,7 +406,6 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
         }
     }
     private  class DataTaskDevices extends AsyncTask<String, Void, String> {
-        private ProgressBar progressBar;
         @Override
         protected void onPreExecute() {
             progressBar = (ProgressBar) findViewById(R.id.pgBar);

@@ -26,6 +26,7 @@
    </com.daimajia.slider.library.SliderLayout>
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal">
@@ -33,18 +34,20 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="#2B6F7A"
+            android:layout_marginRight="5dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/qrScanner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_qr"/>
+                android:src="@drawable/qr_code_white"/>
             <TextView
                 android:text="@string/qrscanner"
                 android:textStyle="bold"
-                android:textSize="18dp"
-                android:textColor="#ff6716"
+                android:textSize="16dp"
+                android:textColor="#ffffff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -54,17 +57,19 @@
             android:orientation="vertical"
             android:gravity="center"
             android:id="@+id/announcement"
+            android:layout_marginLeft="5dp"
+            android:background="#9C2F11"
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/inventory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/inventory"/>
+                android:src="@drawable/inventory_white"/>
             <TextView
                 android:text="@string/inventory"
                 android:textStyle="bold"
-                android:textSize="18dp"
-                android:textColor="#004d40"
+                android:textSize="16dp"
+                android:textColor="#ffffff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -73,22 +78,27 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_marginRight="5dp"
+            android:background="#4FA0D7"
             android:orientation="vertical">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/status"/>
+                android:src="@drawable/help"/>
             <TextView
                 android:text="@string/guide"
                 android:textStyle="bold"
-                android:textSize="18dp"
-                android:textColor="#91215c"
+                android:textSize="16dp"
+                android:textColor="#ffffff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -97,17 +107,19 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
+            android:layout_marginLeft="5dp"
+            android:background="#795548"
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/wareHouse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/warehouse"/>
+                android:src="@drawable/warehouse_white"/>
             <TextView
                 android:text="@string/warehouse"
                 android:textStyle="bold"
-                android:textSize="18dp"
-                android:textColor="#795548"
+                android:textSize="16dp"
+                android:textColor="#ffffff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
