@@ -13,7 +13,7 @@
         <item name="colorPrimaryDark">@android:color/holo_blue_dark</item>
     </style>
 
-    <style name="QRScanner" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@android:color/holo_blue_dark</item>
         <item name="colorPrimaryDark">@android:color/holo_blue_dark</item>
     </style>

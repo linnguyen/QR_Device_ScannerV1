@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ActivityQRScanner"
-            android:theme="@style/QRScanner">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,9 +39,11 @@
             android:name=".Test"
             android:label="@string/title_activity_test"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ActivityInventoryPerDevice"
+        <activity
+            android:name=".ActivityInventoryPerDevice"
             android:label="Nhập thông tin thiết bị"
-            android:theme="@style/InventoryPerDevice"/>
+            android:theme="@style/InventoryPerDevice" />
+        <activity android:name=".ActivityHelp"></activity>
     </application>
 
 </manifest>

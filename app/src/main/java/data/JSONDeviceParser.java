@@ -1,6 +1,7 @@
 package data;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -91,5 +92,15 @@ public class JSONDeviceParser {
             e.printStackTrace();
         }
         return arrIvSeason;
+    }
+    public static String getMessageResponse(String jsonString) {
+        String message = "";
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            message = jsonObject.getString("info");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return message;
     }
 }

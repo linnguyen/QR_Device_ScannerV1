@@ -180,5 +180,4 @@ public class ActivityInventoryPerDevice extends AppCompatActivity {
             // Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
         }
     }
-
 }

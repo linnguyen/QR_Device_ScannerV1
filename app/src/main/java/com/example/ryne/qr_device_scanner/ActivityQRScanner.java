@@ -58,7 +58,7 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
       //  this.startActivity(new Intent(this, Test.class));
-        initToolBar();
+       // initToolBar();
         initSlider();
         final Activity activity = this;
         arrSeason = new ArrayList<>();
@@ -137,11 +137,11 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
 
     }
 
-    public void initToolBar(){
-        toolBar = (Toolbar) findViewById(R.id.toolBarQRSCanner);
-        toolBar.setNavigationIcon(R.drawable.qrcode);
-        toolBar.setTitle("Quản Lí Thiết Bị");
-    }
+//    public void initToolBar(){
+//        toolBar = (Toolbar) findViewById(R.id.toolBarQRSCanner);
+//        toolBar.setNavigationIcon(R.drawable.qrcode);
+//        toolBar.setTitle("Quản Lí Thiết Bị");
+//    }
 
     public void initSlider(){
         imageSlider = (SliderLayout) findViewById(R.id.sliderImage);
@@ -162,7 +162,8 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
         imageSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
         imageSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         imageSlider.setCustomAnimation(new DescriptionAnimation());
-        imageSlider.setDuration(2000);
+        imageSlider.setDuration(3000);
+        //imageSlider.setPadding(30,30,0,0);
         imageSlider.addOnPageChangeListener(this);
     }
 

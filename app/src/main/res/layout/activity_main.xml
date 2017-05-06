@@ -7,26 +7,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.ryne.qr_device_scanner.ActivityQRScanner">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolBarQRSCanner"
-        android:title="Device Scanner"
-        android:layout_width="match_parent"
-        android:background="#00BCD4"
-        android:layout_height="56dp">
-    </android.support.v7.widget.Toolbar>
+
    <com.daimajia.slider.library.SliderLayout
        android:id="@+id/sliderImage"
+       android:layout_margin="10dp"
        android:layout_width="match_parent"
-       android:layout_height="200dp"
+       android:layout_height="270dp"
        app:pager_animation="Accordion"
        app:auto_cycle="true"
        app:indicator_visibility="visible"
        app:pager_animation_span="1100">
-
    </com.daimajia.slider.library.SliderLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="4dp"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal">
@@ -34,8 +30,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:background="#2B6F7A"
-            android:layout_marginRight="5dp"
+            android:background="@drawable/qr_item_bg"
+            android:layout_marginRight="2dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <ImageView
@@ -57,8 +53,8 @@
             android:orientation="vertical"
             android:gravity="center"
             android:id="@+id/announcement"
-            android:layout_marginLeft="5dp"
-            android:background="#9C2F11"
+            android:layout_marginLeft="2dp"
+            android:background="@drawable/iv_item_bg"
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/inventory"
@@ -87,8 +83,8 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:layout_marginRight="5dp"
-            android:background="#4FA0D7"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/help_item_bg"
             android:orientation="vertical">
             <ImageView
                 android:layout_width="wrap_content"
@@ -107,8 +103,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_marginLeft="5dp"
-            android:background="#795548"
+            android:layout_marginLeft="2dp"
+            android:background="@drawable/wh_item_bg"
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/wareHouse"

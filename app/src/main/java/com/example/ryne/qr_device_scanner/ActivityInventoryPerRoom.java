@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -58,12 +59,12 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
     private EditText edNumberOfNormalDevice;
     private EditText edNumberOfBrokenDevice;
     private EditText edNumberOfUnusedDevice;
-
     private EditText edNumberOfDeviceLeftSave;
     private EditText edNumberOfNormalDeviceSave;
     private EditText edNumberOfBrokenDeviceSave;
     private EditText edNumberOfUnusedDeviceSave;
     private EditText edNoteDeviceSave;
+    private ProgressBar progressBar;
 
     private ArrayList<Device> arrlistDevice;
     private ArrayList<Labroom> arrlistLabRoom;
@@ -71,7 +72,7 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
     private Labroom labroom;
     private ArrayList<InventoryLab> arrLabRoom;
     private int id_dot;
-    private ProgressBar progressBar;
+    private String message;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -165,10 +166,8 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 labroom = (Labroom)parent.getItemAtPosition(position);
-                DataTaskDevices dataTaskDevices = new DataTaskDevices();
-                dataTaskDevices.execute("/devices/"+labroom.getId());
-                listView.setEnabled(true);
-                fabSave.show();
+                CheckLatestInventoryRequest checkLatestInventoryRequest = new CheckLatestInventoryRequest();
+                checkLatestInventoryRequest.execute(labroom.getId());
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -389,7 +388,8 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(String s) {
-           // Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+//           Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+         Log.d("daata",JSONDeviceParser.getMessageResponse(s));
         }
     }
     private class DataTaskLabRoom extends AsyncTask<String, Void, String> {
@@ -426,4 +426,91 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
             initListView();
         }
     }
+
+    private class CheckLatestInventoryRequest extends AsyncTask<String, Void, String> {
+        OutputStream outputStream;
+        BufferedWriter bufferedWriter;
+        JSONObject jsonObjectDevice;
+        JSONArray jsonArrayDevice;
+        JSONObject postParams;
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                // URL url = new URL("https://apiqrcode-v1.herokuapp.com/inventories");
+                URL url = new URL(Config.URL + "/inventories/latest_inventory_for_room");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Accept", "application/json");
+                connection.setRequestMethod("POST");
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                String maPth = params[0];
+                postParams = new JSONObject();
+                postParams.put("ma_pth", maPth);
+                outputStream = connection.getOutputStream();
+                bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                bufferedWriter.write(String.valueOf(postParams));
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                    BufferedReader in = new BufferedReader(
+                            new InputStreamReader(
+                                    connection.getInputStream()));
+                    StringBuffer sb = new StringBuffer("");
+                    String line = "";
+
+                    while ((line = in.readLine()) != null) {
+
+                        sb.append(line);
+                        break;
+                    }
+
+                    in.close();
+                    return sb.toString();
+
+                } else {
+                    return new String("false : " + responseCode);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            message = JSONDeviceParser.getMessageResponse(s);
+            if (message == "") {
+                showOutputDevice();
+            } else {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(ActivityInventoryPerRoom.this);
+                builder.setMessage(message)
+                        .setTitle("Xác Nhận")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                               showOutputDevice();
+                            }
+                        })
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).show();
+            }
+        }
+        public void showOutputDevice(){
+            DataTaskDevices dataTaskDevices = new DataTaskDevices();
+            dataTaskDevices.execute("/devices/"+labroom.getId());
+            listView.setEnabled(true);
+            fabSave.show();
+        }
+    }
+
 }
