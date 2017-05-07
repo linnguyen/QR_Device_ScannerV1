@@ -46,6 +46,7 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
     private ImageView imQrSCanner;
     private ImageView imInventory;
     private ImageView imWareHouse;
+    private ImageView imHelp;
     private SliderLayout imageSlider;
     private RadioGroup rbgSeason;
 
@@ -68,6 +69,7 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
         imQrSCanner = (ImageView)findViewById(R.id.qrScanner);
         imInventory = (ImageView)findViewById(R.id.inventory);
         imWareHouse = (ImageView)findViewById(R.id.wareHouse);
+        imHelp = (ImageView) findViewById(R.id.imHelp);
         imQrSCanner.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -131,6 +133,14 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ActivityQRScanner.this, ActivityWareHouse.class);
+                startActivity(intent);
+            }
+        });
+
+        imHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityQRScanner.this, ActivityHelp.class);
                 startActivity(intent);
             }
         });

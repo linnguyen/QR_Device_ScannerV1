@@ -43,7 +43,9 @@
             android:name=".ActivityInventoryPerDevice"
             android:label="Nhập thông tin thiết bị"
             android:theme="@style/InventoryPerDevice" />
-        <activity android:name=".ActivityHelp"></activity>
+        <activity android:name=".ActivityHelp"
+            android:label="Trợ Giúp"
+            android:theme="@style/Help"/>
     </application>
 
 </manifest>
