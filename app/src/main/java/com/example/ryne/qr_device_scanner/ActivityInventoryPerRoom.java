@@ -485,7 +485,7 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             message = JSONDeviceParser.getMessageResponse(s);
-            if (message == "") {
+            if (message.equals("")) {
                 showOutputDevice();
             } else {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(ActivityInventoryPerRoom.this);

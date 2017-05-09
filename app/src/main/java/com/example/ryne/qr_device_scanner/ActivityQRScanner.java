@@ -183,11 +183,11 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null){
             if(result.getContents() == null){
-                Toast.makeText(this, "You cancelled the scanning", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Hủy quét mã QR!", Toast.LENGTH_LONG).show();
                 MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
                 mediaPlayer.start();
                 DataTask dataTask = new DataTask();
-                dataTask.execute("/device_informations/TL2017MT1");
+                dataTask.execute("/device_informations/TL2017T1");
             }else{
                 MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
                 mediaPlayer.start();
@@ -217,10 +217,15 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
            // Toast.makeText(ActivityQRScanner.this,jsonString,Toast.LENGTH_LONG).show()
             //create device object
             device = jsonDeviceParser.getDeviceData(jsonString);
-            //pass to ActivityDeviceInformation activity
-            Intent intent = new Intent(ActivityQRScanner.this, ActivityDeviceInformation.class);
-            intent.putExtra("objDevice", device);
-            startActivity(intent);
+            if(device == null){
+                String message = "Không có dữ liệu cho mã QR này!";
+                Toast.makeText(ActivityQRScanner.this, message, Toast.LENGTH_LONG).show();
+                //pass to ActivityDeviceInformation activity
+            }else{
+                Intent intent = new Intent(ActivityQRScanner.this, ActivityDeviceInformation.class);
+                intent.putExtra("objDevice", device);
+                startActivity(intent);
+            }
         }
     }
 

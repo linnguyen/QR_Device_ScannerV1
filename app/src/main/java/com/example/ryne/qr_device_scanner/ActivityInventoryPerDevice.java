@@ -86,7 +86,7 @@ public class ActivityInventoryPerDevice extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ActivityInventoryPerDevice.this, ActivityDeviceInformation.class);
+                Intent intent = new Intent(ActivityInventoryPerDevice.this, ActivityQRScanner.class);
                 startActivity(intent);
             }
         });

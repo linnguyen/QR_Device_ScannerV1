@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QR_Device_Scanner</string>
+    <string name="app_name">Quản Lí Thiết Bị</string>
     <string name="toolbarTitle">Quay lại</string>
     <string name="inventory">Kiểm Kê</string>
     <string name="status_valuation">Tình Trạng</string>

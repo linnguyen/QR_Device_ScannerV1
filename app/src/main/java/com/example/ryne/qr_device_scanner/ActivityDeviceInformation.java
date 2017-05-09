@@ -191,9 +191,10 @@ public class ActivityDeviceInformation extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             message = JSONDeviceParser.getMessageResponse(s);
-            if (message == "") {
+            if (message.equals("")) {
                 navigateSeasonActivity();
             } else {
+                Toast.makeText(ActivityDeviceInformation.this, message, Toast.LENGTH_LONG).show();
                 final AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDeviceInformation.this);
                 builder.setMessage(message)
                         .setTitle("Xác Nhận")
