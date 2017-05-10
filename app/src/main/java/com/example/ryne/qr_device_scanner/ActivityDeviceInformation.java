@@ -53,11 +53,12 @@ public class ActivityDeviceInformation extends AppCompatActivity {
     private TextView dateOfProduce;
     private TextView staff;
     private TextView digital;
+    private TextView manufacturer;
+    private TextView timeOfWarranty;
     private Button btDaSeason;
 
     private Device objDevice = null;
     private Toolbar toolbar;
-    private Date date;
     private InventorySeason inventorySeasonSelected;
     private String message;
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -78,22 +79,24 @@ public class ActivityDeviceInformation extends AppCompatActivity {
         dateOfProduce = (TextView) findViewById(R.id.dateOfProduce);
         staff = (TextView) findViewById(R.id.staff);
         digital = (TextView) findViewById(R.id.digital);
+        manufacturer = (TextView) findViewById(R.id.manufacturer);
+        timeOfWarranty = (TextView) findViewById(R.id.warranty);
 
          name.setText(objDevice.getName());
          parentCode.setText(objDevice.getParentcode());
          origin.setText(objDevice.getCountry());
          String dateFormat = "";
         try {
-            SimpleDateFormat destFormat = new SimpleDateFormat("dd-MM-yyyy");
-            dateFormat = destFormat.format(objDevice.getDateofProduce());
-     //      dateFormat = destFormat.format(date);
+            SimpleDateFormat destFormat = new SimpleDateFormat("dd/MM/yyyy");
+            dateFormat = destFormat.format(destFormat.parse(objDevice.getDateofProduce()));
         } catch (Exception e) {
             e.printStackTrace();
         }
          dateOfProduce.setText(objDevice.getDateofProduce());
          staff.setText(objDevice.getStaff());
-        //digital.setTextColor(Color.parseColor("#212121"));
-//        digital.setText("Digital:\n"+device.getDigital());
+         digital.setText(objDevice.getDescription());
+         manufacturer.setText(objDevice.getProducer());
+         timeOfWarranty.setText(objDevice.getTimeofWarranty());
     }
 
     @Override
@@ -194,7 +197,6 @@ public class ActivityDeviceInformation extends AppCompatActivity {
             if (message.equals("")) {
                 navigateSeasonActivity();
             } else {
-                Toast.makeText(ActivityDeviceInformation.this, message, Toast.LENGTH_LONG).show();
                 final AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDeviceInformation.this);
                 builder.setMessage(message)
                         .setTitle("Xác Nhận")

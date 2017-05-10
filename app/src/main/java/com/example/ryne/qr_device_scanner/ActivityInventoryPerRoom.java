@@ -65,6 +65,7 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
     private EditText edNumberOfUnusedDeviceSave;
     private EditText edNoteDeviceSave;
     private ProgressBar progressBar;
+    private TextView tvEmpty;
 
     private ArrayList<Device> arrlistDevice;
     private ArrayList<Labroom> arrlistLabRoom;
@@ -82,6 +83,7 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
       //  initListView();
         listView = (ListView) findViewById(R.id.listViewInventory);
         fabSave = (FloatingActionButton) findViewById(R.id.fabSave);
+        tvEmpty = (TextView) findViewById(R.id.tvEmpty);
         arrlistLabRoom = new ArrayList<>();
         arrlistDevice = new ArrayList<>();
         arrLabRoom = new ArrayList<>();
@@ -180,8 +182,13 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
 //        arrlistDevice.add(new Device("Dell Voutro","D001"));
 //        arrlistDevice.add(new Device("Dell Voutro","D001"));
 //        arrlistDevice.add(new Device("Dell Voutro","D001"));
-        adapterInventory = new AdapterInventory(arrlistDevice,getApplicationContext());
-        listView.setAdapter(adapterInventory);
+
+        if(arrlistDevice.isEmpty()){
+            listView.setEmptyView(tvEmpty);
+        }else{
+            adapterInventory = new AdapterInventory(arrlistDevice,getApplicationContext());
+            listView.setAdapter(adapterInventory);
+        }
         // event ListView
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

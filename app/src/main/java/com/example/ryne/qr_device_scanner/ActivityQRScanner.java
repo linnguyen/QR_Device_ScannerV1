@@ -184,18 +184,15 @@ public class ActivityQRScanner extends AppCompatActivity implements BaseSliderVi
         if(result != null){
             if(result.getContents() == null){
                 Toast.makeText(this, "Hủy quét mã QR!", Toast.LENGTH_LONG).show();
-                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
-                mediaPlayer.start();
+//                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
+//                mediaPlayer.start();
                 DataTask dataTask = new DataTask();
-                dataTask.execute("/device_informations/TL2017T1");
+                dataTask.execute("/device_informations/TL2017MT1");
             }else{
-                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
-                mediaPlayer.start();
-               // Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+//                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.beep);
+//                mediaPlayer.start();
                 DataTask dataTask = new DataTask();
                 dataTask.execute("/device_informations/"+result.getContents());
-                Toast.makeText(ActivityQRScanner.this,result.getContents(), Toast.LENGTH_LONG).show();
-                Log.d("reu", result.getContents());
             }
         }else{
             super.onActivityResult(requestCode, resultCode, data);

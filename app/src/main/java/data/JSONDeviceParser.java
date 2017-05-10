@@ -30,11 +30,13 @@ public class JSONDeviceParser {
             String name = jsonObjectDevice.getString("ten_thiet_bi");
             String parentCode =  jsonObjectDevice.getString("ma_thiet_bi");
             String producer = jsonObjectDevice.getString("hang_san_xuat");
-            String country  = jsonObjectDevice.getString("ma_nuoc_san_xuat");
             String dateofProduce = jsonObjectDevice.getString("ngay_san_xuat");
             String digital = jsonObjectDevice.getString("thong_so_ki_thuat");
             String timeofWarranty = jsonObjectDevice.getString("han_bao_hanh");
             String description = jsonObjectDevice.getString("mo_ta");
+
+            JSONObject jsonObjectOrigin = jsonObject.getJSONObject("origin");
+            String country  = jsonObjectOrigin.getString("nuoc_san_xuat");
 
             device = new Device(name, parentCode, producer, country, dateofProduce, digital, staff, room, timeofWarranty, description);
         } catch (JSONException e) {

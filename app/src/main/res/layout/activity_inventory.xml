@@ -25,6 +25,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:text="Không có dữ liệu"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <ProgressBar
         android:id="@+id/pgBar"
         style="@style/Animation.AppCompat.Dialog"
@@ -36,7 +44,7 @@
         app:backgroundTint="#00796b"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:src="@drawable/plus"
+        android:src="@drawable/plane"
         android:layout_gravity="top|right"
         app:layout_anchorGravity="bottom|center|end"
         app:fabSize="mini"
