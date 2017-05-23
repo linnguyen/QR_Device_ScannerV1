@@ -1,5 +1,6 @@
 package data;
 
+import android.text.BoringLayout;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,7 +19,7 @@ import model.Labroom;
  */
 
 public class JSONDeviceParser {
-    public static Device getDeviceData(String jsonString){
+    public static Device getDeviceData(String jsonString) {
         Device device = null;
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
@@ -28,7 +29,7 @@ public class JSONDeviceParser {
 
             JSONObject jsonObjectDevice = jsonObject.getJSONObject("device");
             String name = jsonObjectDevice.getString("ten_thiet_bi");
-            String parentCode =  jsonObjectDevice.getString("ma_thiet_bi");
+            String parentCode = jsonObjectDevice.getString("ma_thiet_bi");
             String producer = jsonObjectDevice.getString("hang_san_xuat");
             String dateofProduce = jsonObjectDevice.getString("ngay_san_xuat");
             String digital = jsonObjectDevice.getString("thong_so_ki_thuat");
@@ -36,7 +37,7 @@ public class JSONDeviceParser {
             String description = jsonObjectDevice.getString("mo_ta");
 
             JSONObject jsonObjectOrigin = jsonObject.getJSONObject("origin");
-            String country  = jsonObjectOrigin.getString("nuoc_san_xuat");
+            String country = jsonObjectOrigin.getString("nuoc_san_xuat");
 
             device = new Device(name, parentCode, producer, country, dateofProduce, digital, staff, room, timeofWarranty, description);
         } catch (JSONException e) {
@@ -44,16 +45,17 @@ public class JSONDeviceParser {
         }
         return device;
     }
+
     public static ArrayList<Labroom> getLabRoomData(String jsonString) {
         ArrayList<Labroom> arrLabRoom = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONArray arrayLabRoomJson = jsonObject.getJSONArray("labrooms");
-            for (int i=0; i < arrayLabRoomJson.length(); i++){
-               JSONObject objectLabRoomJson = arrayLabRoomJson.getJSONObject(i);
+            for (int i = 0; i < arrayLabRoomJson.length(); i++) {
+                JSONObject objectLabRoomJson = arrayLabRoomJson.getJSONObject(i);
                 String id = objectLabRoomJson.getString("ma_pth");
                 String name = objectLabRoomJson.getString("phong_thuc_hanh");
-                Labroom labroom = new Labroom(id,name);
+                Labroom labroom = new Labroom(id, name);
                 arrLabRoom.add(labroom);
             }
         } catch (JSONException e) {
@@ -61,29 +63,42 @@ public class JSONDeviceParser {
         }
         return arrLabRoom;
     }
-    public static ArrayList<Device> getOutputDevice(String jsonString){
+
+    public static ArrayList<Device> getOutputDevice(String jsonString) {
         ArrayList<Device> arrDevice = new ArrayList<>();
+        ArrayList<Device> arrDeviceUniq = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONArray arrDeviceJSon = jsonObject.getJSONArray("devices");
-            for (int i=0; i<arrDeviceJSon.length(); i++){
+            for (int i = 0; i < arrDeviceJSon.length(); i++) {
                 JSONObject objectDevice = arrDeviceJSon.getJSONObject(i);
                 String name = objectDevice.getString("ten_thiet_bi");
                 String code_of_parent = objectDevice.getString("ma_thiet_bi");
                 Device device = new Device(name, code_of_parent);
+                Boolean check = false;
+                for(Device d: arrDevice){
+                    if(d.getParentcode() == device.getParentcode()){
+                        check = true;
+                    }
+                }
+                if(check){
+                    break;
+                }
                 arrDevice.add(device);
+                Log.d("hdsi", arrDevice.toString());
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return arrDevice;
     }
+
     public static ArrayList<InventorySeason> getInventorySeason(String jsonString) {
         ArrayList<InventorySeason> arrIvSeason = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONArray arrIvSeasonJSon = jsonObject.getJSONArray("inventory_season");
-            for(int i=0; i< arrIvSeasonJSon.length(); i++){
+            for (int i = 0; i < arrIvSeasonJSon.length(); i++) {
                 JSONObject objectIvSeason = arrIvSeasonJSon.getJSONObject(i);
                 int id = objectIvSeason.getInt("id_dot");
                 String name = objectIvSeason.getString("ten");
@@ -95,6 +110,7 @@ public class JSONDeviceParser {
         }
         return arrIvSeason;
     }
+
     public static String getMessageResponse(String jsonString) {
         String message = "";
         try {
@@ -105,4 +121,5 @@ public class JSONDeviceParser {
         }
         return message;
     }
+
 }

@@ -100,7 +100,7 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 arrLabRoom = getListViewData();
-                Log.d("dulieuday", arrLabRoom.toString());
+//                Log.d("dulieuday", arrLabRoom.toString());
                 if (arrLabRoom.isEmpty()) {
                     final Dialog openDialog = new Dialog(ActivityInventoryPerRoom.this);
                     openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -178,10 +178,6 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
         });
     }
     public void initListView(){
-        // arrlistDevice = new ArrayList<>();
-//        arrlistDevice.add(new Device("Dell Voutro","D001"));
-//        arrlistDevice.add(new Device("Dell Voutro","D001"));
-//        arrlistDevice.add(new Device("Dell Voutro","D001"));
 
         if(arrlistDevice.isEmpty()){
             listView.setEmptyView(tvEmpty);
@@ -232,16 +228,20 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
                           String numberOfBorkenDevice = edNumberOfBrokenDevice.getText().toString();
                           String numberOfUnusedDevice = edNumberOfUnusedDevice.getText().toString();
                           String noteDevice = ActivityInventoryPerRoom.this.edNoteDevice.getText().toString();
-                          edNoteDeviceSave.setText(noteDevice);
-                          edNumberOfDeviceLeftSave.setText(numberOfDeviceLeft);
-                          edNumberOfNormalDeviceSave.setText(numberOfNormalDevice);
-                          edNumberOfBrokenDeviceSave.setText(numberOfBorkenDevice);
-                          edNumberOfUnusedDeviceSave.setText(numberOfUnusedDevice);
-                          if(checkInputInventory()) {
-                              int tick = R.drawable.tick;
-                              edShowRowStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, tick);
+                          if(numberOfDeviceLeft.length() > 0) {
+                              edNoteDeviceSave.setText(noteDevice);
+                              edNumberOfDeviceLeftSave.setText(numberOfDeviceLeft);
+                              edNumberOfNormalDeviceSave.setText(numberOfNormalDevice);
+                              edNumberOfBrokenDeviceSave.setText(numberOfBorkenDevice);
+                              edNumberOfUnusedDeviceSave.setText(numberOfUnusedDevice);
+                              if (checkInputInventory()) {
+                                  int tick = R.drawable.tick;
+                                  edShowRowStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, tick);
+                              }
+                              openDialog.dismiss();
+                          }else{
+                               edNumberOfDeviceLeft.setError("Trường này bắt buộc!");
                           }
-                          openDialog.dismiss();
                     }
                 });
             }
@@ -395,8 +395,6 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(String s) {
-//           Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-         Log.d("daata",JSONDeviceParser.getMessageResponse(s));
         }
     }
     private class DataTaskLabRoom extends AsyncTask<String, Void, String> {
