@@ -76,16 +76,19 @@ public class JSONDeviceParser {
                 String code_of_parent = objectDevice.getString("ma_thiet_bi");
                 Device device = new Device(name, code_of_parent);
                 Boolean check = false;
+                Log.d("arrayne", arrDevice.toString());
                 for(Device d: arrDevice){
-                    if(d.getParentcode() == device.getParentcode()){
+                    if(d.getParentcode().equals(device.getParentcode())){
                         check = true;
                     }
+                    Log.d("ded", d.getParentcode()+"-"+device.getParentcode()+"-"+arrDevice.size()+"i= "+i+"check= "+check);
                 }
-                if(check){
+                if(check==true){
                     break;
+                }else{
+                    arrDevice.add(device);
                 }
-                arrDevice.add(device);
-                Log.d("hdsi", arrDevice.toString());
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
