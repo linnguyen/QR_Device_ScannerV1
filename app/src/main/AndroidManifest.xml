@@ -36,10 +36,6 @@
             android:theme="@style/InventorySeason"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Test"
-            android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".ActivityInventoryPerDevice"
             android:label="Nhập thông tin thiết bị"
             android:theme="@style/InventoryPerDevice" />

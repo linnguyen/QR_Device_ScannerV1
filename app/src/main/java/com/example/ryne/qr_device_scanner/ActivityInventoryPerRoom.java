@@ -21,7 +21,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -55,6 +54,8 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
     private TextView tvCodeParent;
     private EditText edShowRowStatus;
     private EditText edNoteDevice;
+    private TextView tvNameInventory;
+    private TextView tvNameDeviceInventoryRow;
     private EditText edNumberOfDeviceLeft;
     private EditText edNumberOfNormalDevice;
     private EditText edNumberOfBrokenDevice;
@@ -78,6 +79,7 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
+        progressBar = (ProgressBar) findViewById(R.id.pgBar);
         initToolBar();
       //  initSpinner();
       //  initListView();
@@ -100,13 +102,11 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 arrLabRoom = getListViewData();
-//                Log.d("dulieuday", arrLabRoom.toString());
                 if (arrLabRoom.isEmpty()) {
                     final Dialog openDialog = new Dialog(ActivityInventoryPerRoom.this);
                     openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     openDialog.setContentView(R.layout.dialog_inventory_fail);
                     openDialog.show();
-//                    Toast.makeText(ActivityInventoryPerRoom.this, "Bạn chưa nhập thông tin kiểm kê. Vui lòng kiểm tra lại", Toast.LENGTH_LONG).show();
                 }else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ActivityInventoryPerRoom.this);
                     builder.setMessage("Bạn phải kiểm tra thông tin nhập của bạn cẩn thận trước khi gửi.\nBạn có chắc chắn không?")
@@ -146,7 +146,6 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
     public void initToolBar(){
         toolBar = (Toolbar) findViewById(R.id.toolBarQRSCanner);
         toolBar.setNavigationIcon(R.drawable.left_arrow_white);
-        //toolBar.setTitle("Select Room");
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,15 +160,19 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
                 ActivityInventoryPerRoom.this,
                 R.layout.spinner_item,
                 arrlistLabRoom);
-//        ArrayAdapter<Labroom> arrayAdapter = ArrayAdapter.createFromResource(this,arrlistLabRoom, R.layout.spinner_item);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 labroom = (Labroom)parent.getItemAtPosition(position);
-                CheckLatestInventoryRequest checkLatestInventoryRequest = new CheckLatestInventoryRequest();
-                checkLatestInventoryRequest.execute(labroom.getId());
+                arrlistDevice.clear();
+                if(labroom.getId().equals("Default")) {
+                    progressBar.setVisibility(ProgressBar.GONE);
+                }else{
+                    CheckLatestInventoryRequest checkLatestInventoryRequest = new CheckLatestInventoryRequest();
+                    checkLatestInventoryRequest.execute(labroom.getId());
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -178,10 +181,10 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
         });
     }
     public void initListView(){
-
         if(arrlistDevice.isEmpty()){
             listView.setEmptyView(tvEmpty);
         }else{
+            tvEmpty.setVisibility(View.GONE);
             adapterInventory = new AdapterInventory(arrlistDevice,getApplicationContext());
             listView.setAdapter(adapterInventory);
         }
@@ -196,15 +199,15 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
                 edNumberOfBrokenDeviceSave = (EditText) view.findViewById(R.id.edNumberOfBrokenDeviceSave);
                 edNumberOfUnusedDeviceSave = (EditText) view.findViewById(R.id.edNumberOfUnusedDeviceSave);
                 edNoteDeviceSave = (EditText) view.findViewById(R.id.edNoteDeviceSave);
+                tvNameInventory = (TextView) view.findViewById(R.id.tvNameDeviceInventory);
 
                 // dialogbox for each row
                 final Dialog openDialog = new Dialog(ActivityInventoryPerRoom.this);
-//                Window window = openDialog.getWindow();
-//                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                //openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 openDialog.setContentView(R.layout.dialog_row_inventory);
                 openDialog.setTitle("Thông Tin Kiểm Kê Thiết Bị");
                 openDialog.show();
+                tvNameDeviceInventoryRow = (TextView) openDialog.findViewById(R.id.nameDeviceInventoryForRow);
+                tvNameDeviceInventoryRow.setText(tvNameInventory.getText());
                 edNumberOfDeviceLeft = (EditText) openDialog.findViewById(R.id.edNumberOfDeviceLeft);
                 edNumberOfNormalDevice = (EditText) openDialog.findViewById(R.id.edNumberOfNormalDevice);
                 edNumberOfBrokenDevice = (EditText) openDialog.findViewById(R.id.edNumberOfBrokenDevice);
@@ -218,8 +221,9 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
                 edNumberOfUnusedDevice.setText(edNumberOfUnusedDeviceSave.getText().toString());
                 edNoteDevice.setText(edNoteDeviceSave.getText().toString());
 
-                Button diologButton = (Button) openDialog.findViewById(R.id.daButtonOK);
-                diologButton.setOnClickListener(new View.OnClickListener() {
+                TextView tvDialogOK = (TextView) openDialog.findViewById(R.id.tvOK);
+                TextView tvDialogCancel = (TextView) openDialog.findViewById(R.id.tvCancel);
+                tvDialogOK.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                          //String parentCode = getListViewData(position);
@@ -242,6 +246,12 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
                           }else{
                                edNumberOfDeviceLeft.setError("Trường này bắt buộc!");
                           }
+                    }
+                });
+                tvDialogCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openDialog.dismiss();
                     }
                 });
             }
@@ -401,19 +411,18 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             String dataLabRoom = HttpHandler.makeServiceCall(params[0]);
-            Log.d("dulieu", dataLabRoom);
             return dataLabRoom;
         }
         @Override
         protected void onPostExecute(String dataLabRoom) {
             arrlistLabRoom = JSONDeviceParser.getLabRoomData(dataLabRoom);
+            arrlistLabRoom.add(0, new Labroom("Default","Chọn phòng để kiểm kê!"));
             initSpinner();
         }
     }
     private  class DataTaskDevices extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
-            progressBar = (ProgressBar) findViewById(R.id.pgBar);
             progressBar.setVisibility(ProgressBar.VISIBLE);
             super.onPreExecute();
         }
@@ -421,7 +430,6 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             String dataDevices = HttpHandler.makeServiceCall(params[0]);
-            //Log.d("thietbvi",dataDevices);
             return dataDevices;
         }
         @Override
