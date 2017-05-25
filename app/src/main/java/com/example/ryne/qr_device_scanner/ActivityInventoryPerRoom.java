@@ -107,6 +107,13 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
                     openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     openDialog.setContentView(R.layout.dialog_inventory_fail);
                     openDialog.show();
+                    final TextView tvFail = (TextView) openDialog.findViewById(R.id.tvInventoryFail);
+                    tvFail.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openDialog.dismiss();
+                        }
+                    });
                 }else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ActivityInventoryPerRoom.this);
                     builder.setMessage("Bạn phải kiểm tra thông tin nhập của bạn cẩn thận trước khi gửi.\nBạn có chắc chắn không?")
@@ -122,8 +129,8 @@ public class ActivityInventoryPerRoom extends AppCompatActivity {
                                     openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                     openDialog.setContentView(R.layout.dialog_inventory_success_per_room);
                                     openDialog.show();
-                                    final Button dialogButtonSuccess = (Button) openDialog.findViewById(R.id.daButtonSuccess);
-                                    dialogButtonSuccess.setOnClickListener(new View.OnClickListener() {
+                                    final TextView tvSuccess = (TextView) openDialog.findViewById(R.id.tvSuccessRoom);
+                                    tvSuccess.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             listView.setEnabled(false);

@@ -75,7 +75,13 @@ public class ActivityInventoryPerDevice extends AppCompatActivity {
                 openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 openDialog.setContentView(R.layout.dialog_inventory_success_per_device);
                 openDialog.show();
-                final Button dialogButtonSuccess = (Button) openDialog.findViewById(R.id.daButtonSuccess);
+                final TextView tvSuccess = (TextView) openDialog.findViewById(R.id.tvSuccessDevice);
+                tvSuccess.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openDialog.dismiss();
+                    }
+                });
             }
         });
     }

@@ -6,6 +6,7 @@
     <TextView
         android:id="@+id/success"
         android:text="@string/success"
+        android:textColor="#039be5"
         android:textStyle="bold"
         android:textSize="34dp"
         android:layout_gravity="center"
@@ -18,13 +19,15 @@
         android:layout_gravity="center"
         android:layout_width="600px"
         android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/daButtonSuccess"
+    <TextView
+        android:id="@+id/tvSuccessRoom"
         android:text="OK"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="40px"
+        android:textColor="#039be5"
+        android:textSize="18dp"
+        android:textStyle="bold"
         android:layout_gravity="center"
-        android:background="@drawable/button_shape"
-        android:layout_width="600px"
-        android:layout_height="80px" />
+        android:layout_marginTop="20px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

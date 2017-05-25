@@ -45,10 +45,6 @@
             android:layout_marginTop="10px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <TextView
-            android:textColor="#1a237e"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -86,7 +82,7 @@
             android:textSize="14dp"
             android:background="@drawable/row_shape"
             android:inputType="number"
-            android:hint="Số lượng xin thanh lí"
+            android:hint="Số thiết bị xin thanh lí"
             android:padding="10dp"
             android:layout_marginTop="14px"
             android:layout_width="match_parent"
@@ -123,7 +119,7 @@
             android:textSize="16dp"
             android:textStyle="bold"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="15px"
+            android:layout_marginTop="25px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
@@ -134,7 +130,7 @@
             android:textStyle="bold"
             android:layout_marginRight="30dp"
             android:layout_toLeftOf="@id/tvOK"
-            android:layout_marginTop="15px"
+            android:layout_marginTop="25px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>

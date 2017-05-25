@@ -46,14 +46,16 @@ public class ActivityInventorySeason extends AppCompatActivity {
             name = intent.getExtras().getString("name");
         }
         arrSeason = new ArrayList<>();
-        InventorySeasonDataTasks inventorySeasonDataTasks = new InventorySeasonDataTasks(ActivityInventorySeason.this);
-        inventorySeasonDataTasks.execute("/inventory_seasons");
+//        InventorySeasonDataTasks inventorySeasonDataTasks = new InventorySeasonDataTasks(ActivityInventorySeason.this);
+//        inventorySeasonDataTasks.execute("/inventory_seasons");
+        initListView();
     }
 
     public void initListView() {
         listView = (ListView) findViewById(R.id.lvSeason);
-//        arrSeason.add(new InventorySeason(1,"Giờ vàng"));
-//        arrSeason.add(new InventorySeason(2,"Giờ cao điểm"));
+        arrSeason.add(new InventorySeason(1,"cuối năm"));
+        arrSeason.add(new InventorySeason(2,"thường xuyên"));
+        arrSeason.add(new InventorySeason(2,"đột xuất"));
         adapterSeason = new AdapterSeason(arrSeason, getApplicationContext());
         listView.setAdapter(adapterSeason);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -81,29 +83,29 @@ public class ActivityInventorySeason extends AppCompatActivity {
         });
     }
 
-    private class InventorySeasonDataTasks extends AsyncTask<String, Void, String>{
-        private Context context;
-        public InventorySeasonDataTasks(Context context) {
-            this.context = context;
-        }
-
-        protected void onPreExecute() {
-            pgBar = (ProgressBar) findViewById(R.id.pgBarSeaSon);
-            pgBar.setVisibility(ProgressBar.VISIBLE);
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String dataInventorySeason = HttpHandler.makeServiceCall(params[0]);
-            return dataInventorySeason;
-        }
-
-        @Override
-        protected void onPostExecute(String dataInventorySeason) {
-            pgBar.setVisibility(ProgressBar.GONE);
-            arrSeason = JSONDeviceParser.getInventorySeason(dataInventorySeason);
-            initListView();
-        }
-    }
+//    private class InventorySeasonDataTasks extends AsyncTask<String, Void, String>{
+//        private Context context;
+//        public InventorySeasonDataTasks(Context context) {
+//            this.context = context;
+//        }
+//
+//        protected void onPreExecute() {
+//            pgBar = (ProgressBar) findViewById(R.id.pgBarSeaSon);
+//            pgBar.setVisibility(ProgressBar.VISIBLE);
+//            super.onPreExecute();
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... params) {
+//            String dataInventorySeason = HttpHandler.makeServiceCall(params[0]);
+//            return dataInventorySeason;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String dataInventorySeason) {
+//            pgBar.setVisibility(ProgressBar.GONE);
+//            arrSeason = JSONDeviceParser.getInventorySeason(dataInventorySeason);
+//            initListView();
+//        }
+//    }
 }
