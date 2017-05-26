@@ -19,7 +19,7 @@
         <item>Singapore</item>
         <item>Japan</item>
     </string-array>
-    <string name="title_activity_ware_house">WareHouse</string>
+    <string name="title_activity_ware_house">Nhà Kho</string>
     <string name="qrscanner">Quét Mã QR</string>
     <string name="actual_number">Số lượng thực tế</string>
     <string name="name_device_inventory">Tên thiết bị</string>

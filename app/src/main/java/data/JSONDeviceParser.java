@@ -4,6 +4,8 @@ import android.text.BoringLayout;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.ryne.qr_device_scanner.ActivityWareHouse;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -110,6 +112,26 @@ public class JSONDeviceParser {
             e.printStackTrace();
         }
         return message;
+    }
+    public static ArrayList<Device> getDeviceLeft(String jsonString) {
+        ArrayList<Device> arrWarehouse = new ArrayList<>();
+        try {
+//            Toast.makeText(null, jsonString, Toast.LENGTH_LONG).show();
+            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONArray arrWareHouseJSon = jsonObject.getJSONArray("device_left");
+            for (int i = 0; i < arrWareHouseJSon.length(); i++) {
+                JSONObject objectWH = arrWareHouseJSon.getJSONObject(i);
+                String parent_code  = objectWH.getString("ma_thiet_bi");
+                String name = objectWH.getString("ten_thiet_bi");
+                int amount = objectWH.getInt("so_luong");
+                String digital = objectWH.getString("mo_ta");
+                Device device = new Device(name,parent_code, amount, digital);
+                arrWarehouse.add(device);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return arrWarehouse;
     }
 
 }

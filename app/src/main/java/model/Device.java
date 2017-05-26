@@ -17,9 +17,16 @@ public class Device implements  Serializable{
     private String room;
     private String timeofWarranty;
     private String description;
+    private int numberLeft;
 
     public  Device(){
 
+    }
+    public Device(String name, String parentCode, int numberLeft, String digital){
+        this.name = name;
+        this.parentCode = parentCode;
+        this.digital = digital;
+        this.numberLeft = numberLeft;
     }
     public Device(String name, String parentCode){
         this.name = name;
@@ -118,7 +125,16 @@ public class Device implements  Serializable{
         this.description = description;
     }
 
+    public int getNumberLeft() {
+        return numberLeft;
+    }
+
+    public void setNumberLeft(int numberLeft) {
+        this.numberLeft = numberLeft;
+    }
+
     public String toString(){
         return this.getName()+" "+this.getParentcode();
     }
+
 }

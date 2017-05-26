@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.example.ryne.qr_device_scanner.R;
@@ -27,6 +28,9 @@ public class AdapterWareHouse extends ArrayAdapter<Device> {
 
     private Context context = null;
     private TextView nameDevice;
+    private TextView codeParent;
+    private TextView digital;
+    private TextView numberLeft;
     public AdapterWareHouse(ArrayList<Device> data, Context context){
         super(context, R.layout.row_item_inventory, data);
         this.arrayInventory = data;
@@ -59,12 +63,18 @@ public class AdapterWareHouse extends ArrayAdapter<Device> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.row_item_ware_house, parent, false);
             nameDevice = (TextView) convertView.findViewById(R.id.nameDeviceInventory);
+            codeParent = (TextView) convertView.findViewById(R.id.codeParent);
+            digital = (TextView) convertView.findViewById(R.id.description);
+            numberLeft = (TextView) convertView.findViewById(R.id.tvNumberLeft);
             result = convertView;
         }else{
             result = convertView;
         }
 
         nameDevice.setText(device.getName());
+        codeParent.setText(device.getParentcode());
+        digital.setText(device.getDigital());
+        numberLeft.setText(Integer.toString(device.getNumberLeft()));
         return convertView;
     }
 

@@ -2,25 +2,33 @@ package com.example.ryne.qr_device_scanner;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import adapter.AdapterWareHouse;
+import data.HttpHandler;
+import data.JSONDeviceParser;
 import model.Device;
+import utils.Config;
 
 public class ActivityWareHouse extends AppCompatActivity {
     private Context context;
     private Toolbar toolbar;
     private ListView listView;
+    ProgressBar pgBar;
 
     private AdapterWareHouse adapterWareHouse;
     private ArrayList<Device> arrlistDevice;
@@ -29,13 +37,16 @@ public class ActivityWareHouse extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ware_house);
         initToolBar();
-        initListView();
+        arrlistDevice = new ArrayList<>();
+        WareHouseDataTasks wareHouseDataTasks = new WareHouseDataTasks(ActivityWareHouse.this);
+        wareHouseDataTasks.execute("/devices_left");
+//        initListView();
     }
     public void initToolBar(){
         toolbar = (Toolbar) findViewById(R.id.toolBarWareHouse);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.left_arrow_white);
-        toolbar.setTitle("Quay l");
+        toolbar.setTitle("Quay lại");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,16 +82,33 @@ public class ActivityWareHouse extends AppCompatActivity {
     }
     public void initListView(){
         listView = (ListView) findViewById(R.id.listViewWareHouse);
-        arrlistDevice = new ArrayList<>();
-        arrlistDevice.add(new Device("Dell Voutro","D001"));
-        arrlistDevice.add(new Device("Asus","A001"));
-        arrlistDevice.add(new Device("Asus","A001"));
-        arrlistDevice.add(new Device("Dell Voutro","D001"));
-        arrlistDevice.add(new Device("Dell Voutro","D001"));
-        arrlistDevice.add(new Device("Dell Voutro","D001"));
-        arrlistDevice.add(new Device("HP","D001"));
-        arrlistDevice.add(new Device("Acer","D001"));
         adapterWareHouse = new AdapterWareHouse(arrlistDevice,getApplicationContext());
         listView.setAdapter(adapterWareHouse);
+    }
+
+      private class WareHouseDataTasks extends AsyncTask<String, Void, String> {
+        private Context context;
+        public WareHouseDataTasks(Context context) {
+            this.context = context;
+        }
+
+        protected void onPreExecute() {
+            pgBar = (ProgressBar) findViewById(R.id.pgBarWareHouse);
+            pgBar.setVisibility(ProgressBar.VISIBLE);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String dataWarehouse = HttpHandler.makeServiceCall(params[0]);
+            return dataWarehouse;
+        }
+
+        @Override
+        protected void onPostExecute(String dataWarehouse) {
+            pgBar.setVisibility(ProgressBar.GONE);
+            arrlistDevice = JSONDeviceParser.getDeviceLeft(dataWarehouse);
+            initListView();
+        }
     }
 }

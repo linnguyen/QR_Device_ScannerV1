@@ -41,16 +41,12 @@ import model.Device;
 import model.InventorySeason;
 
 public class ActivityQRScanner extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
-    private Toolbar toolBar;
-    private Button btScan;
     private ImageView imQrSCanner;
     private ImageView imInventory;
     private ImageView imWareHouse;
     private ImageView imHelp;
     private SliderLayout imageSlider;
-    private RadioGroup rbgSeason;
 
-    private InventorySeason inventorySeasonSelected;
     private JSONDeviceParser jsonDeviceParser = new JSONDeviceParser();
     private Device device = null;
     private ArrayList<InventorySeason> arrSeason = null;
